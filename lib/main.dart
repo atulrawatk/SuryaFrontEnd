@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/app_pages.dart';
+import 'app/utils/utils.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,10 @@ class MyApp extends StatelessWidget {
       ),
     );
     return GetMaterialApp(
+      translations: Messages(), // your translations
+      locale:
+          Locale('en', 'US'), // translations will be displayed in that locale
+      // fallbackLocale: Locale('en', 'UK'),
       title: "Surya",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
