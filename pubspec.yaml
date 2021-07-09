@@ -49,7 +49,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/img/
-    - assets/.env
+    - .env
 
   fonts:
     - family: Helvetica Neue Ultra Light
