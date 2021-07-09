@@ -1,7 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final count = 0.obs;
+  //
+
+  final GlobalKey<FormState> loginKey = GlobalKey();
+
+  final RxString _mobileNumber = RxString('');
+  String get mobileNumber => this._mobileNumber.value;
+  set mobileNumber(String? text) => this._mobileNumber.value = text!;
+
   @override
   void onInit() {
     super.onInit();
@@ -13,6 +21,8 @@ class LoginController extends GetxController {
   }
 
   @override
-  void onClose() {}
-  void increment() => count.value++;
+  void onClose() {
+    super.onClose();
+    _mobileNumber.close();
+  }
 }

@@ -9,14 +9,12 @@ class LoginView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LoginView'),
+        title: Text('Login'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'LoginView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
       ),
     );
   }
