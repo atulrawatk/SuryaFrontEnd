@@ -11,6 +11,9 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   pin_code_fields: ^7.2.0
   flutter_svg: ^0.22.0
+  http: ^0.13.3
+  logger: ^1.0.0
+  connectivity: ^3.0.6
 
   flutter:
     sdk: flutter
@@ -23,9 +26,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/
-    - assets/img/
-
+    - assets/
   fonts:
     - family: Helvetica Neue Ultra Light
       fonts:
