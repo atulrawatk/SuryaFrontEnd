@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   //
 
-  final GlobalKey<FormState> loginKey = GlobalKey();
+  late GlobalKey<FormState> loginKey;
 
   final RxString _mobileNumber = RxString('');
   String get mobileNumber => this._mobileNumber.value;
@@ -13,6 +13,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loginKey = GlobalKey<FormState>();
   }
 
   @override

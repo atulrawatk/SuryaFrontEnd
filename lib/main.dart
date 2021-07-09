@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:surya/theme_controller.dart';
 
 import 'package:get/get.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
     );
     // Injection class
     InjectionClass.constcall();
-
+    // ThemeController _themeController = Get.find();
     return GetMaterialApp(
       translations: Messages(), // your translations
       locale:
@@ -43,10 +44,11 @@ class MyApp extends StatelessWidget {
       title: "Surya",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: AppTheme.lightTheme,
+      // theme: (_themeController.isDarkTheme),
+      theme: (Get.isDarkMode) ? AppTheme.lightTheme : AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
+      // themeMode: ThemeMode.system,
     );
   }
 }

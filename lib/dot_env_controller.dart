@@ -26,5 +26,9 @@ class DotEnvController extends GetxController {
     webUrl = dotenv.env["WEB_URL"];
     encryptKey = dotenv.env["ENCRYPT_KEY"];
     encryptIv = dotenv.env["ENCRYPT_IV"];
+    print("app url: $appUrl");
+    print("webUrl : $webUrl");
+    print("encryptKey: $encryptKey");
+    print("encryptIv: $encryptIv");
   }
 }
