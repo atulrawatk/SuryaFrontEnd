@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,8 +17,12 @@ void main() async {
   //load dot env file
   await dotenv.load(fileName: ".env");
   //
-  runApp(
-    MyApp(),
+  runZonedGuarded<Future<void>>(() async {
+      runApp(MyApp());
+    },
+        (dynamic error, StackTrace stackTrace) {
+      Get.defaultDialog(title: 'Error occurred', middleText: '$error');
+    },
   );
 }
 
@@ -25,7 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Screentutils
+    // ScreenUtils
     ScreenUtil.init(
       BoxConstraints(
         maxWidth: Get.width,
@@ -34,7 +40,6 @@ class MyApp extends StatelessWidget {
     );
     // Injection class
     InjectionClass.constcall();
-
     return GetMaterialApp(
       translations: Messages(), // your translations
       locale:
