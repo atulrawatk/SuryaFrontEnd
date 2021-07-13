@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       // theme: (_themeController.isDarkTheme),
-      theme: (Get.isDarkMode) ? AppTheme.lightTheme : AppTheme.darkTheme,
+      theme: (Get.isDarkMode) ? AppTheme.darkTheme : AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       // themeMode: ThemeMode.system,

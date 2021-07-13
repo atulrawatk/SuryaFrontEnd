@@ -4,6 +4,18 @@ class AppStrings {
   //
   AppStrings._();
 
+  static final String welcomeText="Welcome to Surya".tr;
+  static final String readOur="Read our".tr;
+  static final String verify="Verify".tr;
+  static final String smsSent="SMS sent to".tr;
+  static final String confirm="Confirm".tr;
+  static final String resendSms="Resend SMS".tr;
+  static final String agreeAndContinueBold="AGREE AND CONTINUE".tr;
+  static final String suryaWillSend="Surya will send an SMS message to verify your phone number.".tr;
+  static final String nextBold="NEXT".tr;
+  static final String privacyPolicy=" Privacy Policy.".tr;
+  static final String tapAgreeAndContinue=" Tap \"Agree and continue\" to accept the".tr;
+  static final String termsOfService="Terms of Service.".tr;
   static final String appName = "Surya".tr;
   static final String enterNumber = "Enter Number".tr;
   static final String enterNumberHint = "Enter Your Number".tr;

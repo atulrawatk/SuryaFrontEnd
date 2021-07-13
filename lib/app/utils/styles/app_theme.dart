@@ -11,7 +11,7 @@ class AppTheme {
       // fontFamily: 'Helvetica Neue Ultra Light',
       brightness: Brightness.light,
       primaryColor: AppColors.appColor,
-      // accentColor: AppColors.,
+      accentColor: AppColors.textColor,
       buttonColor: AppColors.appColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
@@ -381,7 +381,7 @@ class AppTheme {
       // fontFamily: 'Helvetica Neue Ultra Light',
       brightness: Brightness.light,
       primaryColor: AppColors.appColor,
-      // accentColor: AppColors.,
+       accentColor: AppColors.whiteColor,
       buttonColor: AppColors.appColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(

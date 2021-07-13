@@ -15,6 +15,16 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle headingText({
+  required Color color ,
+    required double fontSize,
+    required FontWeight fontWeight
+  }){
+    return _textStyle(color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight);
+
+}
   static TextStyle buttonTextStyle({
     required Color color,
     required double fontSize,
@@ -27,6 +37,16 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle greyText({
+    required Color color,
+    required double fontSize,
+   required FontWeight fontWeight
+  }){
+    return _textStyle(color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight);
+
+  }
   static TextStyle _textStyle({
     required Color color,
     required double fontSize,
