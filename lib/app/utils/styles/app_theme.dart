@@ -7,15 +7,15 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     //
-    return ThemeData(
-      fontFamily: 'Helvetica Neue Ultra Light',
+    return ThemeData.light().copyWith(
+      // fontFamily: 'Helvetica Neue Ultra Light',
       brightness: Brightness.light,
       primaryColor: AppColors.appColor,
-      // accentColor: AppColors.,
+      accentColor: AppColors.textColor,
       buttonColor: AppColors.appColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
-        color: AppColors.appColor,
+        // color: AppColors.appColor,
         backgroundColor: AppColors.appColor,
         centerTitle: false,
         iconTheme: IconThemeData(
@@ -80,12 +80,12 @@ class AppTheme {
           ),
           subtitle1: AppTextStyle.buttonTextStyle(
             color: Colors.black,
-            fontSize: AppDimen.fontSize16,
+            fontSize: AppDimen.fontSize20,
             fontWeight: FontWeight.w400,
           ),
           subtitle2: AppTextStyle.buttonTextStyle(
             color: Colors.black,
-            fontSize: AppDimen.fontSize16,
+            fontSize: AppDimen.fontSize30,
             fontWeight: FontWeight.w400,
           ),
         ),
@@ -377,15 +377,15 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     //
-    return ThemeData(
-      fontFamily: 'Helvetica Neue Ultra Light',
+    return ThemeData.dark().copyWith(
+      // fontFamily: 'Helvetica Neue Ultra Light',
       brightness: Brightness.light,
       primaryColor: AppColors.appColor,
-      // accentColor: AppColors.,
+       accentColor: AppColors.whiteColor,
       buttonColor: AppColors.appColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
-        color: AppColors.appColor,
+        // color: AppColors.appColor,
         backgroundColor: AppColors.appColor,
         centerTitle: false,
         iconTheme: IconThemeData(
@@ -461,7 +461,7 @@ class AppTheme {
         ),
       ),
       buttonTheme: ButtonThemeData(
-        buttonColor: AppColors.appColor,
+        buttonColor: Colors.white,
         height: 45.h,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(

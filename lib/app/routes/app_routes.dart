@@ -7,10 +7,14 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
   static const PIN = _Paths.PIN;
+  static const WELCOME = _Paths.WELCOME;
+  static const OTP = _Paths.OTP;
 }
 
 abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const PIN = '/pin';
+  static const WELCOME = '/welcome';
+  static const OTP = '/otp';
 }

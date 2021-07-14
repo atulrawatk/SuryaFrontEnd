@@ -7,4 +7,5 @@ class AppImages {
   static const backgroundImage = "assets/img/backgroundImage.png";
 
   static const bangbandhu = "assets/img/bangabandhu_logo.png";
+
 }
