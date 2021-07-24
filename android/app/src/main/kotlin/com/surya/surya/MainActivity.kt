@@ -1,6 +1,46 @@
 package com.surya.surya
 
+import android.app.AlertDialog
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.media.RingtoneManager
+import android.os.Build
+import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
+import android.util.Log
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.plugin.common.MethodChannel
+import java.io.IOException
 
 class MainActivity: FlutterActivity() {
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        MethodChannel(flutterEngine?.dartExecutor, "com.surya.surya")
+                .setMethodCallHandler { methodCall, result ->
+                    if (methodCall.method == "firebaseToken") {
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                            if (!task.isSuccessful) {
+                                return@OnCompleteListener
+                            }
+                            val token = task.result
+                            Log.d("FirebaseToken", token.toString())
+                            result.success("$token")
+                        })
+                    }
+
+                }
+    }
 }

@@ -32,15 +32,22 @@ class TextFormWidget extends StatelessWidget {
       buildCounter: (BuildContext? context, { int? currentLength, int? maxLength, bool? isFocused }) => null,
       decoration: InputDecoration(
         hintText: hintText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          gapPadding: 12,
+        hintStyle: TextStyle(
+          fontSize: AppDimen.fontSize16,
+          color: (Get.isPlatformDarkMode) ? AppColors.whiteColor :AppColors.textColor,
+          fontWeight: FontWeight.w400,
         ),
-        focusColor: (Get.isDarkMode) ? AppColors.whiteColor :AppColors.textColor,
+        fillColor: Colors.transparent,
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.accentColor),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.primaryColor),
+        ),
       ),
       style: TextStyle(
         fontSize: AppDimen.fontSize16,
-        color: (Get.isDarkMode) ? AppColors.whiteColor :AppColors.textColor,
+        color: (Get.isPlatformDarkMode) ? AppColors.whiteColor :AppColors.textColor,
         fontWeight: FontWeight.w400,
       ),
     );

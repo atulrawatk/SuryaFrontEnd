@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -19,77 +20,104 @@ class WelcomeView extends GetView<WelcomeController> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          color: AppColors.chatBg.withOpacity(0.1),
-          image: DecorationImage(
-            image: AssetImage(AppImages.backgroundImage),
-            fit: BoxFit.fill
-          )
+          //color: Get.thAppColors.chatBg.withOpacity(0.4),
         ),
         child: SafeArea(
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.only(top:Get.height/40),
-                  child: Text(AppStrings.welcomeText,
-                    style: AppTextStyle.headingText(
-                      color: Get.theme.primaryColor,
-                      fontSize: AppDimen.headingSize,
-                      fontWeight: AppFontWeight.headingWeight),),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding:  EdgeInsets.only(left:Get.height/50,
-                      right: Get.height/50,bottom: Get.height/20),
+          child: Padding(
+            padding: AppPadding.appPagePadding,
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.center,
                   child: ListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: Get.height/10),
                     children: [
-                      Padding(
-                        padding:  EdgeInsets.only(bottom: Get.height/40),
-                        child: RichText(
-                          text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: AppStrings.readOur,
-                            ),
-                            TextSpan(
-                              text: AppStrings.privacyPolicy,
-                              style: AppTextStyle.greyText(
-                                  color: AppColors.blue,
-                                  fontSize: AppDimen.normalFontSize,
-                                  fontWeight: AppFontWeight.normalWeight)
-                            ),
-                            TextSpan(
-                              text: AppStrings.tapAgreeAndContinue,
-                            ),
-                            TextSpan(
-                              text: AppStrings.termsOfService,
-                                style: AppTextStyle.greyText(
-                                    color: AppColors.blue,
-                                    fontSize: AppDimen.normalFontSize,
-                                    fontWeight: AppFontWeight.normalWeight)
-                            )
-                          ],
-                            style: AppTextStyle.greyText(
-                        color: AppColors.grey_500,
-                            fontSize: AppDimen.normalFontSize,
-                            fontWeight:AppFontWeight.normalWeight)
-                        ),
-                          textAlign: TextAlign.center,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: Get.width/2.5,
+                          width: Get.width/2.5,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Get.width/2),
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    AppImages.appLogo,
+                                  ),
+                                  fit: BoxFit.fill
+                              )
+                          ),
                         ),
                       ),
-                      CustomButton(text: AppStrings.agreeAndContinueBold,onPress: (){
-                        Get.toNamed(Routes.LOGIN);
-                        },)
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding:  EdgeInsets.only(top:Get.height/10),
+                          child: Text(AppStrings.welcomeText,
+                            style: AppTextStyle.headingText(
+                              color: Get.theme.accentColor,
+                              fontSize: AppDimen.headingSize,
+                              fontWeight: AppFontWeight.headingWeight),),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              )
-            ],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding:  EdgeInsets.only(left:Get.height/50,
+                        right: Get.height/50,bottom: Get.height/20),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        Padding(
+                          padding:  EdgeInsets.only(bottom: Get.height/40),
+                          child: RichText(
+                            text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: AppStrings.readOur,
+                              ),
+                              TextSpan(
+                                text: AppStrings.privacyPolicy,
+                                style: AppTextStyle.greyText(
+                                    color: AppColors.blue,
+                                    fontSize: AppDimen.normalFontSize,
+                                    fontWeight: AppFontWeight.normalWeight),
+                                recognizer: new TapGestureRecognizer()..onTap = ()=>controller.launchURL()
+                              ),
+                              TextSpan(
+                                text: AppStrings.tapAgreeAndContinue,
+                              ),
+                              TextSpan(
+                                text: AppStrings.termsOfService,
+                                  recognizer: new TapGestureRecognizer()..onTap = ()=>controller.launchURL(),
+                                  style: AppTextStyle.greyText(
+                                      color: AppColors.blue,
+                                      fontSize: AppDimen.normalFontSize,
+                                      fontWeight: AppFontWeight.normalWeight)
+                              )
+                            ],
+                              style: AppTextStyle.greyText(
+                          color: Get.theme.accentColor,
+                              fontSize: AppDimen.normalFontSize,
+                              fontWeight:AppFontWeight.normalWeight)
+                          ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        CustomButton(text: AppStrings.agreeAndContinueBold,buttonColor: Get.theme.primaryColor,
+                          onPress: (){
+                          Get.toNamed(Routes.LOGIN);
+                          },)
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

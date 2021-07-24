@@ -5,15 +5,19 @@ import 'package:surya/app/utils/styles/app_text_style.dart';
 class CustomButton extends StatelessWidget {
   final String? text;
   final VoidCallback? onPress;
+  final Color buttonColor;
   const CustomButton({Key? key,
   required this.text,
-    required this.onPress
+    required this.onPress,
+    required this.buttonColor
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
       style: ElevatedButton.styleFrom(
+        primary: buttonColor,
       //  padding: EdgeInsets.all(20),
         fixedSize: Size(
           Get.width / 2,

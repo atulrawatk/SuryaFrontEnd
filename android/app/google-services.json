@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "200370932809",
+    "project_id": "surya-d2937",
+    "storage_bucket": "surya-d2937.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200370932809:android:64ab1a1ec54dd3492b8398",
+        "android_client_info": {
+          "package_name": "com.surya.surya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200370932809-9s0udic2tqordm9dkmprosj11us68dla.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.surya.surya",
+            "certificate_hash": "2a91205e61d216eca365ee0b88b1eeb053f86d5f"
+          }
+        },
+        {
+          "client_id": "200370932809-u2not3v3mcr83jmjhii7pnelsfld86lo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3awJYvEzDRV4WY7X346ZxQaJuHAgGdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "200370932809-u2not3v3mcr83jmjhii7pnelsfld86lo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

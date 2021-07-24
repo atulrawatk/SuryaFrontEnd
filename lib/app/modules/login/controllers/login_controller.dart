@@ -1,25 +1,81 @@
+
+import 'dart:async';
+import 'dart:io';
+
+import 'package:device_info/device_info.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:surya/app/data/api/api_helper.dart';
+import 'package:surya/app/data/device_services.dart';
+import 'package:surya/app/data/encryption/aes.dart';
+import 'package:surya/app/data/native_services/firebase_service.dart';
+import 'package:surya/app/global_widgets/loader.dart';
+import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/strings.dart';
+import 'package:surya/dot_env_controller.dart';
 
 class LoginController extends GetxController {
-  //
+  //API Helper Instance for login purpose
+  ApiHelper _apiHelper=ApiHelper();
 
-  late GlobalKey<FormState> loginKey;
+  AESEncryption _aesEncryption=AESEncryption();
+
+   GlobalKey<FormState> loginKey=GlobalKey<FormState>();
 
   final TextEditingController mobileController=new TextEditingController();
-  final RxString _mobileNumber = RxString('');
-  final RxBool _isLoading=RxBool(false);
-  bool get isLoading=>this._isLoading.value;
-  set setLoadingStatus(bool? status)=>this._isLoading.value=status!;
-  String get mobileNumber => this._mobileNumber.value;
-  set mobileNumber(String? text) => this._mobileNumber.value = text!;
+  RxString _encNumber="".obs;
+  String get encNumber=>_encNumber.value;
+  set setEncNumber(String num){
+    _encNumber.value=num;
+  }
 
 
 
+ signIn() async{
+    if(mobileController.text.length<10){
+      Get.snackbar(AppStrings.mobileVerification, AppStrings.enterValidNumber,snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+    else{
+     // Get.dialog(widget)
+      LoadingOverlay.of().show();
+      //Device ID
+      String deviceId= await DeviceServices.deviceInfo();
+
+      //Firebase Push token
+      String pushToken= await FirebaseService.getFirebaseTokenFromNative();
+
+      //Phone Number Encrypt
+      String phoneNumEncrypted=_aesEncryption.encryptAESFull(plainText: mobileController.value.text);
+
+      Map<String,Object> body={
+        "phone_number":phoneNumEncrypted,
+        "device_id":deviceId,
+        "push_token":pushToken
+      };
+
+      await _apiHelper.login(body: body).then((res) {
+        LoadingOverlay.of().hide();
+        if(res!.isOk){
+          Timer(Duration(milliseconds: 300),()=>Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
+          Get.toNamed(Routes.OTP,arguments: phoneNumEncrypted);
+          //setEncNumber=phoneNumEncrypted;
+        }
+        else{
+       //   Get.showSnackbar(GetBar(message: "Gooooooo",isDismissible: true,duration: Duration(seconds: 1),));
+       Get.snackbar(AppStrings.mobileVerification, AppStrings.userNotExist,snackPosition: SnackPosition.BOTTOM);
+          //  Future.error("Sign in Error");
+        }
+      });
+
+    }
+ }
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     loginKey = GlobalKey<FormState>();
+
   }
 
   @override
@@ -31,7 +87,5 @@ class LoginController extends GetxController {
   void onClose() {
     super.onClose();
     mobileController.dispose();
-    _mobileNumber.close();
-    _isLoading.close();
   }
 }

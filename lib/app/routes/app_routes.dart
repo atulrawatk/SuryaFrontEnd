@@ -9,6 +9,10 @@ abstract class Routes {
   static const PIN = _Paths.PIN;
   static const WELCOME = _Paths.WELCOME;
   static const OTP = _Paths.OTP;
+  static const CREATE_PIN = _Paths.CREATE_PIN;
+  static const ENTER_PIN = _Paths.ENTER_PIN;
+  static const CONFIRM_PIN = _Paths.CONFIRM_PIN;
+  static const SPLASH = _Paths.SPLASH;
 }
 
 abstract class _Paths {
@@ -17,4 +21,8 @@ abstract class _Paths {
   static const PIN = '/pin';
   static const WELCOME = '/welcome';
   static const OTP = '/otp';
+  static const CREATE_PIN = '/create-pin';
+  static const ENTER_PIN = '/enter-pin';
+  static const CONFIRM_PIN = '/confirm-pin';
+  static const SPLASH = '/splash';
 }

@@ -7,15 +7,16 @@ class AppStrings {
   static final String welcomeText="Welcome to Surya".tr;
   static final String readOur="Read our".tr;
   static final String verify="Verify".tr;
-  static final String smsSent="SMS sent to".tr;
-  static final String confirm="Confirm".tr;
-  static final String resendSms="Resend SMS".tr;
+  static final String smsSent="SMS sent".tr;
+  static final String confirmBold="CONFIRM".tr;
+  static final String resendSms="Resend OTP".tr;
+  static final String resendSmsIn="Resend OTP in".tr;
   static final String agreeAndContinueBold="AGREE AND CONTINUE".tr;
   static final String suryaWillSend="Surya will send an SMS message to verify your phone number.".tr;
   static final String nextBold="NEXT".tr;
   static final String privacyPolicy=" Privacy Policy.".tr;
   static final String tapAgreeAndContinue=" Tap \"Agree and continue\" to accept the".tr;
-  static final String termsOfService="Terms of Service.".tr;
+  static final String termsOfService=" Terms of Service.".tr;
   static final String appName = "Surya".tr;
   static final String enterNumber = "Enter Number".tr;
   static final String enterNumberHint = "Enter Your Number".tr;
@@ -25,6 +26,10 @@ class AppStrings {
   static final String otpNotCorrect = "OTP not correct".tr;
   static final String somethingWentWong = "Something went wrong".tr;
   static final String pinHint = "****".tr;
+  static final String cancel="Cancel".tr;
+  static final String delete="Delete".tr;
+  static final String createYourPin="Create Your Pin".tr;
+  static final String confirmPin="Confirm Pin".tr;
   static final String pinSmallText = "Pin must be of minimum 4 digit".tr;
   static final String pinUnmatchText =
       "Confirm pin and Create pin not seems equal".tr;
@@ -77,7 +82,43 @@ class AppStrings {
   static final String statusOnline = "online".tr;
   static final String statusOffline = "offline".tr;
   static final String incorrectPin = "Incorrect pin".tr;
+  //Temporary User Data Model
+ static  final String userDataKey = 'UserData';
+  static final String userTokenKey = 'UserToken';
 
+  //Error
+  static final String error="Error".tr;
+
+  //Website Url
+  static final String privacyUrl="http://www.sveltetech.com/";
+
+  //Mobile Verification
+  static final String mobileVerification="OTP Verification".tr;
+  static final String wrongOTP="Wrong OTP".tr;
+  static final String somethingWentWrong="Something went wrong".tr;
+  static final String otp="OTP".tr;
+  static final String otpSentSuccessfully="OTP sent successfully".tr;
+  static final String enterValidNumber="Please enter a valid number".tr;
+  static final String enterValidOTP="Please enter a valid OTP".tr;
+  static final String userNotExist="User not Exist".tr;
+
+  //Method Channel
+  static final String methodChannel="com.surya.surya";
+
+
+  static final String loading="Loading".tr;
+
+  //Internet Check
+  static final String internetProblem="Internet Problem!!".tr;
+  //HomePage
+  static const String newGroup = ' New Group ';
+  static const String settings = ' Settings ';
+
+  static final String success="Success".tr;
+  //Pin
+  static final String enterPin="Enter Pin".tr;
+  static final String wrongPin="Wrong Pin!! Please enter again".tr;
+  static final String isLogin="isLogin".tr;
   //user_store_data
   static final String userId = "user_id".tr;
   static final String userName = "user_name".tr;

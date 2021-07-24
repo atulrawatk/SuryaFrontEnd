@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DotEnvController extends GetxController {
+  DotEnvController._();
+
+  factory DotEnvController()=>DotEnvController._();
   //
   final RxString _appUrl = RxString('');
   String get appUrl => this._appUrl.value;

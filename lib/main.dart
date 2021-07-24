@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:surya/theme_controller.dart';
 
 import 'package:get/get.dart';
-
+import 'package:surya/app/utils/initializer.dart';
 import 'app/routes/app_pages.dart';
 import 'app/utils/styles/custom_styles.dart';
 import 'app/utils/utils.dart';
@@ -15,9 +16,15 @@ import 'injection_class.dart';
 void main() async {
   //load dot env file
   await dotenv.load(fileName: ".env");
+  Initializer.init();
   //
-  runApp(
-    MyApp(),
+  runZonedGuarded<Future<void>>(
+    () async {
+      runApp(MyApp());
+    },
+    (dynamic error, StackTrace stackTrace) {
+      Get.defaultDialog(title: 'Error occurred', middleText: '$error');
+    },
   );
 }
 
@@ -26,7 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Screentutils
+    // ScreenUtils
     ScreenUtil.init(
       BoxConstraints(
         maxWidth: Get.width,

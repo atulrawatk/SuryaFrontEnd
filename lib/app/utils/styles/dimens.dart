@@ -21,4 +21,5 @@ class AppDimen {
   static final double fontSize36 = 36.sp;
   static final double headingSize=Get.height/25;
   static final double normalFontSize=Get.height/55;
+  static final double normalSize=Get.height/40;
 }
