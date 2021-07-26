@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:surya/app/modules/splash/controllers/splash_controller.dart';
@@ -115,13 +116,16 @@ class HomeView extends GetView<HomeController> {
                             Flexible(
                                 flex: 1,
                                 child: Container(
-                                  height: Get.height / 12,
-                                  width: Get.height / 12,
+                                  margin: EdgeInsets.only(
+                                    left: 10.w,
+                                    top: 10.h,
+                                  ),
+                                  height: Get.height / 14,
+                                  width: Get.height / 14,
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color: Colors.black12,
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            AppImages.dummyProfileImage),
+                                        image: AssetImage(AppImages.appLogo),
                                         fit: BoxFit.fill),
                                     borderRadius:
                                         BorderRadius.circular(Get.height / 2),
@@ -130,10 +134,10 @@ class HomeView extends GetView<HomeController> {
                             Flexible(
                                 flex: 3,
                                 fit: FlexFit.tight,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: Get.height / 80,
-                                    // top: Get.height/50
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    left: 10.w,
+                                    top: 20.h,
                                   ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -161,9 +165,15 @@ class HomeView extends GetView<HomeController> {
                                 )),
                             Align(
                               alignment: AlignmentDirectional.topEnd,
-                              child: Text(
-                                "Today",
-                                textAlign: TextAlign.end,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  top: 25.h,
+                                  right: 10.w,
+                                ),
+                                child: Text(
+                                  "Today",
+                                  textAlign: TextAlign.end,
+                                ),
                               ),
                             )
                           ],
