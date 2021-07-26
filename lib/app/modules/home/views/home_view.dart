@@ -103,13 +103,15 @@ class HomeView extends GetView<HomeController> {
               width: Get.width,
               child: TabBarView(
                 controller: controller.tabController,
-                children: [Text("Mesg"), Text("Calls")],
+                children: [Text(""), Text("")],
               ),
             )
           ],
         ),
         floatingActionButton: Obx(() => FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.navigateToNewChatOrPhone();
+              },
               child: controller.tabIndex.value == 0
                   ? Icon(
                       Icons.add_comment,

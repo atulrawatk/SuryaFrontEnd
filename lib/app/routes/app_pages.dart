@@ -10,6 +10,8 @@ import 'package:surya/app/modules/home/bindings/home_binding.dart';
 import 'package:surya/app/modules/home/views/home_view.dart';
 import 'package:surya/app/modules/login/bindings/login_binding.dart';
 import 'package:surya/app/modules/login/views/login_view.dart';
+import 'package:surya/app/modules/new_chat_list/bindings/new_chat_list_binding.dart';
+import 'package:surya/app/modules/new_chat_list/views/new_chat_list_view.dart';
 import 'package:surya/app/modules/otp/bindings/otp_binding.dart';
 import 'package:surya/app/modules/otp/views/otp_view.dart';
 import 'package:surya/app/modules/splash/bindings/splash_binding.dart';
@@ -22,7 +24,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL=Routes.SPLASH;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_CHAT_LIST,
+      page: () => NewChatListView(),
+      binding: NewChatListBinding(),
     ),
   ];
 }

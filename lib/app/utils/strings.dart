@@ -108,6 +108,11 @@ class AppStrings {
 
   static final String loading="Loading".tr;
 
+
+  //New Chat
+  static final String chat="Chat".tr;
+  static final String phone="Phone".tr;
+
   //Internet Check
   static final String internetProblem="Internet Problem!!".tr;
   //HomePage
