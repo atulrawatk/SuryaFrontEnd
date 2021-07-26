@@ -8,4 +8,6 @@ class AppImages {
 
   static const bangbandhu = "assets/img/bangabandhu_logo.png";
 
+  static const dummyProfileImage="assets/img/dummy_profile_image.png";
+
 }

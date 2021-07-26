@@ -5,17 +5,12 @@ import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin{
-
   late TabController tabController;
-
 
   //Tab Index Setter & Getter
   var tabIndex=0.obs;
-  // int get tabIndex=>_tabIndex.value;
-  // set setTabIndex(int value) {
-  //   _tabIndex.value;
-  // }
 
+  //Chat Type Status
   RxString _chatType="".obs;
   String get chatType=>_chatType.value;
   set setChatType(String value){
@@ -45,7 +40,6 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin{
   _handleTabSelection() {
     if (tabController.indexIsChanging||tabController.hasListeners) {
       tabIndex.value = tabController.index;
-      // update();
     }
   }
 

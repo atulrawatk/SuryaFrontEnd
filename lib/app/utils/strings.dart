@@ -195,4 +195,9 @@ class AppStrings {
 
   //Method Channel
   // static final String method_channel_name = "com.chatzo.chatzo";
+
+
+
+//App Font Family
+ static final String appFontFamily='Helvetica Neue Ultra Light'.tr;
 }

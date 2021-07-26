@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/weight.dart';
@@ -62,6 +63,28 @@ class AppTextStyle {
         fontWeight: fontWeight);
 
   }
+
+   static TextStyle multiChatName(){
+    return  TextStyle(
+      color: Get.theme.accentColor,
+      fontSize: Get.height/40,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 0.5,
+      fontFamily: AppStrings.appFontFamily,
+
+    );
+  }
+
+  static TextStyle multiChatMessage(){
+    return TextStyle(
+      color: Get.theme.accentColor,
+      fontSize: Get.height/50,
+      fontWeight: FontWeight.normal,
+      fontFamily: AppStrings.appFontFamily,
+
+    );
+  }
+
   static TextStyle _textStyle({
     required Color color,
     required double fontSize,

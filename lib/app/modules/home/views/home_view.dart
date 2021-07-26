@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:surya/app/modules/splash/controllers/splash_controller.dart';
+import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
+import 'package:surya/app/utils/styles/padding.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -99,11 +101,69 @@ class HomeView extends GetView<HomeController> {
                   ),
                 )),
             Container(
-              height: Get.height / 1.3,
+              height: Get.height / 8,
               width: Get.width,
+              padding: EdgeInsets.zero,
               child: TabBarView(
                 controller: controller.tabController,
-                children: [Text(""), Text("")],
+                children: [
+                  Padding(
+                    padding: AppPadding.multiChatPadding,
+                    child: Row(
+                     // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          flex:1,
+                            child: Container(
+                              height: Get.height/12,
+                              width: Get.height/12
+                              ,decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: AssetImage(AppImages.dummyProfileImage),
+                            fit: BoxFit.fill
+                          ),
+                          borderRadius: BorderRadius.circular(Get.height/2),
+                        ),)),
+                        Flexible(
+                            flex:3,
+                            fit: FlexFit.tight,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: Get.height/80,
+                                 // top: Get.height/50
+                              ),
+                              child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                              Text("Sangam",textAlign: TextAlign.left,style: AppTextStyle.multiChatName()),
+                              Padding(
+                                padding: EdgeInsets.only(top:Get.height/100),
+                                child: Text("Hii, This side Sangam ewfjw efr f ew f ewf ewf",textAlign: TextAlign.left,style: AppTextStyle.multiChatMessage(),
+                                overflow: TextOverflow.ellipsis,maxLines: 1,
+                                ),
+                              )
+                          ],
+                        ),
+                            )),
+                        Flexible(
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(top:Get.height/100),
+                              child: Text(
+                                "Today",
+                                textAlign: TextAlign.end,
+
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                  , Text("")],
               ),
             )
           ],
