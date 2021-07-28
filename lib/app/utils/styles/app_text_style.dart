@@ -94,7 +94,7 @@ class AppTextStyle {
       color: color,
       fontSize: fontSize,
       fontWeight: fontWeight,
-      fontFamily: 'Helvetica Neue Ultra Light',
+      fontFamily: AppStrings.appFontFamily,
     );
   }
 }

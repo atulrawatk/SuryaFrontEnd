@@ -1,7 +1,9 @@
 class ApiConstant{
-  static final baseUrl="http://3.108.193.156:8081/api/auth";
-  static final login="/signin/";
-  static final otpVerify="/confirmOtp/";
+  static final baseUrl="http://3.108.193.156:8081/api";
+  static final login="/auth/signin/";
+  //Threads URLs
+  static final getThreads="/thread/";
+  static final otpVerify="/auth/confirmOtp/";
   static final String app_url = "api.surya-app.com";
   // static final String api_header = "http://6220627f225e.ngrok.io";
   static final String api_header = "http://14.142.186.249";

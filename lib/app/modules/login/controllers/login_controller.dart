@@ -57,7 +57,7 @@ class LoginController extends GetxController {
 
       await _apiHelper.login(body: body).then((res) {
         LoadingOverlay.of().hide();
-        if(res!.isOk){
+        if(res.isOk){
           Timer(Duration(milliseconds: 300),()=>Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
           Get.toNamed(Routes.OTP,arguments: phoneNumEncrypted);
           //setEncNumber=phoneNumEncrypted;
@@ -67,6 +67,9 @@ class LoginController extends GetxController {
        Get.snackbar(AppStrings.mobileVerification, AppStrings.userNotExist,snackPosition: SnackPosition.BOTTOM);
           //  Future.error("Sign in Error");
         }
+      }).catchError((error){
+        // Get.back();
+        // Get.snackbar(AppStrings.appName, AppStrings.internetProblem);
       });
 
     }

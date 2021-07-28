@@ -101,6 +101,7 @@ class AppStrings {
   static final String enterValidNumber="Please enter a valid number".tr;
   static final String enterValidOTP="Please enter a valid OTP".tr;
   static final String userNotExist="User not Exist".tr;
+  static final String fieldIsEmpty='Field is empty!'.tr;
 
   //Method Channel
   static final String methodChannel="com.surya.surya";

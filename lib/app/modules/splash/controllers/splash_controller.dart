@@ -8,20 +8,19 @@ class SplashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     Future.delayed(
-      Duration( seconds: 2),() {
-      Get.offAndToNamed(
-        AppGetStorage.hasData(AppStrings.isLogin) ? Routes.ENTER_PIN :
-        Routes.WELCOME,
-      );
-    },
+      Duration(seconds: 2),
+      () {
+        Get.offAndToNamed(
+          AppGetStorage.hasData(AppStrings.isLogin) ? Routes.ENTER_PIN :
+          Routes.WELCOME,
+        );
+      },
     );
     super.onInit();
   }
+
   @override
   void onReady() {
     super.onReady();
-
   }
-
-
 }

@@ -10,6 +10,7 @@ import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/padding.dart';
 import 'package:surya/app/utils/styles/weight.dart';
+import 'package:surya/app/utils/validators.dart';
 import '../controllers/login_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -27,69 +28,75 @@ class LoginView extends GetView<LoginController> {
               children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: SafeArea(
-                      child: IosBackButton()),
+                  child: SafeArea(child: IosBackButton()),
                 ),
                 Align(
                   alignment: Alignment.center,
                   child: ListView(
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: Get.height/3),
+                    padding: EdgeInsets.only(bottom: Get.height / 3),
                     children: [
                       Align(
                         alignment: Alignment.topCenter,
                         child: SafeArea(
-                          child: Text(AppStrings.enterNumberHint,
+                          child: Text(
+                            AppStrings.enterNumberHint,
                             style: AppTextStyle.headingText(
                                 color: Get.theme.primaryColor,
-                                fontSize: Get.height/30,
-                                fontWeight: AppFontWeight.headingWeight),),
+                                fontSize: Get.height / 30,
+                                fontWeight: AppFontWeight.headingWeight),
+                          ),
                         ),
                       ),
                       Align(
-                        alignment:Alignment.center,
+                        alignment: Alignment.center,
                         child: Padding(
-                          padding: EdgeInsets.only(top:Get.height/20,
-                            left: Get.height/30,
-                          right: Get.height/30),
-                          child: Text(AppStrings.suryaWillSend,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyle.headingText(
-                              color: Get.theme.accentColor,
-                              fontSize:AppDimen.normalFontSize,
-                              fontWeight: AppFontWeight.normalWeight),
+                          padding: EdgeInsets.only(
+                              top: Get.height / 20,
+                              left: Get.height / 30,
+                              right: Get.height / 30),
+                          child: Text(
+                            AppStrings.suryaWillSend,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyle.headingText(
+                                color: Get.theme.accentColor,
+                                fontSize: AppDimen.normalFontSize,
+                                fontWeight: AppFontWeight.normalWeight),
                           ),
-                        ) ,),
+                        ),
+                      ),
                       Align(
                         alignment: Alignment.topCenter,
                         child: Padding(
-                          padding: EdgeInsets.only(top:Get.height/10),
+                          padding: EdgeInsets.only(top: Get.height / 10),
                           child: TextFormWidget(
                             textEditingController: controller.mobileController,
-                            textInputType: TextInputType.phone,
+                            textInputType: TextInputType.numberWithOptions(
+                              signed: false,
+                              decimal: false
+                            ),
                             textInputAction: TextInputAction.go,
-                            hintText: AppStrings.enterNumberHint, validator: (String? value) {
-                              return value!.length<10
-                                  ?"Please enter valid phone":null;
-                          },
+                            hintText: AppStrings.enterNumberHint,
+                            validator: Validators.mobileNumber,
                             maxLength: 10,
+                            formatter: [FilteringTextInputFormatter.digitsOnly],
                           ),
                         ),
                       )
                     ],
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding:  EdgeInsets.only(bottom:Get.height/30),
-                    child: CustomButton(text: AppStrings.nextBold,
+                    padding: EdgeInsets.only(bottom: Get.height / 30),
+                    child: CustomButton(
+                        text: AppStrings.nextBold,
                         buttonColor: Get.theme.primaryColor,
-                        onPress: (){
-                      if(controller.loginKey.currentState!.validate()){
-                        controller.signIn();
-                      }
+                        onPress: () {
+                          if (controller.loginKey.currentState!.validate()) {
+                            controller.signIn();
+                          }
                         }),
                   ),
                 )

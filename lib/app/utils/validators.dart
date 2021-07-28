@@ -1,5 +1,19 @@
 // import 'package:flutter/material.dart';
+import 'package:surya/app/utils/strings.dart';
 
+class Validators{
+  const Validators._();
+
+  static String? mobileNumber(String? value) {
+    if (value!.isEmpty) {
+      return AppStrings.fieldIsEmpty;
+    } else if (value.length < 10) {
+      return AppStrings.enterValidNumber;
+    } else {
+      return null;
+    }
+  }
+}
 // class Validators {
 //   const Validators._();
 
@@ -72,15 +86,7 @@
 //     }
 //   }
 
-//   static String mobileNumber(String value) {
-//     if (value.isEmpty) {
-//       return 'Field is empty!';
-//     } else if (value.length < 10) {
-//       return Strings.errorMobileNumber;
-//     } else {
-//       return null;
-//     }
-//   }
+
 
 //   static String postalCode(String value) {
 //     if (value.isEmpty) {

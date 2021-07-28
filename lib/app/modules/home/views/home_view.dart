@@ -167,8 +167,8 @@ class HomeView extends GetView<HomeController> {
                               alignment: AlignmentDirectional.topEnd,
                               child: Container(
                                 margin: EdgeInsets.only(
-                                  top: 25.h,
-                                  right: 10.w,
+                                  top: 15.h,
+                                 // right: 10.w,
                                 ),
                                 child: Text(
                                   "Today",

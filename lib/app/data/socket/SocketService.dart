@@ -14,8 +14,10 @@ class SocketService {
   }
   late IO.Socket? socket;
   late Map<String, String> roomJoined, newRoomJoined;
-  createSocketConnection(String userId,
-      {required String notificationId}) async {
+
+  //Creating Socket
+  createSocketConnection({required String? userId,
+      required String? notificationId}) async {
     String url = SocketStrings.socketUrl;
     debugPrint(url);
     debugPrint(userId);
@@ -54,7 +56,7 @@ class SocketService {
     socket!.onConnectTimeout((data) {
       if (socket != null && !socket!.connected) {
         debugPrint("timeout ==== ");
-        createSocketConnection(userId,notificationId: "");
+        createSocketConnection(notificationId: "", userId: '');
       }
     });
 
@@ -102,7 +104,7 @@ class SocketService {
       debugPrint("socket data inside $socket");
 
       //Need to work
-      createSocketConnection("", notificationId: "");
+      createSocketConnection( notificationId: "", userId: '');
     }
   }
 }

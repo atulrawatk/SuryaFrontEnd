@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'custom_styles.dart';
 
 class AppTheme {
@@ -326,29 +327,20 @@ class AppTheme {
           fontSize: AppDimen.fontSize16,
           fontWeight: FontWeight.bold,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.red),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.grey_500),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        focusedBorder:UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.primaryColor),
+        ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.accentColor),
         ),
       ),
       cardTheme: CardTheme(
@@ -635,29 +627,20 @@ class AppTheme {
           fontSize: AppDimen.fontSize16,
           fontWeight: FontWeight.bold,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColors.red),
           ),
+        disabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.grey_500),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        focusedBorder:UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: AppColors.appColor,
-          ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Get.theme.accentColor),
         ),
       ),
       cardTheme: CardTheme(

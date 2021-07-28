@@ -1,7 +1,8 @@
 /build/
+.idea
 .dart_tool
+pubspec.lock
+build
 .packages
 .flutter-plugins
 .flutter-plugins-dependencies
-pubspec.lock
-.idea
