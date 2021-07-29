@@ -1,3 +1,4 @@
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -19,14 +20,15 @@ class ContactsView extends GetView<ContactsController> {
             () => controller.isSearch == false
                 ? ListTile(
                     title: Text('Select Contact'),
-                    subtitle: Text("100 contacts"),
+                    subtitle: Text(
+                        "${controller.mobileContactsList.length} contacts"),
                   )
                 : TextFormField(
                     maxLines: 1,
 
                     style: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.black,
+                      fontSize: 18.sp,
+                      color: Colors.white,
                     ),
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
@@ -146,12 +148,16 @@ class ContactsView extends GetView<ContactsController> {
               shrinkWrap: true,
               addAutomaticKeepAlives: true,
               itemBuilder: (_, i) {
+                //controller.mobileContactsList
+                Contact contact = controller.mobileContactsList.elementAt(i);
                 return UserListTile(
                   onTap: () {},
                   isOnTap: true,
-                  title: "Sangam ",
+                  title: contact.displayName!,
                   subTitle: Text(
-                    "9876543210",
+                    contact.phones != null
+                        ? contact.phones!.first.value.toString()
+                        : "",
                     textAlign: TextAlign.left,
                     style: AppTextStyle.multiChatMessage(),
                     overflow: TextOverflow.ellipsis,
@@ -162,7 +168,7 @@ class ContactsView extends GetView<ContactsController> {
                 );
               },
               // separatorBuilder: (_, i) => Divider(),
-              itemCount: 10,
+              itemCount: controller.mobileContactsList.length,
             ),
           ],
         ));

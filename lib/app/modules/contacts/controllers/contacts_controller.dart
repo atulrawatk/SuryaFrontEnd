@@ -16,16 +16,18 @@ class ContactsController extends GetxController {
   late ContactList contactList;
 
   //Getter & Setter for Contact List
-  RxList<Contact> _mobileContactList=RxList<Contact>.empty();
-  List<Contact> get mobileContactsList=>_mobileContactList;
-  set setMobileContactList(Iterable<Contact> list){
+  RxList<Contact> _mobileContactList = RxList<Contact>.empty();
+  List<Contact> get mobileContactsList => _mobileContactList;
+  set mobileContactsList(Iterable<Contact> list) {
     _mobileContactList.addAll(list);
   }
 
   //Get Contacts
-  Future getContacts() async{
-    setMobileContactList = await ContactsService.getContacts(withThumbnails: false);
-    Logger().i("Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
+  Future getContacts() async {
+    mobileContactsList =
+        await ContactsService.getContacts(withThumbnails: false);
+    Logger().i(
+        "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
   }
 
   @override
@@ -33,7 +35,7 @@ class ContactsController extends GetxController {
     super.onInit();
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
-    getContacts();
+    mobileContactsList = homeController.mobileContactsList;
   }
 
   @override
