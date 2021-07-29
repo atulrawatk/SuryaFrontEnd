@@ -2,6 +2,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 
 import 'package:surya/app/utils/lists.dart';
@@ -33,7 +34,7 @@ class ContactsView extends GetView<ContactsController> {
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
                     autofocus: true,
-
+                    onChanged: (v) => controller.searchContacts = v,
                     // controller: _searchtextController,
                     decoration: InputDecoration(
                       filled: true,
@@ -62,6 +63,7 @@ class ContactsView extends GetView<ContactsController> {
                   )
                 : IconButton(
                     onPressed: () {
+                      controller.searchContacts = "";
                       controller.isSearch = false;
                     },
                     icon: Icon(
@@ -120,55 +122,126 @@ class ContactsView extends GetView<ContactsController> {
             SizedBox(
               height: 10.h,
             ),
-            ListTile(
-              title: Text(
-                "New Group",
-                textAlign: TextAlign.left,
-                style: AppTextStyle.multiChatName(),
-                textDirection: TextDirection.ltr,
-              ),
-              selected: true,
-              // contentPadding: EdgeInsets.only(top: 10.h,),
+            Obx(
+              () => controller.searchContacts.isEmpty ||
+                      controller.searchContacts.isBlank == true
+                  ? ListTile(
+                      title: Text(
+                        "New Group",
+                        textAlign: TextAlign.left,
+                        style: AppTextStyle.multiChatName(),
+                        textDirection: TextDirection.ltr,
+                      ),
+                      selected: true,
+                      // contentPadding: EdgeInsets.only(top: 10.h,),
 
-              leading: CircleAvatar(
-                radius: 30,
-                child: Icon(
-                  Icons.group_add,
-                  color: Colors.white,
-                ),
-                backgroundColor: AppColors.lightAppColor,
-              ),
-              trailing: Text(""),
-              onTap: () {},
-              onLongPress: () {},
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Icon(
+                          Icons.group_add,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: AppColors.lightAppColor,
+                      ),
+                      trailing: Text(""),
+                      onTap: () {},
+                      onLongPress: () {},
+                    )
+                  : SizedBox(),
             ),
             // Divider(),
-            ListView.builder(
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              addAutomaticKeepAlives: true,
-              itemBuilder: (_, i) {
-                //controller.mobileContactsList
-                Contact contact = controller.mobileContactsList.elementAt(i);
-                return UserListTile(
-                  onTap: () {},
-                  isOnTap: true,
-                  title: contact.displayName!,
-                  subTitle: Text(
-                    contact.phones != null
-                        ? contact.phones!.first.value.toString()
-                        : "",
-                    textAlign: TextAlign.left,
-                    style: AppTextStyle.multiChatMessage(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  imageUrl: AppImages.appLogo,
-                  customWidget: Text(""),
-                );
-              },
-              // separatorBuilder: (_, i) => Divider(),
-              itemCount: controller.mobileContactsList.length,
+            Obx(
+              () => controller.searchContacts.isEmpty ||
+                      controller.searchContacts.isBlank == true
+                  ? ListView.builder(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      addAutomaticKeepAlives: true,
+                      itemBuilder: (_, i) {
+                        //controller.mobileContactsList
+                        Contact contact =
+                            controller.mobileContactsList.elementAt(i);
+                        return UserListTile(
+                          onTap: () {},
+                          isOnTap: true,
+                          title: contact.displayName!,
+                          subTitle: Text(
+                            contact.phones != null
+                                ? contact.phones!.first.value.toString()
+                                : "",
+                            textAlign: TextAlign.left,
+                            style: AppTextStyle.multiChatMessage(),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          imageUrl: AppImages.appLogo,
+                          customWidget: Text(""),
+                        );
+                      },
+                      // separatorBuilder: (_, i) => Divider(),
+                      itemCount: controller.mobileContactsList.length,
+                    )
+                  : ListView.builder(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      addAutomaticKeepAlives: true,
+                      itemBuilder: (_, i) {
+                        //controller.mobileContactsList
+                        Contact contact = controller.mobileContactsList
+                            .where(
+                              (element) =>
+                                  element.displayName!
+                                      .toLowerCase()
+                                      .contains(controller.searchContacts) ||
+                                  element.phones!.first.value!.contains(
+                                      controller.searchContacts.toString()),
+                            )
+                            .elementAt(i);
+                        // print(
+                        //     "Contacts clicks : ${contact.displayName ?? contact.phones!.first.value}");
+                        Logger().i(
+                            "Here is total number of contacts =====>>>>> ${contact.displayName ?? contact.phones!.first.value}");
+
+                        return contact.toString().isNotEmpty ||
+                                contact.displayName!.isNotEmpty ||
+                                contact.phones!.first.value!.isNotEmpty ||
+                                contact.phones != null ||
+                                contact.displayName.isBlank == false ||
+                                contact.isBlank == false
+                            ? UserListTile(
+                                onTap: () {},
+                                isOnTap: true,
+                                title: contact.displayName!,
+                                subTitle: Text(
+                                  contact.phones != null
+                                      ? contact.phones!.first.value.toString()
+                                      : "",
+                                  textAlign: TextAlign.left,
+                                  style: AppTextStyle.multiChatMessage(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                imageUrl: AppImages.appLogo,
+                                customWidget: Text(""),
+                              )
+                            : Text(
+                                "No results found for '${controller.searchContacts}'",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              );
+                      },
+                      // separatorBuilder: (_, i) => Divider(),
+                      itemCount: controller.mobileContactsList
+                          .where(
+                            (element) =>
+                                element.displayName!.toLowerCase().contains(
+                                    controller.searchContacts.toString()) ||
+                                element.phones!.first.value!.contains(
+                                    controller.searchContacts.toString()),
+                          )
+                          .length,
+                    ),
             ),
           ],
         ));

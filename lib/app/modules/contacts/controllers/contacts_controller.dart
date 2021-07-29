@@ -30,12 +30,33 @@ class ContactsController extends GetxController {
         "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
   }
 
+  // search
+  TextEditingController searchController = TextEditingController();
+
+  RxList<Contact> _searchContactList = [Contact()].obs;
+  List<Contact> get searchContactList => this._searchContactList;
+  set searchContactList(List<Contact> contactList) =>
+      this._searchContactList.assignAll(contactList);
+
+  RxString _searchContacts = "".obs;
+  String get searchContacts => this._searchContacts.value;
+  set searchContacts(String v) => this._searchContacts.value = v;
+
   @override
   void onInit() {
     super.onInit();
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
     mobileContactsList = homeController.mobileContactsList;
+    // searchController.addListener(() {
+    //   searchContactList = mobileContactsList
+    //       .where(
+    //         (element) => element.phones!.first.value!
+    //             .toLowerCase()
+    //             .contains(searchController.text),
+    //       )
+    //       .toList();
+    // });
   }
 
   @override
