@@ -25,9 +25,13 @@ import io.flutter.plugin.common.MethodChannel
 import java.io.IOException
 
 class MainActivity: FlutterActivity() {
+    var permission = arrayOf<String>("android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.CAMERA","android.permission.RECORD_AUDIO",
+            "android.permission.READ_CONTACTS","android.permission.WRITE_CONTACTS")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestPermission()
         MethodChannel(flutterEngine?.dartExecutor, "com.surya.surya")
                 .setMethodCallHandler { methodCall, result ->
                     if (methodCall.method == "firebaseToken") {
@@ -42,5 +46,11 @@ class MainActivity: FlutterActivity() {
                     }
 
                 }
+    }
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Log.d("permission",""+permission[0])
+            ActivityCompat.requestPermissions(this,permission,200)
+        }
     }
 }
