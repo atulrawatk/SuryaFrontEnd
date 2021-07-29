@@ -14,6 +14,7 @@ abstract class Routes {
   static const CONFIRM_PIN = _Paths.CONFIRM_PIN;
   static const SPLASH = _Paths.SPLASH;
   static const NEW_CHAT_LIST = _Paths.NEW_CHAT_LIST;
+  static const CONTACTS = _Paths.CONTACTS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const CONFIRM_PIN = '/confirm-pin';
   static const SPLASH = '/splash';
   static const NEW_CHAT_LIST = '/new-chat-list';
+  static const CONTACTS = '/contacts';
 }

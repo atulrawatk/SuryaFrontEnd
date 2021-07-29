@@ -12,6 +12,7 @@ import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
 import 'package:surya/app/data/storage/get_storage/otp_verify_get_storage_service.dart';
 import 'package:surya/app/modules/otp/controllers/otp_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin{
@@ -37,8 +38,12 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin{
 
   //Navigating Screen to chat or phone call
   navigateToNewChatOrPhone(){
-    setChatType=AppStrings.chat;
-    Get.toNamed(Routes.NEW_CHAT_LIST);
+    Get.toNamed(
+      Routes.CONTACTS,
+      arguments: tabIndex.value == 0
+          ? ContactList.chatContact
+          : ContactList.callContact,
+    );
   }
 
   @override

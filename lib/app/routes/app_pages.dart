@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import 'package:surya/app/modules/confirmPin/bindings/confirm_pin_binding.dart';
 import 'package:surya/app/modules/confirmPin/views/confirm_pin_view.dart';
+import 'package:surya/app/modules/contacts/bindings/contacts_binding.dart';
+import 'package:surya/app/modules/contacts/views/contacts_view.dart';
 import 'package:surya/app/modules/createPin/bindings/create_pin_binding.dart';
 import 'package:surya/app/modules/createPin/views/create_pin_view.dart';
 import 'package:surya/app/modules/enterPin/bindings/enter_pin_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.NEW_CHAT_LIST,
       page: () => NewChatListView(),
       binding: NewChatListBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACTS,
+      page: () => ContactsView(),
+      binding: ContactsBinding(),
     ),
   ];
 }

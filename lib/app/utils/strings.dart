@@ -196,6 +196,10 @@ class AppStrings {
 
   //Method Channel
   // static final String method_channel_name = "com.chatzo.chatzo";
+  static final String inviteAFriend = 'Invite a friend'.tr;
+  static final String contacts = 'Contacts'.tr;
+  static final String refresh = 'Refresh'.tr;
+  static final String help = 'Help'.tr;
 
 
 

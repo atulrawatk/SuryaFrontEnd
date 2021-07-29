@@ -7,4 +7,10 @@ class AppLists{
     // Messages,
     AppStrings.settings
   ];
+  static final List<String> choicesForContacts = <String>[
+    AppStrings.inviteAFriend,
+    AppStrings.contacts,
+    AppStrings.refresh,
+    AppStrings.help,
+  ];
 }

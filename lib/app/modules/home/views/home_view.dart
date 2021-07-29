@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/modules/splash/controllers/splash_controller.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
@@ -179,7 +180,41 @@ class HomeView extends GetView<HomeController> {
                           ],
                         );
                       }),
-                  Text("")
+                  ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (_, i) {
+                        return UserListTile(
+                          isOnTap: true,
+                          onTap: () {},
+                          title: "Sangam ",
+                          subTitle: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.call_made,
+                                color: Colors.red,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                "subTitle",
+                                textAlign: TextAlign.left,
+                                style: AppTextStyle.multiChatMessage(),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
+                          imageUrl: AppImages.appLogo,
+                          customWidget: Icon(
+                            Icons.call,
+                            color: Colors.red,
+                          ),
+                        );
+                      },
+                      separatorBuilder: (_, i) => Divider(),
+                      itemCount: 10),
                 ],
               ),
             )

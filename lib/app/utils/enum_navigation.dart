@@ -3,3 +3,8 @@ enum Pin{
   confirmPin,
   enterPin
 }
+enum ContactList {
+  chatContact,
+  callContact,
+  forwardMessageContact,
+}
