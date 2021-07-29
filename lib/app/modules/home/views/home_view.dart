@@ -125,7 +125,7 @@ class HomeView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                     color: Colors.black12,
                                     image: DecorationImage(
-                                        image: AssetImage(AppImages.appLogo),
+                                        image: AssetImage(AppImages.dummyProfileImage),
                                         fit: BoxFit.fill),
                                     borderRadius:
                                         BorderRadius.circular(Get.height / 2),

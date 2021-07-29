@@ -23,22 +23,22 @@ class NewChatListController extends GetxController {
   void onInit() {
     super.onInit();
 
-    getContacts().then((value) {
-      Logger().i("Here is total number of contacts =====>>>>> ${contactList.length}");
-    });
+    getContacts();
     debugPrint(homeController.chatType);
   }
 
   Future getContacts() async{
+
     await Permission.contacts.status.then((value) async{
       if(PermissionStatus.granted!=value){
-        Permission.contacts.request().then((value) async{
+        await Permission.contacts.request().then((value) async{
           setContactList = await ContactsService.getContacts(withThumbnails: false);
         });
       }
       else{
         setContactList = await ContactsService.getContacts(withThumbnails: false);
       }
+      Logger().i("Here is total number of contacts =====>>>>> ${contactList.length}");
     });
 
   }

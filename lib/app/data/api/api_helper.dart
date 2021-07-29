@@ -48,7 +48,7 @@ class ApiHelper extends GetConnect with NetworkConnection {
   Future<Response> otpVerify({required Map<dynamic, dynamic> body}) async {
     return await checkInternetWithApi(
         requestType: post(ApiConstant.baseUrl + ApiConstant.otpVerify, body,
-            headers: normalHeader));
+            headers: normalHeader)).catchError((error) {});
   }
 
   //Resend Otp
@@ -56,7 +56,7 @@ class ApiHelper extends GetConnect with NetworkConnection {
     required Map<dynamic, dynamic> body,
   }) {
     return checkInternetWithApi(requestType: post(ApiConstant.baseUrl + ApiConstant.login, body,
-        headers: normalHeader));
+        headers: normalHeader)).catchError((error) {});
   }
 
   //
