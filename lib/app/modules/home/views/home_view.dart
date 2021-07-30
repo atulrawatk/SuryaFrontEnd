@@ -3,12 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
-import 'package:surya/app/modules/splash/controllers/splash_controller.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
-import 'package:surya/app/utils/styles/padding.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -16,61 +14,163 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Get.theme.primaryColor,
+        //   title: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     mainAxisSize: MainAxisSize.max,
+        //     children: [
+        //       Text(
+        //         AppStrings.appName,
+        //         style: TextStyle(
+        //           color: AppColors.whiteColor,
+        //           fontSize: AppDimen.normalSize,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.end,
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           IconButton(
+        //             icon: Icon(
+        //               Icons.search,
+        //               size: AppDimen.normalSize,
+        //               color: AppColors.whiteColor,
+        //             ),
+        //             iconSize: AppDimen.normalFontSize,
+        //             onPressed: () {},
+        //           ),
+        //           Container(
+        //             alignment: Alignment.center,
+        //             child: PopupMenuButton(
+        //               icon: Icon(
+        //                 Icons.more_vert,
+        //                 size: AppDimen.normalSize,
+        //                 color: AppColors.whiteColor,
+        //               ),
+        //               onSelected: (value) {},
+        //               itemBuilder: (BuildContext context) {
+        //                 return AppLists.choices.map((String choices) {
+        //                   return PopupMenuItem<String>(
+        //                     value: choices,
+        //                     child: Text(choices),
+        //                   );
+        //                 }).toList();
+        //               },
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        //   automaticallyImplyLeading: false,
+        //   shadowColor: Colors.transparent,
+        //   // centerTitle: true,
+        // ),
+
         appBar: AppBar(
-          backgroundColor: Get.theme.primaryColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                AppStrings.appName,
-                style: TextStyle(
-                  color: AppColors.whiteColor,
-                  fontSize: AppDimen.normalSize,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      size: AppDimen.normalSize,
+          elevation: 0,
+          title: Obx(
+            () => controller.isSearch == false
+                ? Text(
+                    AppStrings.appName,
+                    style: TextStyle(
                       color: AppColors.whiteColor,
+                      fontSize: AppDimen.normalSize,
+                      fontWeight: FontWeight.bold,
                     ),
-                    iconSize: AppDimen.normalFontSize,
-                    onPressed: () {},
+                  )
+                : TextFormField(
+                    maxLines: 1,
+
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      color: Colors.white,
+                    ),
+                    textInputAction: TextInputAction.search,
+                    keyboardType: TextInputType.text,
+                    autofocus: true,
+
+                    // controller: _searchtextController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      contentPadding: EdgeInsets.all(10),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(
+                        color: AppColors.lightGreyColor,
+                      ),
+                    ),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: PopupMenuButton(
+          ),
+          leading: Obx(
+            () => controller.isSearch == false
+                ? IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () {
+                      controller.isSearch = false;
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                    ),
+                  ),
+          ),
+          // centerTitle: true,
+          actions: [
+            Obx(
+              () => controller.isSearch == false
+                  ? IconButton(
                       icon: Icon(
-                        Icons.more_vert,
+                        Icons.search,
                         size: AppDimen.normalSize,
                         color: AppColors.whiteColor,
                       ),
-                      onSelected: (value) {},
-                      itemBuilder: (BuildContext context) {
-                        return AppLists.choices.map((String choices) {
-                          return PopupMenuItem<String>(
-                            value: choices,
-                            child: Text(choices),
-                          );
-                        }).toList();
+                      iconSize: AppDimen.normalFontSize,
+                      onPressed: () {
+                        controller.isSearch = !controller.isSearch;
                       },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          automaticallyImplyLeading: false,
-          shadowColor: Colors.transparent,
-          // centerTitle: true,
+                    )
+                  : SizedBox(),
+            ),
+            Obx(
+              () => controller.isSearch == false
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          size: AppDimen.normalSize,
+                          color: AppColors.whiteColor,
+                        ),
+                        onSelected: (value) {},
+                        itemBuilder: (BuildContext context) {
+                          return AppLists.choicesForContacts
+                              .map((String choices) {
+                            return PopupMenuItem<String>(
+                              value: choices,
+                              child: Text(choices),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    )
+                  : SizedBox(),
+            )
+          ],
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -126,7 +226,8 @@ class HomeView extends GetView<HomeController> {
                                   decoration: BoxDecoration(
                                     color: Colors.black12,
                                     image: DecorationImage(
-                                        image: AssetImage(AppImages.dummyProfileImage),
+                                        image: AssetImage(
+                                            AppImages.dummyProfileImage),
                                         fit: BoxFit.fill),
                                     borderRadius:
                                         BorderRadius.circular(Get.height / 2),
@@ -169,7 +270,7 @@ class HomeView extends GetView<HomeController> {
                               child: Container(
                                 margin: EdgeInsets.only(
                                   top: 15.h,
-                                 // right: 10.w,
+                                  // right: 10.w,
                                 ),
                                 child: Text(
                                   "Today",

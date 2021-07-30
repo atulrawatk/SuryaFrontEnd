@@ -16,24 +16,47 @@ class ContactsController extends GetxController {
   late ContactList contactList;
 
   //Getter & Setter for Contact List
-  RxList<Contact> _mobileContactList=RxList<Contact>.empty();
-  List<Contact> get mobileContactsList=>_mobileContactList;
-  set setMobileContactList(Iterable<Contact> list){
+  RxList<Contact> _mobileContactList = RxList<Contact>.empty();
+  List<Contact> get mobileContactsList => _mobileContactList;
+  set mobileContactsList(Iterable<Contact> list) {
     _mobileContactList.addAll(list);
   }
 
   //Get Contacts
-  Future getContacts() async{
-    setMobileContactList = await ContactsService.getContacts(withThumbnails: false);
-    Logger().i("Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
+  Future getContacts() async {
+    mobileContactsList =
+        await ContactsService.getContacts(withThumbnails: false);
+    Logger().i(
+        "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
   }
+
+  // search
+  TextEditingController searchController = TextEditingController();
+
+  RxList<Contact> _searchContactList = [Contact()].obs;
+  List<Contact> get searchContactList => this._searchContactList;
+  set searchContactList(List<Contact> contactList) =>
+      this._searchContactList.assignAll(contactList);
+
+  RxString _searchContacts = "".obs;
+  String get searchContacts => this._searchContacts.value;
+  set searchContacts(String v) => this._searchContacts.value = v;
 
   @override
   void onInit() {
     super.onInit();
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
-    getContacts();
+    mobileContactsList = homeController.mobileContactsList;
+    // searchController.addListener(() {
+    //   searchContactList = mobileContactsList
+    //       .where(
+    //         (element) => element.phones!.first.value!
+    //             .toLowerCase()
+    //             .contains(searchController.text),
+    //       )
+    //       .toList();
+    // });
   }
 
   @override

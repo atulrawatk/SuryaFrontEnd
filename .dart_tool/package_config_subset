@@ -1,7 +1,7 @@
 surya
 2.12
-file:///home/user/Sveltetech%20Projects/SuryaFrontEnd/
-file:///home/user/Sveltetech%20Projects/SuryaFrontEnd/lib/
+file:///home/user/Sveltetech%20Projects/surya/SuryaFrontEnd/
+file:///home/user/Sveltetech%20Projects/surya/SuryaFrontEnd/lib/
 _fe_analyzer_shared
 2.12
 file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-22.0.0/
@@ -398,6 +398,14 @@ pedantic
 2.12
 file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.1/
 file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/pedantic-1.11.1/lib/
+permission_handler
+2.12
+file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-8.1.4+2/
+file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-8.1.4+2/lib/
+permission_handler_platform_interface
+2.12
+file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-3.6.1/
+file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-3.6.1/lib/
 petitparser
 2.12
 file:///home/user/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-4.1.0/
