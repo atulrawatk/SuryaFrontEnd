@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/contact_circle_avatar.dart';
+import 'package:surya/app/global_widgets/selected_contact_circle_avatar.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
-
-class UserListTile extends StatelessWidget {
+class GroupContactListTile extends StatelessWidget {
   final String title;
   final Widget subTitle;
-  final String imageUrl;
+  final Widget circleAvatar;
   final Widget customWidget;
   final bool isOnTap;
   final VoidCallback onTap;
-  const UserListTile({
-    Key? key,
+  const GroupContactListTile({Key? key,
     required this.title,
     required this.subTitle,
-    required this.imageUrl,
+    required this.circleAvatar,
     required this.customWidget,
     required this.isOnTap,
-    required this.onTap,
-  }) : super(key: key);
-
+    required this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -28,7 +26,7 @@ class UserListTile extends StatelessWidget {
         style: AppTextStyle.multiChatName(),
       ),
       subtitle: subTitle,
-      leading: ContactCircleAvatar(imageUrl: imageUrl,),
+      leading: circleAvatar,
       trailing: customWidget,
       onTap: onTap,
     );

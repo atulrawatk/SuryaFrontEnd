@@ -13,4 +13,11 @@ class AppLists{
     AppStrings.refresh,
     AppStrings.help,
   ];
+
+  static final List<String> contactsName=<String>[
+    "Sangam",
+    "Gaurav",
+    "Tushar",
+    "Rohit"
+  ];
 }

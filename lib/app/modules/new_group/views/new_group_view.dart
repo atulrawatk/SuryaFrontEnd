@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:surya/app/data/models/ContactUsers.dart';
+import 'package:surya/app/global_widgets/contact_circle_avatar.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
-import 'package:surya/app/routes/app_pages.dart';
-
+import 'package:surya/app/global_widgets/group_contact_list_member.dart';
+import 'package:surya/app/global_widgets/group_contact_list_tile.dart';
+import 'package:surya/app/global_widgets/selected_contact_circle_avatar.dart';
+import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
-import 'package:surya/app/utils/utils.dart';
 
-import '../controllers/contacts_controller.dart';
+import '../controllers/new_group_controller.dart';
 
-class ContactsView extends GetView<ContactsController> {
+class NewGroupView extends GetView<NewGroupController> {
   @override
   Widget build(BuildContext context) {
-    // controller.onReady();
     return Scaffold(
         appBar: AppBar(
           title: Obx(
@@ -24,7 +26,6 @@ class ContactsView extends GetView<ContactsController> {
                   )
                 : TextFormField(
                     maxLines: 1,
-
                     style: TextStyle(
                       fontSize: 20.sp,
                       color: Colors.black,
@@ -119,55 +120,86 @@ class ContactsView extends GetView<ContactsController> {
             SizedBox(
               height: 10.h,
             ),
-            ListTile(
-              title: Text(
-                "New Group",
-                textAlign: TextAlign.left,
-                style: AppTextStyle.multiChatName(),
-                textDirection: TextDirection.ltr,
-              ),
-              selected: true,
-              // contentPadding: EdgeInsets.only(top: 10.h,),
-
-              leading: CircleAvatar(
-                radius: 30,
-                child: Icon(
-                  Icons.group_add,
-                  color: Colors.white,
-                ),
-                backgroundColor: AppColors.lightAppColor,
-              ),
-              trailing: Text(""),
-              onTap: () {
-                Get.toNamed(Routes.NEW_GROUP);
-              },
-              onLongPress: () {},
-            ),
+            Obx(() => controller.contacts.length > 0
+                ? AspectRatio(
+                    aspectRatio: 4,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(right: 15.h, left: 15.h),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: 10.h),
+                          child: GestureDetector(
+                            onTap: (){
+                              controller.contacts.remove(controller.contacts.keys.elementAt(index));
+                            },
+                            child: GroupContactListMember(
+                              name: controller.contacts.values.elementAt(index).name),
+                          ),
+                        );
+                      },
+                      itemCount: controller.contacts.length,
+                    ),
+                  )
+                : Container()),
             // Divider(),
-            ListView.builder(
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              addAutomaticKeepAlives: true,
-              itemBuilder: (_, i) {
-                return UserListTile(
-                  onTap: () {},
-                  isOnTap: true,
-                  title: "Sangam ",
-                  subTitle: Text(
-                    "9876543210",
-                    textAlign: TextAlign.left,
-                    style: AppTextStyle.multiChatMessage(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                  imageUrl: AppImages.appLogo,
-                  customWidget: Text(""),
-                );
-              },
-              // separatorBuilder: (_, i) => Divider(),
-              itemCount: 10,
-            ),
+            // Obx(() => controller.totalList.length > 0?
+                ListView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    addAutomaticKeepAlives: true,
+                    itemBuilder: (_, i) {
+                      return Obx(()=>GroupContactListTile(
+                        onTap: () {
+                          if (controller.contacts
+                              .containsKey(controller.totalList[i].name)) {
+                            controller.contacts
+                                .remove(controller.totalList[i].name);
+                          } else {
+                            controller.contacts.putIfAbsent(
+                                controller.totalList[i].name,
+                                    () => controller.totalList[i]);
+                          }
+                         // controller.setGroupMemberList = 1;
+                        },
+                        isOnTap: true,
+                        title: controller.totalList[i].name,
+                        subTitle: Text(
+                          controller.totalList[i].number.toString(),
+                          textAlign: TextAlign.left,
+                          style: AppTextStyle.multiChatMessage(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+
+                        customWidget: Text(""),
+                        circleAvatar: !controller.contacts.containsKey(controller.totalList[i].name)
+                            ?ContactCircleAvatar(imageUrl: AppImages.dummyProfileImage,)
+                            :SelectedContactCircleAvatar(imageUrl: AppImages.dummyProfileImage),
+                      ));
+                    },
+                    // separatorBuilder: (_, i) => Divider(),
+                    itemCount: controller.totalList.length,
+                  )
+                // : SizedBox())
           ],
-        ));
+        ),
+    floatingActionButton: Obx(() => controller.contacts.length > 0?FloatingActionButton(
+      onPressed: () {
+      },
+      child:Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r)
+        ),
+            child: Icon(
+        Icons.arrow_forward_ios,
+        size: AppDimen.normalSize,
+        color: Get.theme.accentColor,
+      ),
+          ),
+      backgroundColor: AppColors.lightAppColor,
+    ):SizedBox())
+    );
   }
 }

@@ -14,6 +14,8 @@ import 'package:surya/app/modules/login/bindings/login_binding.dart';
 import 'package:surya/app/modules/login/views/login_view.dart';
 import 'package:surya/app/modules/new_chat_list/bindings/new_chat_list_binding.dart';
 import 'package:surya/app/modules/new_chat_list/views/new_chat_list_view.dart';
+import 'package:surya/app/modules/new_group/bindings/new_group_binding.dart';
+import 'package:surya/app/modules/new_group/views/new_group_view.dart';
 import 'package:surya/app/modules/otp/bindings/otp_binding.dart';
 import 'package:surya/app/modules/otp/views/otp_view.dart';
 import 'package:surya/app/modules/splash/bindings/splash_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.CONTACTS,
       page: () => ContactsView(),
       binding: ContactsBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_GROUP,
+      page: () => NewGroupView(),
+      binding: NewGroupBinding(),
     ),
   ];
 }
