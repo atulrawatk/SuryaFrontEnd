@@ -7,6 +7,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
+import 'package:surya/app/data/models/mobile_contact_list_model.dart';
+import 'package:surya/app/data/models/mobile_local_contact_model.dart';
 import 'package:surya/app/data/socket/SocketService.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
@@ -15,6 +17,7 @@ import 'package:surya/app/modules/otp/controllers/otp_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
+import 'dart:convert' as JSON;
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin {
   late TabController tabController;
@@ -54,9 +57,33 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     _mobileContactList.addAll(list);
   }
 
+  // Contact_list model=new Contact_list(name: "",number: "");
+  // Rx<MobileContactListModel> _mobileDbContact=MobileContactListModel().obs;
+  //
+  // MobileContactListModel get mobileDbContact=>_mobileDbContact.value;
+  // set setMobileDbContact(Iterable<Contact> list){
+  //   list.forEach((element) {
+  //
+  //     if(element.phones!.isNotEmpty){
+  //       _mobileDbContact.value.contactList!.add(Contact_list(name: element.displayName!=null?element.displayName:"User",number: element.phones!.first.value));
+  //     }
+  //      });
+  //
+  // }
+
   Future getContacts() async {
+    // if(AppGetStorage.hasData(AppStrings.mobileContact)){
+    //   .value=MobileContactListModel.fromJson(AppGetStorage.getValue(AppStrings.mobileContact));
+    //   mobileDbContact.contactList!.forEach((element) {
+    //     Logger().i(element.name);
+    //   });
+    // }
+    // else{
     mobileContactsList =
-        await ContactsService.getContacts(withThumbnails: false);
+      await ContactsService.getContacts(withThumbnails: false,orderByGivenName: true);
+    //   AppGetStorage.saveValue(AppStrings.mobileContact, mobileDbContact);
+    // }
+
     Logger().i(
         "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
+import 'package:surya/app/routes/app_pages.dart';
 
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
@@ -26,7 +27,6 @@ class ContactsView extends GetView<ContactsController> {
                   )
                 : TextFormField(
                     maxLines: 1,
-
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: Colors.white,
@@ -144,7 +144,9 @@ class ContactsView extends GetView<ContactsController> {
                         backgroundColor: AppColors.lightAppColor,
                       ),
                       trailing: Text(""),
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(Routes.NEW_GROUP);
+                      },
                       onLongPress: () {},
                     )
                   : SizedBox(),
@@ -164,10 +166,10 @@ class ContactsView extends GetView<ContactsController> {
                         return UserListTile(
                           onTap: () {},
                           isOnTap: true,
-                          title: contact.displayName!,
+                          title: contact.displayName!=null?contact.displayName!:"",
                           subTitle: Text(
-                            contact.phones != null
-                                ? contact.phones!.first.value.toString()
+                            contact.phones != null && contact.phones!.isNotEmpty
+                                ? contact.phones!.first.value!
                                 : "",
                             textAlign: TextAlign.left,
                             style: AppTextStyle.multiChatMessage(),

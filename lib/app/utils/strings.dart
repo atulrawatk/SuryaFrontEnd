@@ -68,7 +68,7 @@ class AppStrings {
   static final String messageNotDecrypt = "* This message is Encrypted *".tr;
   static final String messageInfo = "Message Info".tr;
   static final String chatzoLogo = "images/chatzo_logo.png".tr;
-  static final String chatBackground = "images/backgroundImage.png".tr;
+  static final String chatBackground = "assets/img/backgroundImage.png";
   static final String tempThumbnail = "temp_thumbnail_image".tr;
   static final String thumbnailImage = "thumbnail_image".tr;
   static final String noParticipant =
@@ -103,6 +103,10 @@ class AppStrings {
   static final String userNotExist="User not Exist".tr;
   static final String fieldIsEmpty='Field is empty!'.tr;
 
+  //Mobile Contact
+  static final String mobileContact="Mobile Contact";
+
+
   //Method Channel
   static final String methodChannel="com.surya.surya";
 
@@ -121,6 +125,17 @@ class AppStrings {
   static const String settings = ' Settings ';
 
   static final String success="Success".tr;
+  //Chat Screen
+  static final String enterAMessage='Enter you message'.tr;
+
+  //Chat Settings Menu
+  static final String viewContact="View Contact".tr;
+  static final String mediaLinksAndDocs="Media,links and docs".tr;
+  static final String search="Search".tr;
+  static final String muteNotifications="Mute Notifications".tr;
+  static final String wallpaper="Wallpaper".tr;
+  static final String more="More".tr;
+
   //Pin
   static final String enterPin="Enter Pin".tr;
   static final String wrongPin="Wrong Pin!! Please enter again".tr;

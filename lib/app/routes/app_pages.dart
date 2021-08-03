@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import 'package:surya/app/modules/chat/bindings/chat_binding.dart';
+import 'package:surya/app/modules/chat/views/chat_view.dart';
 import 'package:surya/app/modules/confirmPin/bindings/confirm_pin_binding.dart';
 import 'package:surya/app/modules/confirmPin/views/confirm_pin_view.dart';
 import 'package:surya/app/modules/contacts/bindings/contacts_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.NEW_GROUP,
       page: () => NewGroupView(),
       binding: NewGroupBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT,
+      page: () => ChatView(),
+      binding: ChatBinding(),
     ),
   ];
 }

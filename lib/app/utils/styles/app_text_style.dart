@@ -4,6 +4,7 @@ import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/weight.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextStyle {
   const AppTextStyle._();
@@ -18,6 +19,10 @@ class AppTextStyle {
       fontSize: fontSize,
       fontWeight: fontWeight,
     );
+  }
+
+  static TextStyle chatLabelText(){
+    return _textStyle(color: Get.theme.accentColor, fontSize: 17.h, fontWeight: FontWeight.bold);
   }
   static TextStyle pinPattern(){
     return _textStyle(color: Get.theme.primaryColor,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
@@ -14,62 +15,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Get.theme.primaryColor,
-        //   title: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     mainAxisSize: MainAxisSize.max,
-        //     children: [
-        //       Text(
-        //         AppStrings.appName,
-        //         style: TextStyle(
-        //           color: AppColors.whiteColor,
-        //           fontSize: AppDimen.normalSize,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.end,
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         mainAxisSize: MainAxisSize.min,
-        //         children: [
-        //           IconButton(
-        //             icon: Icon(
-        //               Icons.search,
-        //               size: AppDimen.normalSize,
-        //               color: AppColors.whiteColor,
-        //             ),
-        //             iconSize: AppDimen.normalFontSize,
-        //             onPressed: () {},
-        //           ),
-        //           Container(
-        //             alignment: Alignment.center,
-        //             child: PopupMenuButton(
-        //               icon: Icon(
-        //                 Icons.more_vert,
-        //                 size: AppDimen.normalSize,
-        //                 color: AppColors.whiteColor,
-        //               ),
-        //               onSelected: (value) {},
-        //               itemBuilder: (BuildContext context) {
-        //                 return AppLists.choices.map((String choices) {
-        //                   return PopupMenuItem<String>(
-        //                     value: choices,
-        //                     child: Text(choices),
-        //                   );
-        //                 }).toList();
-        //               },
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ],
-        //   ),
-        //   automaticallyImplyLeading: false,
-        //   shadowColor: Colors.transparent,
-        //   // centerTitle: true,
-        // ),
 
         appBar: AppBar(
           elevation: 0,
@@ -111,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                   ),
           ),
           leading: Obx(
-            () => controller.isSearch == false
+            () => controller.isSearch == true
                 ? IconButton(
                     onPressed: () {
                       Get.back();
@@ -120,14 +65,7 @@ class HomeView extends GetView<HomeController> {
                       Icons.arrow_back,
                     ),
                   )
-                : IconButton(
-                    onPressed: () {
-                      controller.isSearch = false;
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                    ),
-                  ),
+                : SizedBox(),
           ),
           // centerTitle: true,
           actions: [
@@ -210,75 +148,84 @@ class HomeView extends GetView<HomeController> {
                       itemCount: 1,
                       shrinkWrap: true,
                       itemBuilder: (context, snapshot) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                                flex: 1,
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    left: 10.w,
-                                    top: 10.h,
+                        return Material(
+                          color: AppColors.transparent,
+                          child: InkWell(
+                            onTap: (){
+                              Get.toNamed(Routes.CHAT);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                    flex: 1,
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        left: 10.w,
+                                        top: 10.h,
+                                        bottom: 10.h
+                                      ),
+                                      height: Get.height / 14,
+                                      width: Get.height / 14,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                AppImages.dummyProfileImage),
+                                            fit: BoxFit.fill),
+                                        borderRadius:
+                                            BorderRadius.circular(Get.height / 2),
+                                      ),
+                                    )),
+                                Flexible(
+                                    flex: 3,
+                                    fit: FlexFit.tight,
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        left: 10.w,
+                                        top: 20.h,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text("Sangam",
+                                              textAlign: TextAlign.left,
+                                              style: AppTextStyle.multiChatName()),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: Get.height / 100),
+                                            child: Text(
+                                              "Hii, This side Sangam ewfjw efr f ew f ewf ewf",
+                                              textAlign: TextAlign.left,
+                                              style:
+                                                  AppTextStyle.multiChatMessage(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                                Align(
+                                  alignment: AlignmentDirectional.topEnd,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                      top: 15.h,
+                                      // right: 10.w,
+                                    ),
+                                    child: Text(
+                                      "Today",
+                                      textAlign: TextAlign.end,
+                                    ),
                                   ),
-                                  height: Get.height / 14,
-                                  width: Get.height / 14,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black12,
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            AppImages.dummyProfileImage),
-                                        fit: BoxFit.fill),
-                                    borderRadius:
-                                        BorderRadius.circular(Get.height / 2),
-                                  ),
-                                )),
-                            Flexible(
-                                flex: 3,
-                                fit: FlexFit.tight,
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    left: 10.w,
-                                    top: 20.h,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text("Sangam",
-                                          textAlign: TextAlign.left,
-                                          style: AppTextStyle.multiChatName()),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: Get.height / 100),
-                                        child: Text(
-                                          "Hii, This side Sangam ewfjw efr f ew f ewf ewf",
-                                          textAlign: TextAlign.left,
-                                          style:
-                                              AppTextStyle.multiChatMessage(),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                            Align(
-                              alignment: AlignmentDirectional.topEnd,
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  top: 15.h,
-                                  // right: 10.w,
-                                ),
-                                child: Text(
-                                  "Today",
-                                  textAlign: TextAlign.end,
-                                ),
-                              ),
-                            )
-                          ],
+                                )
+                              ],
+                            ),
+                          ),
                         );
                       }),
                   ListView.separated(
@@ -336,7 +283,7 @@ class HomeView extends GetView<HomeController> {
                       size: AppDimen.normalSize,
                       color: AppColors.whiteColor,
                     ),
-              backgroundColor: AppColors.lightAppColor,
+              backgroundColor: Get.theme.primaryColor,
             )));
   }
 }

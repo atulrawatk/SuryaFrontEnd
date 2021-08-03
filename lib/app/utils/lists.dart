@@ -7,6 +7,14 @@ class AppLists{
     // Messages,
     AppStrings.settings
   ];
+  static final List<String> chatMenu=<String>[
+    AppStrings.viewContact,
+    AppStrings.mediaLinksAndDocs,
+    AppStrings.search,
+    AppStrings.muteNotifications,
+    AppStrings.wallpaper,
+    AppStrings.more,
+  ];
   static final List<String> choicesForContacts = <String>[
     AppStrings.inviteAFriend,
     AppStrings.contacts,

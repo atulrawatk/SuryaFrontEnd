@@ -174,7 +174,7 @@ class AppTheme {
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 4,
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Get.theme.primaryColor,
       ),
       primaryTextTheme: TextTheme(
         bodyText1: AppTextStyle.buttonTextStyle(
@@ -534,7 +534,7 @@ class AppTheme {
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         elevation: 4,
-        backgroundColor: AppColors.appColor,
+        backgroundColor: Get.theme.primaryColor,
       ),
       primaryTextTheme: TextTheme(
         bodyText1: AppTextStyle.buttonTextStyle(
