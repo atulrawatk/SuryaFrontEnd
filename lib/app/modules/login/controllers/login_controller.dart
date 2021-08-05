@@ -9,7 +9,11 @@ import 'package:get/get.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/device_services.dart';
 import 'package:surya/app/data/encryption/aes.dart';
+import 'package:surya/app/data/models/basic_user_model.dart';
+import 'package:surya/app/data/models/send_otp_model.dart';
 import 'package:surya/app/data/native_services/firebase_service.dart';
+import 'package:surya/app/data/storage/get_storage/get_storage.dart';
+import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
 import 'package:surya/app/global_widgets/loader.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
@@ -38,7 +42,6 @@ class LoginController extends GetxController {
       return;
     }
     else{
-     // Get.dialog(widget)
       LoadingOverlay.of().show();
       //Device ID
       String deviceId= await DeviceServices.deviceInfo();
@@ -58,8 +61,15 @@ class LoginController extends GetxController {
       await _apiHelper.login(body: body).then((res) {
         LoadingOverlay.of().hide();
         if(res.isOk){
+          SendOtpModel userModel=SendOtpModel.fromJson(res.body);
+
+          //Setting User Id and Token
+          BasicUserModel.userId=userModel.success!.data!.id!;
+          BasicUserModel.userEncNumber=phoneNumEncrypted;
+          BasicUserModel.userToken=userModel.success!.data!.verificationToken!;
+
           Timer(Duration(milliseconds: 300),()=>Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
-          Get.toNamed(Routes.OTP,arguments: phoneNumEncrypted);
+          Get.toNamed(Routes.OTP);
           //setEncNumber=phoneNumEncrypted;
         }
         else{

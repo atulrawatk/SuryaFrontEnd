@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:surya/app/data/models/basic_user_model.dart';
 import 'package:surya/app/global_widgets/loader.dart';
 import 'package:surya/app/utils/network/api_constant.dart';
 import 'package:surya/app/utils/network/network_connection.dart';
@@ -48,7 +49,7 @@ class ApiHelper extends GetConnect with NetworkConnection {
   Future<Response> otpVerify({required Map<dynamic, dynamic> body}) async {
     return await checkInternetWithApi(
         requestType: post(ApiConstant.baseUrl + ApiConstant.otpVerify, body,
-            headers: normalHeader)).catchError((error) {});
+            headers: tokenHeader(token: BasicUserModel.userToken))).catchError((error) {});
   }
 
   //Resend Otp

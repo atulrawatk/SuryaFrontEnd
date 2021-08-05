@@ -117,6 +117,7 @@ class AppStrings {
   //New Chat
   static final String chat="Chat".tr;
   static final String phone="Phone".tr;
+  static final String you="You".tr;
 
   //Internet Check
   static final String internetProblem="Internet Problem!!".tr;

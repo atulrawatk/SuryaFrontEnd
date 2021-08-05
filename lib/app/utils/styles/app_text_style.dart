@@ -21,8 +21,17 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle repliedUserNameChat(){
+    return TextStyle(
+        color: Get.theme
+            .primaryColor,
+        fontFamily: AppStrings.appFontFamily,
+        fontSize: 15.h,
+        fontWeight: FontWeight.bold
+    );
+  }
   static TextStyle chatLabelText(){
-    return _textStyle(color: Get.theme.accentColor, fontSize: 17.h, fontWeight: FontWeight.bold);
+    return _textStyle(color: Get.theme.accentColor, fontSize: 15.h, fontWeight: FontWeight.bold);
   }
   static TextStyle pinPattern(){
     return _textStyle(color: Get.theme.primaryColor,

@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
+import 'package:surya/app/data/models/basic_user_model.dart';
 import 'package:surya/app/data/models/mobile_contact_list_model.dart';
 import 'package:surya/app/data/models/mobile_local_contact_model.dart';
 import 'package:surya/app/data/socket/SocketService.dart';
@@ -34,9 +35,9 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   //User Model
-  Rx<OtpVerify> _otpVerify = OtpVerify().obs;
-  OtpVerify? get otpVerifyModel => _otpVerify.value;
-  set setOTPVerifyModel(OtpVerify model) {
+  Rx<OtpVerifyModel> _otpVerify = OtpVerifyModel().obs;
+  OtpVerifyModel? get otpVerifyModel => _otpVerify.value;
+  set setOTPVerifyModel(OtpVerifyModel model) {
     _otpVerify.value = model;
   }
 
@@ -57,32 +58,10 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     _mobileContactList.addAll(list);
   }
 
-  // Contact_list model=new Contact_list(name: "",number: "");
-  // Rx<MobileContactListModel> _mobileDbContact=MobileContactListModel().obs;
-  //
-  // MobileContactListModel get mobileDbContact=>_mobileDbContact.value;
-  // set setMobileDbContact(Iterable<Contact> list){
-  //   list.forEach((element) {
-  //
-  //     if(element.phones!.isNotEmpty){
-  //       _mobileDbContact.value.contactList!.add(Contact_list(name: element.displayName!=null?element.displayName:"User",number: element.phones!.first.value));
-  //     }
-  //      });
-  //
-  // }
 
   Future getContacts() async {
-    // if(AppGetStorage.hasData(AppStrings.mobileContact)){
-    //   .value=MobileContactListModel.fromJson(AppGetStorage.getValue(AppStrings.mobileContact));
-    //   mobileDbContact.contactList!.forEach((element) {
-    //     Logger().i(element.name);
-    //   });
-    // }
-    // else{
     mobileContactsList =
       await ContactsService.getContacts(withThumbnails: false,orderByGivenName: true);
-    //   AppGetStorage.saveValue(AppStrings.mobileContact, mobileDbContact);
-    // }
 
     Logger().i(
         "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
@@ -104,6 +83,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     });
     onInitializer();
     getContacts();
+    fetchUserValues();
   }
 
 //Get User Details from DB
@@ -123,11 +103,17 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
           "Token =====>>>> ${otpVerifyModel!.success!.data!.verificationToken}");
       Logger().i("=>>>Successfully User Model Imported from DB");
     } else {
-      setOTPVerifyModel = OtpVerify.fromJson(
+      setOTPVerifyModel = OtpVerifyModel.fromJson(
           AppGetStorage.getValue(GetStorageKeys.otpVerifyModelKey));
       Logger().w(
           "Token =====>>>> ${otpVerifyModel!.success!.data!.verificationToken}");
       Logger().i("=>>>Successfully User Model Imported from DB");
+    }
+    if(BasicUserModel.userEncNumber==""&&BasicUserModel.userId==""&&BasicUserModel.userToken==""){
+      //Setting Basic User Values at Home Page
+      BasicUserModel.userEncNumber=otpVerifyModel!.success!.data!.phoneNumber!;
+      BasicUserModel.userId=otpVerifyModel!.success!.data!.id!;
+      BasicUserModel.userToken=otpVerifyModel!.success!.data!.verificationToken!;
     }
   }
 
@@ -161,6 +147,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     if (tabController.indexIsChanging || tabController.hasListeners) {
       tabIndex.value = tabController.index;
     }
+  }
+
+  //Fetching User Details
+  fetchUserValues(){
+
   }
 
   @override

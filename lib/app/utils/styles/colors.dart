@@ -4,6 +4,7 @@ class AppColors {
   //
   AppColors._();
 
+  static final Color primaryDarkColor=Color(0xffCC5200);
   static final Color whiteColor = Color.fromARGB(255, 255, 255, 255);
   static final Color lightGreyColor = Color.fromARGB(255, 210, 210, 210);
   static final Color darkGreyColor = Color.fromARGB(255, 77, 77, 77);

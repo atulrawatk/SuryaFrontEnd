@@ -6,9 +6,9 @@ class OtpVerifyModel {
   Success? get success => _success;
 
   OtpVerifyModel({
-    Success? success}){
+      Success? success}){
     _success = success;
-  }
+}
 
   OtpVerifyModel.fromJson(dynamic json) {
     _success = json["success"] != null ? Success.fromJson(json["success"]) : null;
@@ -35,11 +35,11 @@ class Success {
   Data? get data => _data;
 
   Success({
-    String? message,
-    Data? data}){
+      String? message, 
+      Data? data}){
     _message = message;
     _data = data;
-  }
+}
 
   Success.fromJson(dynamic json) {
     _message = json["message"];
@@ -86,14 +86,14 @@ class Data {
   String? get pushToken => _pushToken;
 
   Data({
-    String? id,
-    String? phoneNumber,
-    String? verificationToken,
-    dynamic? profilePic,
-    dynamic? thumbnail,
-    dynamic? about,
-    String? name,
-    String? pushToken}){
+      String? id, 
+      String? phoneNumber, 
+      String? verificationToken, 
+      dynamic? profilePic, 
+      dynamic? thumbnail, 
+      dynamic? about, 
+      String? name, 
+      String? pushToken}){
     _id = id;
     _phoneNumber = phoneNumber;
     _verificationToken = verificationToken;
@@ -102,7 +102,7 @@ class Data {
     _about = about;
     _name = name;
     _pushToken = pushToken;
-  }
+}
 
   Data.fromJson(dynamic json) {
     _id = json["_id"];

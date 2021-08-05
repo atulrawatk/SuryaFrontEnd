@@ -5,14 +5,12 @@ import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/ios_back_button.dart';
 import 'package:surya/app/global_widgets/mobile_textfield.dart';
-import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/padding.dart';
 import 'package:surya/app/utils/styles/weight.dart';
 import 'package:surya/app/utils/validators.dart';
 import '../controllers/login_controller.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginView extends GetView<LoginController> {
   @override
@@ -21,8 +19,7 @@ class LoginView extends GetView<LoginController> {
       body: Center(
         child: Form(
           key: controller.loginKey,
-          //autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Padding(
+            child: Padding(
             padding: AppPadding.appPagePadding,
             child: Stack(
               children: [

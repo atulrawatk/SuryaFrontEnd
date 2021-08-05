@@ -1,26 +1,18 @@
 import 'dart:async';
-import 'dart:isolate';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/device_services.dart';
-import 'package:surya/app/data/encryption/aes.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
+import 'package:surya/app/data/models/basic_user_model.dart';
 import 'package:surya/app/data/native_services/firebase_service.dart';
-import 'package:surya/app/data/storage/get_storage/models/GetStorageShortUserModel.dart';
 import 'package:surya/app/data/storage/get_storage/otp_verify_get_storage_service.dart';
 import 'package:surya/app/global_widgets/loader.dart';
-import 'package:surya/app/modules/home/controllers/home_controller.dart';
-import 'package:surya/app/modules/login/controllers/login_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
-import 'package:surya/dot_env_controller.dart';
-import 'dart:convert' as JSON;
 
 class OtpController extends GetxController {
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -29,10 +21,9 @@ class OtpController extends GetxController {
       StreamController<ErrorAnimationType>.broadcast();
   TextEditingController otpController = new TextEditingController();
   ApiHelper _apiHelper = ApiHelper();
-  AESEncryption _aesEncryption = AESEncryption();
 
   //UserModel
-  Rx<OtpVerify> userModel=OtpVerify().obs;
+  Rx<OtpVerifyModel> userModel=OtpVerifyModel().obs;
 
 
   //Timer
@@ -102,7 +93,6 @@ class OtpController extends GetxController {
   }
 
   otpVerify() async {
-    final overlay = LoadingOverlay.of();
     if (otpController.text.length < 4) {
       Get.snackbar(AppStrings.otp, AppStrings.enterValidOTP,
           snackPosition: SnackPosition.BOTTOM);
@@ -110,14 +100,13 @@ class OtpController extends GetxController {
     } else {
       setOtpStatus = 1;
       LoadingOverlay.of().show();
-      String number = encNumber;
       Map<String, String> body = {
-        "phone_number": number,
+        "phone_number": BasicUserModel.userEncNumber,
         "otp": otpController.text
       };
       await _apiHelper.otpVerify(body: body).then((res) {
         if (res.isOk) {
-          OtpVerify otpModel = OtpVerify.fromJson(res.body);
+          OtpVerifyModel otpModel = OtpVerifyModel.fromJson(res.body);
 
           //Saving OTP model into Get Storage
           OTPVerifyGetStorageService().saveOtpModel(otpModel);
@@ -147,7 +136,7 @@ class OtpController extends GetxController {
     //Push token
     String pushToken = await FirebaseService.getFirebaseTokenFromNative();
     Map<String, Object> body = {
-      "phone_number": encNumber,
+      "phone_number": BasicUserModel.userEncNumber,
       "device_id": deviceId,
       "push_token": pushToken
     };

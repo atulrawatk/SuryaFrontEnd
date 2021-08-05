@@ -19,7 +19,7 @@ class EnterPinController extends GetxController {
 
 
   socketInitialization() async{
-    OtpVerify model= await OTPVerifyGetStorageService().getOtpModel();
+    OtpVerifyModel model= await OTPVerifyGetStorageService().getOtpModel();
     SocketService().createSocketConnection(userId: model.success!.data!.id, notificationId: "");
   }
 

@@ -5,10 +5,12 @@ class ChatMessageField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool showTrackOnHover;
+  final FocusNode focusNode;
    ChatMessageField({Key? key,
   required this.controller,
     required this.hintText,
     required this.showTrackOnHover,
+     required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -24,8 +26,10 @@ class ChatMessageField extends StatelessWidget {
           TextField(
             controller: controller,
             maxLines: null,
+            focusNode: focusNode,
             decoration: InputDecoration(
               hintText: hintText,
+             // contentPadding: EdgeInsets.only(top: 5.h,bottom: 5.h,left: 10.h,right: 10.h),
               fillColor: Colors.transparent,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,

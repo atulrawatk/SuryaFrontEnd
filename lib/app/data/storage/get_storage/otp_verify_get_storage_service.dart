@@ -9,11 +9,11 @@ class OTPVerifyGetStorageService{
   factory OTPVerifyGetStorageService(){
     return OTPVerifyGetStorageService._();
   }
-   saveOtpModel(OtpVerify model){
+   saveOtpModel(OtpVerifyModel model){
     AppGetStorage.saveValue(GetStorageKeys.otpVerifyModelKey, model);
   }
-   Future<OtpVerify> getOtpModel() async{
-    var model= OtpVerify.fromJson(AppGetStorage.getValue(GetStorageKeys.otpVerifyModelKey));
+   Future<OtpVerifyModel> getOtpModel() async{
+    var model= OtpVerifyModel.fromJson(AppGetStorage.getValue(GetStorageKeys.otpVerifyModelKey));
    return model;
   }
 }

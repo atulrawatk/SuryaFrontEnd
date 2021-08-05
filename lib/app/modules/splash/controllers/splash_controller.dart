@@ -6,13 +6,13 @@ import 'package:surya/app/utils/strings.dart';
 class SplashController extends GetxController {
   @override
   void onInit() {
-    // TODO: implement onInit
     Future.delayed(
       Duration(seconds: 2),
       () {
         Get.offAndToNamed(
-          AppGetStorage.hasData(AppStrings.isLogin) ? Routes.ENTER_PIN :
-          Routes.WELCOME,
+          AppGetStorage.hasData(AppStrings.isLogin) ?
+          Routes.ENTER_PIN
+             : Routes.WELCOME,
         );
       },
     );
