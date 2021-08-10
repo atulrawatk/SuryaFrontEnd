@@ -128,6 +128,14 @@ class AppStrings {
   static final String success="Success".tr;
   //Chat Screen
   static final String enterAMessage='Enter you message'.tr;
+  //Attach File Bottom sheet Menu
+  static final String document="Document".tr;
+  static final String camera="Camera".tr;
+  static final String audio="Audio".tr;
+  static final String payment="Payment".tr;
+  static final String location="Location".tr;
+  static final String contact="Contact".tr;
+
 
   //Chat Settings Menu
   static final String viewContact="View Contact".tr;

@@ -2,6 +2,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/global_widgets/chat_message.dart';
 import 'package:surya/app/global_widgets/chat_message_field.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
@@ -34,11 +35,11 @@ class ChatView extends GetView<ChatController> {
                       padding: EdgeInsets.only(
                           bottom: controller.replyMsg.value ? 115.h : 55.h,
                           top: 55.h),
-                      child: ChatMessage(
-                        modelList: controller.oneToOneChatModel.value,
-                        scrollController: controller.scrollController,
-                        chatController: controller,
-                      ),
+                      child: Obx(() => ChatMessage(
+                            modelList: controller.oneToOneChatModel.value,
+                            scrollController: controller.scrollController,
+                            chatController: controller,
+                          )),
                     ),
                   )),
               Align(
@@ -50,8 +51,8 @@ class ChatView extends GetView<ChatController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                              flex: 6,
+                            Expanded(
+                              // flex: 6,
                               child: Padding(
                                 padding: EdgeInsets.all(5.w),
                                 child: Container(
@@ -184,7 +185,6 @@ class ChatView extends GetView<ChatController> {
                                                       ],
                                                     )
                                                   : SizedBox(),
-
                                               // Chat Text Field
                                               Row(
                                                 children: [
@@ -249,24 +249,103 @@ class ChatView extends GetView<ChatController> {
                                 ),
                               ),
                             ),
-                            Flexible(
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 5.w),
-                                child: CircleAvatar(
-                                  radius: 25.r,
-                                  backgroundColor: Get.theme.primaryColor,
-                                  child: Obx(() => IconButton(
-                                        onPressed: () {
-                                          controller.sendMessage();
-                                        },
-                                        icon: controller.sendStatus.value
-                                            ? Icon(Icons.near_me_sharp)
-                                            : Icon(Icons.mic),
-                                        color: Get.theme.accentColor,
-                                      )),
-                                ),
-                              ),
-                            )
+                            Obx(() => AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  width: controller.isRecording.value
+                                      ? 150.w
+                                      : 60.w,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      controller.isRecording.value
+                                          ? Flexible(
+                                              child: Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 10.w),
+                                                child: Icon(
+                                                  Icons.fiber_manual_record,
+                                                  color: AppColors.red,
+                                                  size: 15.h,
+                                                ),
+                                              ),
+                                            )
+                                          : SizedBox(),
+                                      controller.isRecording.value
+                                          ? Expanded(
+                                              flex: 2,
+                                              child: AnimatedDefaultTextStyle(
+                                                duration:
+                                                    Duration(milliseconds: 400),
+                                                style: TextStyle(
+                                                    fontSize: controller
+                                                            .isRecording.value
+                                                        ? 15
+                                                        : 0),
+                                                child: Text(
+                                                  controller
+                                                      .recordingMessageTimer(),
+                                                  textAlign: TextAlign.start,
+                                                  style: AppTextStyle
+                                                      .multiChatName(),
+                                                ),
+                                              )
+                                              )
+                                          : SizedBox(),
+                                      Flexible(
+                                        child: GestureDetector(
+                                          onLongPress: () {
+                                            if (!controller.sendStatus.value) {
+                                              controller.stopTimer.value =
+                                              false;
+                                              controller.recordMessages();
+                                              controller.timerStart();
+                                              controller.isRecording.value =
+                                                  true;
+                                            }
+                                          },
+                                          onLongPressEnd: (end) {
+                                            if (!controller.sendStatus.value) {
+                                              controller.stopTimer.value = true;
+                                              controller.recordMessages();
+                                              controller.isRecording.value =
+                                                  false;
+
+                                            }
+                                          },
+                                          child: CircleAvatar(
+                                            radius: 25.r,
+                                            backgroundColor:
+                                                controller.isRecording.value
+                                                    ? AppColors.green
+                                                    : Get.theme.primaryColor,
+                                            child: controller.sendStatus.value
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      controller.sendMessage();
+                                                    },
+                                                    icon: Icon(
+                                                        Icons.near_me_sharp),
+                                                    color:
+                                                        Get.theme.accentColor,
+                                                  )
+                                                : Icon(
+                                                    Icons.mic,
+                                                    color:
+                                                        Get.theme.accentColor,
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: controller.isRecording.value
+                                          ? Colors.green
+                                          : Colors.transparent,
+                                      borderRadius:
+                                          BorderRadius.circular(50.r)),
+                                ))
                           ],
                         ),
                         controller.emojiOpen.value
@@ -326,71 +405,123 @@ class ChatView extends GetView<ChatController> {
                       ],
                     )),
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  height: 50.h,
-                  width: Get.width,
-                  decoration: BoxDecoration(color: AppColors.primaryDarkColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 10.w),
-                          child: IosBackButton(),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                                alignment: Alignment.centerLeft,
+              Obx(() => controller.selectedMessages.length > 0
+                  ? Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        height: 50.h,
+                        width: Get.width,
+                        decoration:
+                            BoxDecoration(color: AppColors.primaryDarkColor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Padding(
                                 padding: EdgeInsets.only(left: 10.w),
-                                height: 50.h,
-                                child: Text(
-                                  "Tushar",
-                                  style: AppTextStyle.chatLabelText(),
-                                )),
-                          ),
-                        ),
-                      ),
-                      Flexible(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: PopupMenuButton(
-                                icon: Icon(
-                                  Icons.more_vert,
-                                  size: AppDimen.normalSize,
-                                  color: AppColors.whiteColor,
+                                child: IconButton(
+                                  onPressed: () {
+                                    controller.selectedMessages
+                                        .forEach((element) {
+                                      element.isSelected.value = false;
+                                    });
+                                    controller.selectedMessages.clear();
+                                    controller.selectMsg.value = false;
+                                  },
+                                  icon: Icon(
+                                    Icons.clear,
+                                    size: 20.h,
+                                  ),
                                 ),
-                                onSelected: (value) {},
-                                itemBuilder: (BuildContext context) {
-                                  return AppLists.chatMenu
-                                      .map((String choices) {
-                                    return PopupMenuItem<String>(
-                                      value: choices,
-                                      child: Text(choices),
-                                      textStyle:
-                                          AppTextStyle.multiChatMessage(),
-                                    );
-                                  }).toList();
-                                },
                               ),
                             ),
-                          ),
+                            Flexible(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      controller.removeMessages();
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      size: 20.h,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                      ),
+                    )
+                  : Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        height: 50.h,
+                        width: Get.width,
+                        decoration:
+                            BoxDecoration(color: AppColors.primaryDarkColor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10.w),
+                                child: IosBackButton(),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      padding: EdgeInsets.only(left: 10.w),
+                                      height: 50.h,
+                                      child: Text(
+                                        "Tushar",
+                                        style: AppTextStyle.chatLabelText(),
+                                      )),
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: PopupMenuButton(
+                                      icon: Icon(
+                                        Icons.more_vert,
+                                        size: AppDimen.normalSize,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                      onSelected: (value) {},
+                                      itemBuilder: (BuildContext context) {
+                                        return AppLists.chatMenu
+                                            .map((String choices) {
+                                          return PopupMenuItem<String>(
+                                            value: choices,
+                                            child: Text(choices),
+                                            textStyle:
+                                                AppTextStyle.multiChatMessage(),
+                                          );
+                                        }).toList();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )),
             ],
           ),
         ),

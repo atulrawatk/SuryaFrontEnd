@@ -15,6 +15,15 @@ class AppLists{
     AppStrings.wallpaper,
     AppStrings.more,
   ];
+  static final List<String> chatAttachFileMenu=<String>[
+    AppStrings.document,
+    AppStrings.camera,
+    AppStrings.audio,
+    AppStrings.payment,
+    AppStrings.location,
+    AppStrings.contact,
+
+  ];
   static final List<String> choicesForContacts = <String>[
     AppStrings.inviteAFriend,
     AppStrings.contacts,
