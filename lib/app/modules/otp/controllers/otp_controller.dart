@@ -11,6 +11,7 @@ import 'package:surya/app/data/native_services/firebase_service.dart';
 import 'package:surya/app/data/storage/get_storage/otp_verify_get_storage_service.dart';
 import 'package:surya/app/global_widgets/loader.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/network/network_connection.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
 
@@ -129,30 +130,37 @@ class OtpController extends GetxController {
   }
 
   resendOtp() async {
-    LoadingOverlay.of().show();
-    //Device ID
-    String deviceId = await DeviceServices.deviceInfo();
+    bool internetCheck= await NetworkConnection().checkInternetConnection();
+    if(internetCheck){
+      LoadingOverlay.of().show();
+      //Device ID
+      String deviceId = await DeviceServices.deviceInfo();
 
-    //Push token
-    String pushToken = await FirebaseService.getFirebaseTokenFromNative();
-    Map<String, Object> body = {
-      "phone_number": BasicUserModel.userEncNumber,
-      "device_id": deviceId,
-      "push_token": pushToken
-    };
+      //Push token
+      String pushToken = await FirebaseService.getFirebaseTokenFromNative();
+      Map<String, Object> body = {
+        "phone_number": BasicUserModel.userEncNumber,
+        "device_id": deviceId,
+        "push_token": pushToken
+      };
 
-    await _apiHelper.resendOtp(body: body).then((res) {
-      LoadingOverlay.of().hide();
-      if (res.isOk) {
-        Timer(Duration(milliseconds: 300),
-            () => Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
-        //setEncNumber=phoneNumEncrypted;
-      } else {
-        Get.snackbar(
-            AppStrings.mobileVerification, AppStrings.somethingWentWrong);
-        //  Future.error("Sign in Error");
-      }
-    });
+      await _apiHelper.resendOtp(body: body).then((res) {
+        LoadingOverlay.of().hide();
+        if (res.isOk) {
+          Timer(Duration(milliseconds: 300),
+                  () => Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
+          //setEncNumber=phoneNumEncrypted;
+        } else {
+          Get.snackbar(
+              AppStrings.mobileVerification, AppStrings.somethingWentWrong);
+          //  Future.error("Sign in Error");
+        }
+      });
+    }
+    else{
+      Get.snackbar(AppStrings.appName, AppStrings.internetProblem);
+    }
+
   }
 
   String timerString() {

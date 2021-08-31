@@ -33,7 +33,6 @@ class ChatMessageField extends StatelessWidget {
             focusNode: focusNode,
             decoration: InputDecoration(
               hintText: hintText,
-              contentPadding: EdgeInsets.only(top: 15.h, left: 10.h),
               fillColor: Colors.transparent,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
@@ -41,28 +40,6 @@ class ChatMessageField extends StatelessWidget {
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
               hintStyle: AppTextStyle.chatLabelText(),
-              suffixIcon: InkWell(
-                  onTap: (){
-                    focusNode.unfocus();
-                    Get.bottomSheet(
-                        ListView(
-                          shrinkWrap: true,
-                          children: [
-                            Text("weugfuiwehbf")
-                          ],
-                        ),
-                      backgroundColor: Colors.transparent
-                    );
-                    focusNode.unfocus();
-                  },
-                  child: Container(
-                    width: 60.w,
-                    //color: Colors.red,
-                    child: Icon(Icons.attach_file,
-                    color: Get.theme.accentColor,
-                    size: 30.w,
-                    ),
-                  )),
             ),
           ),
         ],

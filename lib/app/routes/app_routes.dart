@@ -17,6 +17,11 @@ abstract class Routes {
   static const CONTACTS = _Paths.CONTACTS;
   static const NEW_GROUP = _Paths.NEW_GROUP;
   static const CHAT = _Paths.CHAT;
+  static const USER_PROFILE = _Paths.USER_PROFILE;
+  static const AUDIO_CALLING = _Paths.AUDIO_CALLING;
+  static const VIDEO_CALLING = _Paths.VIDEO_CALLING;
+  static const CHAT_MEDIA = _Paths.CHAT_MEDIA;
+  static const OTHER_USER_PROFILE = _Paths.OTHER_USER_PROFILE;
 }
 
 abstract class _Paths {
@@ -33,4 +38,9 @@ abstract class _Paths {
   static const CONTACTS = '/contacts';
   static const NEW_GROUP = '/new-group';
   static const CHAT = '/chat';
+  static const USER_PROFILE = '/user-profile';
+  static const AUDIO_CALLING = '/audio-calling';
+  static const VIDEO_CALLING = '/video-calling';
+  static const CHAT_MEDIA = '/chat-media';
+  static const OTHER_USER_PROFILE = '/other-user-profile';
 }

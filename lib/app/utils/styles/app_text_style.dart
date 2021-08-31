@@ -21,6 +21,10 @@ class AppTextStyle {
     );
   }
 
+  static TextStyle mainPageHeading(){
+    return _textStyle(color: Get.theme.accentColor, fontSize: 17.h, fontWeight: FontWeight.bold);
+  }
+
   static TextStyle repliedUserNameChat(){
     return TextStyle(
         color: Get.theme
@@ -45,6 +49,15 @@ class AppTextStyle {
         fontSize: AppDimen.normalFontSize,
         fontWeight: AppFontWeight.normalWeight);
   }
+  static TextStyle phoneNumber(){
+    return TextStyle(
+      fontFamily: AppStrings.appFontFamily,
+      color: Get.theme.accentColor,
+      fontSize: 18.h,
+      letterSpacing: 1.w
+    );
+  }
+
   static TextStyle headingText({
   required Color color ,
     required double fontSize,
@@ -55,6 +68,9 @@ class AppTextStyle {
         fontWeight: fontWeight);
 
 }
+  static TextStyle nameHeading(){
+    return _textStyle(color: Get.theme.accentColor, fontSize: 13.h, fontWeight: FontWeight.normal);
+  }
   static TextStyle buttonTextStyle({
     required Color color,
     required double fontSize,

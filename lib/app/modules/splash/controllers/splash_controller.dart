@@ -11,8 +11,8 @@ class SplashController extends GetxController {
       () {
         Get.offAndToNamed(
           AppGetStorage.hasData(AppStrings.isLogin) ?
-          Routes.ENTER_PIN
-             : Routes.WELCOME,
+          Routes.ENTER_PIN :
+          Routes.WELCOME,
         );
       },
     );

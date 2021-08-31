@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/contact_circle_avatar.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 import 'global_widgets.dart';
 class SelectedContactCircleAvatar extends StatelessWidget {
   final String imageUrl;
@@ -24,12 +25,12 @@ class SelectedContactCircleAvatar extends StatelessWidget {
               width: 20.r,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Get.height / 2),
-                  border: Border.all(color: Get.isPlatformDarkMode?Colors.black:Colors.white,width: 2),
+                  border: Border.all(color: ThemeService.isDark.value?Colors.black:Colors.white,width: 2),
                   color: AppColors.green
               ),
               child: Icon(
                 Icons.done,
-                color: Get.isPlatformDarkMode?Colors.black:Colors.white,
+                color: ThemeService.isDark.value?Colors.black:Colors.white,
                 size: 15.r,
               ),
             ),

@@ -91,7 +91,6 @@ class AppTheme {
           ),
         ),
       ),
-
       buttonTheme: ButtonThemeData(
         buttonColor: AppColors.appColor,
         height: 45.h,
@@ -336,7 +335,7 @@ class AppTheme {
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.grey_500),
         ),
-        focusedBorder:UnderlineInputBorder(
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
         border: UnderlineInputBorder(
@@ -373,7 +372,7 @@ class AppTheme {
       // fontFamily: 'Helvetica Neue Ultra Light',
       brightness: Brightness.light,
       primaryColor: AppColors.appColor,
-       accentColor: AppColors.whiteColor,
+      accentColor: AppColors.whiteColor,
       buttonColor: AppColors.appColor,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: AppBarTheme(
@@ -630,13 +629,13 @@ class AppTheme {
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
-          errorBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColors.red),
-          ),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.red),
+        ),
         disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: AppColors.grey_500),
         ),
-        focusedBorder:UnderlineInputBorder(
+        focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: Get.theme.primaryColor),
         ),
         border: UnderlineInputBorder(

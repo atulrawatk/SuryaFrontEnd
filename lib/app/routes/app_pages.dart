@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 
+import 'package:surya/app/modules/audio_calling/bindings/audio_calling_binding.dart';
+import 'package:surya/app/modules/audio_calling/views/audio_calling_view.dart';
 import 'package:surya/app/modules/chat/bindings/chat_binding.dart';
 import 'package:surya/app/modules/chat/views/chat_view.dart';
+import 'package:surya/app/modules/chat_media/bindings/chat_media_binding.dart';
+import 'package:surya/app/modules/chat_media/views/chat_media_view.dart';
 import 'package:surya/app/modules/confirmPin/bindings/confirm_pin_binding.dart';
 import 'package:surya/app/modules/confirmPin/views/confirm_pin_view.dart';
 import 'package:surya/app/modules/contacts/bindings/contacts_binding.dart';
@@ -18,10 +24,16 @@ import 'package:surya/app/modules/new_chat_list/bindings/new_chat_list_binding.d
 import 'package:surya/app/modules/new_chat_list/views/new_chat_list_view.dart';
 import 'package:surya/app/modules/new_group/bindings/new_group_binding.dart';
 import 'package:surya/app/modules/new_group/views/new_group_view.dart';
+import 'package:surya/app/modules/other_user_profile/bindings/other_user_profile_binding.dart';
+import 'package:surya/app/modules/other_user_profile/views/other_user_profile_view.dart';
 import 'package:surya/app/modules/otp/bindings/otp_binding.dart';
 import 'package:surya/app/modules/otp/views/otp_view.dart';
 import 'package:surya/app/modules/splash/bindings/splash_binding.dart';
 import 'package:surya/app/modules/splash/views/splash_view.dart';
+import 'package:surya/app/modules/user_profile/bindings/user_profile_binding.dart';
+import 'package:surya/app/modules/user_profile/views/user_profile_view.dart';
+import 'package:surya/app/modules/video_calling/bindings/video_calling_binding.dart';
+import 'package:surya/app/modules/video_calling/views/video_calling_view.dart';
 import 'package:surya/app/modules/welcome/bindings/welcome_binding.dart';
 import 'package:surya/app/modules/welcome/views/welcome_view.dart';
 
@@ -92,6 +104,31 @@ class AppPages {
       name: _Paths.CHAT,
       page: () => ChatView(),
       binding: ChatBinding(),
+    ),
+    GetPage(
+      name: _Paths.USER_PROFILE,
+      page: () => UserProfileView(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUDIO_CALLING,
+      page: () => AudioCallingView(),
+      binding: AudioCallingBinding(),
+    ),
+    GetPage(
+      name: _Paths.VIDEO_CALLING,
+      page: () => VideoCallingView(),
+      binding: VideoCallingBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_MEDIA,
+      page: () => ChatMediaView(),
+      binding: ChatMediaBinding(),
+    ),
+    GetPage(
+      name: _Paths.OTHER_USER_PROFILE,
+      page: () => OtherUserProfileView(),
+      binding: OtherUserProfileBinding(),
     ),
   ];
 }

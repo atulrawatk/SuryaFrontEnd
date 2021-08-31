@@ -28,6 +28,7 @@ class AppLists{
     AppStrings.inviteAFriend,
     AppStrings.contacts,
     AppStrings.refresh,
+    AppStrings.settings.trim(),
     AppStrings.help,
   ];
 

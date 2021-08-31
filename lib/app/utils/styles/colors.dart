@@ -24,4 +24,9 @@ class AppColors {
   static final Color blue = Color.fromARGB(255, 3, 155, 229);
   static final Animation<Color> greenAnimate =
       new AlwaysStoppedAnimation<Color>(green);
+  static final Color? snackBarColor=Colors.grey[800];
+
+  static final Color? darkThemeBackground=Colors.grey[850];
+  static final Color? lightThemeBackground=Colors.grey[400];
+  static final Color? lightThemeFront=Colors.grey[400];
 }

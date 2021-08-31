@@ -5,7 +5,7 @@ import 'package:surya/app/utils/network/api_constant.dart';
 import 'package:surya/app/utils/network/network_connection.dart';
 import 'package:surya/app/utils/strings.dart';
 
-class ApiHelper extends GetConnect with NetworkConnection {
+class ApiHelper extends GetConnect {
   ApiHelper._();
  factory ApiHelper(){
    return ApiHelper._();

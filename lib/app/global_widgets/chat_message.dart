@@ -5,10 +5,15 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
+import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
+import 'package:surya/app/modules/chat_media/views/chat_media_view.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 import 'package:surya/app/utils/utils.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:video_player/video_player.dart';
 
 class ChatMessage extends StatelessWidget {
   final List<ChatMessageModel> modelList;
@@ -69,9 +74,9 @@ class ChatMessage extends StatelessWidget {
                             : Alignment.centerLeft,
                         child: Container(
                           constraints: BoxConstraints(maxWidth: 200.w),
-                          padding: EdgeInsets.only(
-                              top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
-                          child: modelList[index].messageType == "text"
+                          padding: EdgeInsets.all(10.h),
+                          child: modelList[index].messageType ==
+                                  AppStrings.textSmall
                               ? Column(
                                   children: [
                                     modelList[index].repliedMessage != null
@@ -135,41 +140,195 @@ class ChatMessage extends StatelessWidget {
                                     ),
                                   ],
                                 )
-                              : modelList[index].mediaType == "audio"
+                              : modelList[index].mediaType ==
+                                      AppStrings.audioSmall
                                   ? IconButton(
-                                    color: Get.theme.accentColor,
-                                    icon: !modelList[index].isTapped.value
-                                        ? Icon(Icons.play_arrow)
-                                        : Icon(Icons.pause),
-                                    onPressed: () async {
-                                      chatController.isPlaying.value = !chatController.isPlaying.value;
-                                      if (chatController.isPlaying.value) {
-                                        await chatController.stopAudio();
-                                        modelList[index].isTapped.value = true;
-                                        if (modelList[index].isTapped.value) {
-                                          chatController.animController
-                                              .forward();
-                                          await chatController
-                                              .playAudio(
-                                              modelList[index].media.path)
-                                              .whenComplete(() {
-                                            chatController.isPlaying.value =
-                                            false;
-                                            modelList[index].isTapped.value = false;
-                                            chatController.animController
-                                                .reverse();
-                                          });
-                                        }
-                                      }
-                                      else{
+                                      color: Get.theme.accentColor,
+                                      icon: !modelList[index].isTapped.value
+                                          ? Icon(Icons.play_arrow)
+                                          : Icon(Icons.pause),
+                                      onPressed: () async {
                                         chatController.isPlaying.value =
-                                        false;
-                                        modelList[index].isTapped.value = false;
-                                        await chatController.stopAudio();
-                                      }
-                                    },
-                                  )
-                                  : SizedBox(),
+                                            !chatController.isPlaying.value;
+                                        if (chatController.isPlaying.value) {
+                                          await chatController.stopAudio();
+                                          modelList[index].isTapped.value =
+                                              true;
+                                          if (modelList[index].isTapped.value) {
+                                            chatController.animController
+                                                .forward();
+                                            await chatController
+                                                .playAudio(
+                                                    modelList[index].media.path)
+                                                .whenComplete(() {
+                                              chatController.isPlaying.value =
+                                                  false;
+                                              modelList[index].isTapped.value =
+                                                  false;
+                                              chatController.animController
+                                                  .reverse();
+                                            });
+                                          }
+                                        } else {
+                                          chatController.isPlaying.value =
+                                              false;
+                                          modelList[index].isTapped.value =
+                                              false;
+                                          await chatController.stopAudio();
+                                        }
+                                      },
+                                    )
+                                  : modelList[index].mediaType ==
+                                          AppStrings.imageSmall
+                                      ? Material(
+                              color: Colors.transparent,
+                                          child: InkWell(
+                                            onTap: () {
+                                              if (chatController
+                                                  .selectedMessages.isEmpty) {
+                                                Future.delayed(
+                                                    Duration.zero,
+                                                    () => Get.toNamed(
+                                                        Routes.CHAT_MEDIA));
+                                                chatController.mediaController
+                                                        .chatModel =
+                                                    modelList[index];
+                                              } else {
+                                                if (chatController
+                                                    .selectedMessages
+                                                    .contains(
+                                                        modelList[index])) {
+                                                  modelList[index]
+                                                      .isSelected
+                                                      .value = false;
+                                                  chatController
+                                                      .selectedMessages
+                                                      .remove(modelList[index]);
+                                                } else {
+                                                  modelList[index]
+                                                      .isSelected
+                                                      .value = true;
+                                                  chatController
+                                                      .selectedMessages
+                                                      .add(modelList[index]);
+                                                }
+                                              }
+                                            },
+                                            child: Hero(
+                                              tag: modelList[index].time,
+                                              child: Container(
+                                                height: 150.h,
+                                                width: 150.h,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10.r),
+                                                  image: DecorationImage(
+                                                      image: FileImage(
+                                                          modelList[index]
+                                                              .media),
+                                                      fit: BoxFit.cover),
+                                                  //   borderRadius: BorderRadius.circular(10.r)
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : modelList[index].mediaType ==
+                                              AppStrings.videoSmall
+                                          ? Material(
+                            color: Colors.transparent,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  if (chatController
+                                                      .selectedMessages
+                                                      .isEmpty) {
+                                                    chatController
+                                                            .mediaController
+                                                            .videoController
+                                                            .value =
+                                                        VideoPlayerController
+                                                            .file(
+                                                                modelList[index]
+                                                                    .media)
+                                                          ..initialize()
+                                                              .whenComplete(() {
+                                                            Future.delayed(
+                                                                Duration.zero,
+                                                                () => Get.toNamed(
+                                                                    Routes
+                                                                        .CHAT_MEDIA));
+                                                            chatController
+                                                                .mediaController
+                                                                .videoListeners();
+                                                          });
+                                                    chatController
+                                                            .mediaController
+                                                            .chatModel =
+                                                        modelList[index];
+                                                  } else {
+                                                    if (chatController
+                                                        .selectedMessages
+                                                        .contains(
+                                                            modelList[index])) {
+                                                      modelList[index]
+                                                          .isSelected
+                                                          .value = false;
+                                                      chatController
+                                                          .selectedMessages
+                                                          .remove(
+                                                              modelList[index]);
+                                                    } else {
+                                                      modelList[index]
+                                                          .isSelected
+                                                          .value = true;
+                                                      chatController
+                                                          .selectedMessages
+                                                          .add(
+                                                              modelList[index]);
+                                                    }
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 150.h,
+                                                  width: 150.h,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.r)),
+                                                  child: Center(
+                                                    child: CircleAvatar(
+                                                      radius: 20.r,
+                                                      backgroundColor: Colors.grey[800],
+                                                      child: Icon(
+                                                        Icons.play_arrow,
+                                                        color:AppColors.whiteColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          : modelList[index].mediaType ==
+                                                  AppStrings.documentSmall
+                                              ? Material(
+                                                  child: InkWell(
+                                                    onTap: () {},
+                                                    child: Container(
+                                                      height: 40.h,
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors
+                                                              .primaryDarkColor),
+                                                      child: Center(
+                                                          child: Text(
+                                                              modelList[index]
+                                                                  .media
+                                                                  .path
+                                                                  .split("/")
+                                                                  .last)),
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(

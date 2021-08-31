@@ -38,7 +38,6 @@ class HomeView extends GetView<HomeController> {
                     textInputAction: TextInputAction.search,
                     keyboardType: TextInputType.text,
                     autofocus: true,
-
                     // controller: _searchtextController,
                     decoration: InputDecoration(
                       filled: true,
@@ -94,12 +93,17 @@ class HomeView extends GetView<HomeController> {
                           size: AppDimen.normalSize,
                           color: AppColors.whiteColor,
                         ),
-                        onSelected: (value) {},
+                        onSelected: (value) {
+                          if(value==AppStrings.settings.trim()){
+                            Get.toNamed(Routes.USER_PROFILE);
+                          }
+                        },
                         itemBuilder: (BuildContext context) {
                           return AppLists.choicesForContacts
                               .map((String choices) {
                             return PopupMenuItem<String>(
                               value: choices,
+                              enabled: true,
                               child: Text(choices),
                             );
                           }).toList();
@@ -192,7 +196,7 @@ class HomeView extends GetView<HomeController> {
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          Text("Sangam",
+                                          Text("Tushar",
                                               textAlign: TextAlign.left,
                                               style: AppTextStyle.multiChatName()),
                                           Padding(
@@ -233,7 +237,9 @@ class HomeView extends GetView<HomeController> {
                       itemBuilder: (_, i) {
                         return UserListTile(
                           isOnTap: true,
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(Routes.AUDIO_CALLING);
+                          },
                           title: "Sangam ",
                           subTitle: Row(
                             // mainAxisAlignment: MainAxisAlignment.spaceBetween,

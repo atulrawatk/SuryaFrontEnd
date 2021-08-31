@@ -5,6 +5,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:surya/app/global_widgets/ios_back_button.dart';
 import 'package:surya/app/global_widgets/custom_button.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/network/network_connection.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/app_text_style.dart';
 import 'package:surya/app/utils/styles/colors.dart';
@@ -112,11 +113,17 @@ class OtpView extends GetView<OtpController> {
                       child: Padding(
                         padding:  EdgeInsets.only(top: Get.height/20),
                         child: GestureDetector(
-                          onTap: (){
+                          onTap: () async {
                             if(!controller.resendOtpTimer){
-                              controller.setResendOtpTimer=true;
-                              controller.timerStart();
-                              controller.resendOtp();
+                              bool internetCheck= await NetworkConnection().checkInternetConnection();
+                              if(internetCheck){
+                                controller.setResendOtpTimer=true;
+                                controller.timerStart();
+                                controller.resendOtp();
+                              }
+                              else{
+                                Get.snackbar(AppStrings.appName, AppStrings.internetProblem);
+                              }
                             }
                           },
                           child: controller.resendOtpTimer?

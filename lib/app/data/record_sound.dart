@@ -73,7 +73,7 @@ class RecordSound{
 
    stopRecorder() async {
    return await _mRecorder!.stopRecorder().then((value) {
-    // prin
+    // print
       recordedAudioPath=value!;
       _mplaybackReady = true;
       return value;
@@ -100,9 +100,9 @@ class RecordSound{
 
 // ----------------------------- UI --------------------------------------------
 
-  getRecorderFn({required String path}) {
+  Future getRecorderFn({required String path}) async {
     if (!_mRecorderIsInited || !_mPlayer!.isStopped) {
-      return ;
+      return;
     }
      _mRecorder!.isStopped ? record(path) : stopRecorder();
   }

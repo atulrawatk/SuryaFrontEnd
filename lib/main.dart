@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:surya/app/utils/initializer.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 import 'app/routes/app_pages.dart';
 import 'app/utils/styles/custom_styles.dart';
 import 'app/utils/utils.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.routes,
       // theme: (_themeController.isDarkTheme),
       theme: (Get.isDarkMode) ? AppTheme.darkTheme : AppTheme.lightTheme,
+     // themeMode: ThemeService().theme,
       darkTheme: AppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       // themeMode: ThemeMode.system,

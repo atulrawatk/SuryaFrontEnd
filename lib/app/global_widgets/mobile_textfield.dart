@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:surya/app/utils/styles/colors.dart';
 import 'package:surya/app/utils/styles/dimens.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 
 class TextFormWidget extends StatelessWidget {
   final TextEditingController? textEditingController;
@@ -38,7 +39,7 @@ class TextFormWidget extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: AppDimen.fontSize16,
-            color: (Get.isPlatformDarkMode)
+            color: (ThemeService.isDark.value)
                 ? AppColors.whiteColor
                 : AppColors.textColor,
             fontWeight: FontWeight.w400,
@@ -55,7 +56,7 @@ class TextFormWidget extends StatelessWidget {
           )),
       style: TextStyle(
         fontSize: AppDimen.fontSize16,
-        color: (Get.isPlatformDarkMode)
+        color: (ThemeService.isDark.value)
             ? AppColors.whiteColor
             : AppColors.textColor,
         fontWeight: FontWeight.w400,

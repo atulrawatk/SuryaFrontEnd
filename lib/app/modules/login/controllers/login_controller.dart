@@ -6,6 +6,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/device_services.dart';
 import 'package:surya/app/data/encryption/aes.dart';
@@ -16,6 +17,7 @@ import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
 import 'package:surya/app/global_widgets/loader.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/network/network_connection.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/dot_env_controller.dart';
 
@@ -42,45 +44,54 @@ class LoginController extends GetxController {
       return;
     }
     else{
-      LoadingOverlay.of().show();
-      //Device ID
-      String deviceId= await DeviceServices.deviceInfo();
+     bool internetCheck= await  NetworkConnection().checkInternetConnection();
+      if(internetCheck){
+        LoadingOverlay.of().show();
+        //Device ID
+        String deviceId= await DeviceServices.deviceInfo();
+        print(deviceId);
+        //2cdab9c0dbebfe3f
 
-      //Firebase Push token
-      String pushToken= await FirebaseService.getFirebaseTokenFromNative();
+        //Firebase Push token
+        String pushToken= await FirebaseService.getFirebaseTokenFromNative();
 
-      //Phone Number Encrypt
-      String phoneNumEncrypted=_aesEncryption.encryptAESFull(plainText: mobileController.value.text);
+        //Phone Number Encrypt
+        String phoneNumEncrypted=_aesEncryption.encryptAESFull(plainText: mobileController.value.text);
 
-      Map<String,Object> body={
-        "phone_number":phoneNumEncrypted,
-        "device_id":deviceId,
-        "push_token":pushToken
-      };
+        Map<String,Object> body={
+          "phone_number":phoneNumEncrypted,
+          "device_id":deviceId,
+          "push_token":pushToken
+        };
 
-      await _apiHelper.login(body: body).then((res) {
-        LoadingOverlay.of().hide();
-        if(res.isOk){
-          SendOtpModel userModel=SendOtpModel.fromJson(res.body);
+        await _apiHelper.login(body: body).then((res) {
+          LoadingOverlay.of().hide();
+          if(res.isOk){
+            SendOtpModel userModel=SendOtpModel.fromJson(res.body);
 
-          //Setting User Id and Token
-          BasicUserModel.userId=userModel.success!.data!.id!;
-          BasicUserModel.userEncNumber=phoneNumEncrypted;
-          BasicUserModel.userToken=userModel.success!.data!.verificationToken!;
+            //Setting User Id and Token
+            BasicUserModel.userId=userModel.success!.data!.id!;
+            BasicUserModel.userEncNumber=phoneNumEncrypted;
+            BasicUserModel.userToken=userModel.success!.data!.verificationToken!;
 
-          Timer(Duration(milliseconds: 300),()=>Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
-          Get.toNamed(Routes.OTP);
-          //setEncNumber=phoneNumEncrypted;
-        }
-        else{
-       //   Get.showSnackbar(GetBar(message: "Gooooooo",isDismissible: true,duration: Duration(seconds: 1),));
-       Get.snackbar(AppStrings.mobileVerification, AppStrings.userNotExist,snackPosition: SnackPosition.BOTTOM);
-          //  Future.error("Sign in Error");
-        }
-      }).catchError((error){
-        // Get.back();
-        // Get.snackbar(AppStrings.appName, AppStrings.internetProblem);
-      });
+            Timer(Duration(milliseconds: 300),()=>Get.snackbar(AppStrings.otp, AppStrings.otpSentSuccessfully));
+            Get.toNamed(Routes.OTP);
+            //setEncNumber=phoneNumEncrypted;
+          }
+          else{
+            //   Get.showSnackbar(GetBar(message: "Gooooooo",isDismissible: true,duration: Duration(seconds: 1),));
+            Get.snackbar(AppStrings.mobileVerification, AppStrings.userNotExist,snackPosition: SnackPosition.BOTTOM);
+            //  Future.error("Sign in Error");
+          }
+        }).catchError((error){
+          // Get.back();
+          //
+        });
+      }
+      else{
+        Get.snackbar(AppStrings.appName, AppStrings.internetProblem);
+      }
+
 
     }
  }

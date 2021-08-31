@@ -6,6 +6,7 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 
 import '../controllers/enter_pin_controller.dart';
 
@@ -35,7 +36,7 @@ class EnterPinView extends GetView<EnterPinController> {
             semanticsLabel: AppStrings.delete,
           ),
           shouldTriggerVerification: controller.verificationNotifier.stream,
-          backgroundColor: Get.isPlatformDarkMode?AppColors.grey_500:AppColors.grey_500,
+          backgroundColor: ThemeService.isDark.value?AppColors.grey_500:AppColors.grey_500,
           cancelCallback: (){
             Get.back();
           },

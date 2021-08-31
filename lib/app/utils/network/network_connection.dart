@@ -12,18 +12,23 @@ enum ConnectivityStatus {
 class NetworkConnection
 {
 
+  NetworkConnection._();
+  factory NetworkConnection(){
+    return NetworkConnection._();
+  }
+
   //Internet Connectivity
-  bool checkConnection=false;
+  bool _checkConnection=false;
   Future<bool> checkInternetConnection() async {
     try {
       final result = await InternetAddress.lookup("www.google.com");
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        checkConnection = true;
+        _checkConnection = true;
       }
     } on SocketException catch (_) {
-      checkConnection = false;
+      _checkConnection = false;
     }
-    return checkConnection;
+    return _checkConnection;
   }
 
 }
