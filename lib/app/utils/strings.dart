@@ -261,6 +261,7 @@ class AppStrings {
   static const String smallDarkTheme="dark";
   static const String smallLightTheme="light";
   static const String smallSystemTheme="system";
+  static const String smallSeen="seen";
 
 
   //Audio Calling
