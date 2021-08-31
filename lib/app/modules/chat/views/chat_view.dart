@@ -135,10 +135,19 @@ class ChatView extends GetView<ChatController> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                controller
-                                                                    .replyMessage
-                                                                    .value
-                                                                    .message,
+                                                                // controller.replyMessage.value.messageType=="media"?
+                                                                // controller.replyMessage.value.mediaType==AppStrings.videoSmall?
+                                                                //     AppStrings.video:
+                                                                // controller.replyMessage.value.mediaType==AppStrings.audioSmall?
+                                                                // AppStrings.audio:
+                                                                // controller.replyMessage.value.mediaType==AppStrings.imageSmall?
+                                                                // AppStrings.image:controller.replyMessage.value.mediaType==AppStrings.documentSmall?
+                                                                // AppStrings.document:
+                                                                // controller
+                                                                //     .replyMessage
+                                                                //     .value
+                                                                //     .message,
+                                                                controller.returnReplyMessage(),
                                                                 maxLines: 2,
                                                                 overflow:
                                                                     TextOverflow

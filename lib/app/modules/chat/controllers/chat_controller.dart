@@ -77,7 +77,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     });
   }
 
-  animationInitilizer() {
+  animationInitializer() {
     animController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -211,7 +211,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     focusNodeListen();
     recordSound = RecordSound();
     player = AudioPlayer();
-    animationInitilizer();
+    animationInitializer();
      mediaController=Get.put(ChatMediaController());
   }
 
@@ -300,9 +300,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: "media",
-                time: TimeOfDay.now().toString(),
-                messageSeen: "seen",
+                messageType: AppStrings.mediaSmall,
+                time: DateTime.now().toUtc().toString(),
+                messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
@@ -316,9 +316,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: "media",
-                time: TimeOfDay.now().toString(),
-                messageSeen: "seen",
+                messageType: AppStrings.mediaSmall,
+                time: DateTime.now().toUtc().toString(),
+                messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
@@ -331,9 +331,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: "media",
+                messageType: AppStrings.mediaSmall,
                 time: DateTime.now().toUtc().toString(),
-                messageSeen: "seen",
+                messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
@@ -346,9 +346,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: "media",
-                time: TimeOfDay.now().toString(),
-                messageSeen: "seen",
+                messageType: AppStrings.mediaSmall,
+                time: DateTime.now().toUtc().toString(),
+                messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
@@ -364,6 +364,27 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     } catch (e) {
       Get.snackbar(AppStrings.appName, e.toString());
       Get.back();
+    }
+  }
+  String returnReplyMessage(){
+    if(replyMessage.value.messageType==AppStrings.mediaSmall){
+      switch(replyMessage.value.mediaType){
+        case AppStrings.videoSmall:
+          return AppStrings.video;
+        case AppStrings.imageSmall:
+          return AppStrings.image;
+        case AppStrings.documentSmall:
+          return AppStrings.document;
+        case AppStrings.audioSmall:
+          return AppStrings.audio;
+          default: return AppStrings.mediaSmall;
+      }
+    }
+    else{
+
+          return replyMessage
+          .value
+          .message;
     }
   }
 
