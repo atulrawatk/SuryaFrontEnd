@@ -7,6 +7,7 @@ import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
 import 'package:surya/app/modules/chat_media/views/chat_media_view.dart';
+import 'package:surya/app/modules/group_chat/controllers/group_chat_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/theme_service.dart';
@@ -126,6 +127,29 @@ class ChatMessage extends StatelessWidget {
                                             ),
                                           )
                                         : SizedBox(),
+                                    chatController==GroupChatController()?
+                                    ListView(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      children: [
+                                        Text(
+                                          modelList[index].name=="You"?"":modelList[index].name
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              top:
+                                              modelList[index].repliedMessage !=
+                                                  null
+                                                  ? 5.h
+                                                  : 0),
+                                          child: Text(
+                                            modelList[index].message,
+                                            maxLines: null,
+                                          ),
+                                        )
+                                      ],
+                                    ):
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top:
