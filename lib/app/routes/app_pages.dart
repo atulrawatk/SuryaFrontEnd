@@ -16,6 +16,8 @@ import 'package:surya/app/modules/createPin/bindings/create_pin_binding.dart';
 import 'package:surya/app/modules/createPin/views/create_pin_view.dart';
 import 'package:surya/app/modules/enterPin/bindings/enter_pin_binding.dart';
 import 'package:surya/app/modules/enterPin/views/enter_pin_view.dart';
+import 'package:surya/app/modules/group_chat/bindings/group_chat_binding.dart';
+import 'package:surya/app/modules/group_chat/views/group_chat_view.dart';
 import 'package:surya/app/modules/home/bindings/home_binding.dart';
 import 'package:surya/app/modules/home/views/home_view.dart';
 import 'package:surya/app/modules/login/bindings/login_binding.dart';
@@ -129,6 +131,11 @@ class AppPages {
       name: _Paths.OTHER_USER_PROFILE,
       page: () => OtherUserProfileView(),
       binding: OtherUserProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.GROUP_CHAT,
+      page: () => GroupChatView(),
+      binding: GroupChatBinding(),
     ),
   ];
 }

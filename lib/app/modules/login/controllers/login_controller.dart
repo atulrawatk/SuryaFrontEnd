@@ -86,6 +86,7 @@ class LoginController extends GetxController {
         }).catchError((error){
           // Get.back();
           //
+          Logger().e("==>> Login API Issue");
         });
       }
       else{

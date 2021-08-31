@@ -18,7 +18,7 @@ import 'package:video_player/video_player.dart';
 class ChatMessage extends StatelessWidget {
   final List<ChatMessageModel> modelList;
   final ScrollController scrollController;
-  final ChatController chatController;
+  final dynamic chatController;
   ChatMessage(
       {Key? key,
       required this.modelList,

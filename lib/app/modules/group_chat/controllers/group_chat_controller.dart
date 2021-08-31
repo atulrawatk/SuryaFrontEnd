@@ -2,26 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
 import 'package:surya/app/utils/strings.dart';
-import 'package:video_player/video_player.dart';
 
-
-class ChatController extends GetxController with SingleGetTickerProviderMixin {
+class GroupChatController extends GetxController with SingleGetTickerProviderMixin{
   RxBool sendStatus = false.obs;
   ScrollController scrollController = new ScrollController();
   TextEditingController textEditingController = new TextEditingController();
@@ -53,18 +44,18 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   RxList<ChatMessageModel> selectedMessages = <ChatMessageModel>[].obs;
   Rx<ChatMessageModel> replyMessage = ChatMessageModel(
-          name: "",
-          isGroup: false,
-          isMe: false,
-          message: "",
-          messageType: "",
-          time: "",
-          messageSeen: "",
-          repliedMessage: null,
-          isSelected: false.obs,
-          media: File(""),
-          mediaType: "",
-          isTapped: false.obs)
+      name: "",
+      isGroup: false,
+      isMe: false,
+      message: "",
+      messageType: "",
+      time: "",
+      messageSeen: "",
+      repliedMessage: null,
+      isSelected: false.obs,
+      media: File(""),
+      mediaType: "",
+      isTapped: false.obs)
       .obs;
 
   focusNodeListen() {
@@ -131,7 +122,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
         isGroup: false,
         isMe: false,
         message:
-            "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
+        "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
         messageType: "text",
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
@@ -212,7 +203,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     recordSound = RecordSound();
     player = AudioPlayer();
     animationInitilizer();
-     mediaController=Get.put(ChatMediaController());
+    mediaController=Get.put(ChatMediaController());
   }
 
   sendStatusCheck() {
@@ -279,19 +270,19 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     try {
       FilePickerResult? result = await FilePicker.platform
           .pickFiles(
-              type: file == AppStrings.audioSmall
-                  ? FileType.audio
-                  : file == AppStrings.videoSmall
-                      ? FileType.video
-                      : file == AppStrings.imageSmall
-                          ? FileType.image
-                          : FileType.any,
-              allowCompression: true,
-              allowMultiple: false,
-              withData: false,
-              onFileLoading: (file) {}
-              //allowedExtensions: ['jpg', 'jpeg', 'gif', "png", "raw", "eps", "svg"],
-              )
+          type: file == AppStrings.audioSmall
+              ? FileType.audio
+              : file == AppStrings.videoSmall
+              ? FileType.video
+              : file == AppStrings.imageSmall
+              ? FileType.image
+              : FileType.any,
+          allowCompression: true,
+          allowMultiple: false,
+          withData: false,
+          onFileLoading: (file) {}
+        //allowedExtensions: ['jpg', 'jpeg', 'gif', "png", "raw", "eps", "svg"],
+      )
           .then((value) {
         switch (file) {
           case AppStrings.videoSmall:
