@@ -23,12 +23,14 @@ class ChatView extends GetView<ChatController> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: Image.asset(
-          AppStrings.chatBackground,
-          color: AppColors.transparentAppColor,
-          fit: BoxFit.fitWidth,
-        ).image)),
+          image: DecorationImage(
+            image: Image.asset(
+              AppStrings.chatBackground,
+              color: AppColors.transparentAppColor,
+            ).image,
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Stack(
           children: [
             //Chat Messages
@@ -59,15 +61,13 @@ class ChatView extends GetView<ChatController> {
                             child: Padding(
                               padding: EdgeInsets.all(5.w),
                               child: Container(
-                                constraints:
-                                    BoxConstraints(maxHeight: 150.h),
+                                constraints: BoxConstraints(maxHeight: 150.h),
                                 width: Get.width,
                                 decoration: BoxDecoration(
                                     color: ThemeService.isDark.value
                                         ? Get.theme.backgroundColor
                                         : AppColors.grey_350,
-                                    borderRadius:
-                                        BorderRadius.circular(30.r)),
+                                    borderRadius: BorderRadius.circular(30.r)),
                                 child: Padding(
                                     padding: EdgeInsets.only(
                                         left: 15.w, top: 2.h, bottom: 2.h),
@@ -84,43 +84,40 @@ class ChatView extends GetView<ChatController> {
                                                     children: [
                                                       Container(
                                                         width: Get.width,
-                                                        margin:
-                                                            EdgeInsets.only(
-                                                                top: 5.h,
-                                                                right:
-                                                                    10.w),
+                                                        margin: EdgeInsets.only(
+                                                            top: 5.h,
+                                                            right: 10.w),
                                                         decoration: BoxDecoration(
-                                                            color: AppColors
-                                                                .chatBg
+                                                            color: AppColors.chatBg
                                                                 .withOpacity(
                                                                     0.3),
                                                             borderRadius: BorderRadius.only(
-                                                                topRight:
-                                                                    Radius.circular(20
-                                                                        .r),
-                                                                topLeft: Radius.circular(
-                                                                    20.r),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20.r),
+                                                                topLeft:
+                                                                    Radius.circular(
+                                                                        20.r),
                                                                 bottomLeft:
-                                                                    Radius.circular(20
-                                                                        .r),
+                                                                    Radius.circular(
+                                                                        20.r),
                                                                 bottomRight:
                                                                     Radius.circular(
                                                                         20.r))),
                                                         child: Padding(
                                                           padding:
-                                                              EdgeInsets
-                                                                  .all(
-                                                                      10.h),
+                                                              EdgeInsets.all(
+                                                                  10.h),
                                                           child: ListView(
-                                                            shrinkWrap:
-                                                                true,
+                                                            shrinkWrap: true,
                                                             physics:
                                                                 NeverScrollableScrollPhysics(),
                                                             children: [
                                                               Padding(
-                                                                padding: EdgeInsets.only(
-                                                                    bottom:
-                                                                        4.h),
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            4.h),
                                                                 child: Text(
                                                                   controller
                                                                           .replyMessage
@@ -154,30 +151,26 @@ class ChatView extends GetView<ChatController> {
 
                                                       //Remove replied Message
                                                       Align(
-                                                        alignment: Alignment
-                                                            .topRight,
-                                                        child:
-                                                            GestureDetector(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: GestureDetector(
                                                           onTap: () {
-                                                            controller
-                                                                    .replyMsg
-                                                                    .value =
-                                                                false;
+                                                            controller.replyMsg
+                                                                .value = false;
                                                             //controller.replyMessage=null;
                                                           },
                                                           child: Container(
                                                             width:
-                                                                Get.width /
-                                                                    6,
+                                                                Get.width / 6,
                                                             height: 35.h,
-                                                            alignment:
-                                                                Alignment
-                                                                    .topRight,
+                                                            alignment: Alignment
+                                                                .topRight,
                                                             child: Padding(
-                                                              padding: EdgeInsets.only(
-                                                                  right:
-                                                                      18.w,
-                                                                  top: 9.h),
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          18.w,
+                                                                      top: 9.h),
                                                               child: Icon(
                                                                 Icons.clear,
                                                                 color: AppColors
@@ -200,17 +193,14 @@ class ChatView extends GetView<ChatController> {
                                                           if (!controller
                                                               .emojiOpen
                                                               .value) {
-                                                            controller
-                                                                .emojiOpen
+                                                            controller.emojiOpen
                                                                 .value = true;
                                                             controller
                                                                 .messageFocusField
                                                                 .unfocus();
                                                           } else {
-                                                            controller
-                                                                    .emojiOpen
-                                                                    .value =
-                                                                false;
+                                                            controller.emojiOpen
+                                                                .value = false;
                                                             controller
                                                                 .messageFocusField
                                                                 .requestFocus();
@@ -227,24 +217,20 @@ class ChatView extends GetView<ChatController> {
                                                                       .value
                                                               ? Icons
                                                                   .emoji_emotions
-                                                              : Icons
-                                                                  .keyboard,
+                                                              : Icons.keyboard,
                                                           size: 20.h,
                                                         ))),
                                                 Flexible(
                                                   flex: 5,
                                                   child: Container(
-                                                    constraints:
-                                                        BoxConstraints(
-                                                            maxHeight:
-                                                                80.h),
+                                                    constraints: BoxConstraints(
+                                                        maxHeight: 80.h),
                                                     child: ChatMessageField(
                                                       controller: controller
                                                           .textEditingController,
                                                       hintText: AppStrings
                                                           .enterAMessage,
-                                                      showTrackOnHover:
-                                                          true,
+                                                      showTrackOnHover: true,
                                                       focusNode: controller
                                                           .messageFocusField,
                                                     ),
@@ -254,8 +240,8 @@ class ChatView extends GetView<ChatController> {
                                                   child: IconButton(
                                                     icon: Icon(
                                                       Icons.attach_file,
-                                                      color: Get.theme
-                                                          .accentColor,
+                                                      color:
+                                                          Get.theme.accentColor,
                                                       size: 22.w,
                                                     ),
                                                     onPressed: () {
@@ -271,56 +257,60 @@ class ChatView extends GetView<ChatController> {
                                                                     callback:
                                                                         () {
                                                                       controller.attachFile(
-                                                                          file: AppStrings.documentSmall);
+                                                                          file:
+                                                                              AppStrings.documentSmall);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .document
                                                                         .trim(),
-                                                                    icon: Icon(
-                                                                        Icons.file_copy)),
+                                                                    icon: Icon(Icons
+                                                                        .file_copy)),
                                                                 UserImageEditMenu(
                                                                     callback:
                                                                         () {
                                                                       controller.attachFile(
-                                                                          file: AppStrings.videoSmall);
+                                                                          file:
+                                                                              AppStrings.videoSmall);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .video
                                                                         .trim(),
-                                                                    icon: Icon(
-                                                                        Icons.video_collection)),
+                                                                    icon: Icon(Icons
+                                                                        .video_collection)),
                                                                 UserImageEditMenu(
                                                                     callback:
                                                                         () {
                                                                       controller.attachFile(
-                                                                          file: AppStrings.audioSmall);
+                                                                          file:
+                                                                              AppStrings.audioSmall);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .audio
                                                                         .trim(),
-                                                                    icon: Icon(
-                                                                        Icons.audiotrack)),
+                                                                    icon: Icon(Icons
+                                                                        .audiotrack)),
                                                                 UserImageEditMenu(
                                                                     callback:
                                                                         () {
                                                                       controller.attachFile(
-                                                                          file: AppStrings.imageSmall);
+                                                                          file:
+                                                                              AppStrings.imageSmall);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .image
                                                                         .trim(),
-                                                                    icon: Icon(
-                                                                        Icons.image))
+                                                                    icon: Icon(Icons
+                                                                        .image))
                                                               ],
                                                             ),
                                                           ),
-                                                          backgroundColor: ThemeService
-                                                                  .isDark
-                                                                  .value
-                                                              ? AppColors
-                                                                  .snackBarColor
-                                                              : AppColors
-                                                                  .grey_350);
+                                                          backgroundColor:
+                                                              ThemeService.isDark
+                                                                      .value
+                                                                  ? AppColors
+                                                                      .snackBarColor
+                                                                  : AppColors
+                                                                      .grey_350);
                                                     },
                                                   ),
                                                 )
@@ -333,9 +323,8 @@ class ChatView extends GetView<ChatController> {
                           ),
                           Obx(() => AnimatedContainer(
                                 duration: Duration(milliseconds: 300),
-                                width: controller.isRecording.value
-                                    ? 150.w
-                                    : 60.w,
+                                width:
+                                    controller.isRecording.value ? 150.w : 60.w,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -343,8 +332,8 @@ class ChatView extends GetView<ChatController> {
                                     controller.isRecording.value
                                         ? Flexible(
                                             child: Padding(
-                                              padding: EdgeInsets.only(
-                                                  left: 10.w),
+                                              padding:
+                                                  EdgeInsets.only(left: 10.w),
                                               child: Icon(
                                                 Icons.fiber_manual_record,
                                                 color: AppColors.red,
@@ -357,8 +346,8 @@ class ChatView extends GetView<ChatController> {
                                         ? Expanded(
                                             flex: 2,
                                             child: AnimatedDefaultTextStyle(
-                                              duration: Duration(
-                                                  milliseconds: 400),
+                                              duration:
+                                                  Duration(milliseconds: 400),
                                               style: TextStyle(
                                                   fontSize: controller
                                                           .isRecording.value
@@ -390,18 +379,15 @@ class ChatView extends GetView<ChatController> {
                                           child: controller.sendStatus.value
                                               ? IconButton(
                                                   onPressed: () {
-                                                    controller
-                                                        .sendMessage();
+                                                    controller.sendMessage();
                                                   },
-                                                  icon: Icon(
-                                                      Icons.near_me_sharp),
-                                                  color:
-                                                      Get.theme.accentColor,
+                                                  icon:
+                                                      Icon(Icons.near_me_sharp),
+                                                  color: Get.theme.accentColor,
                                                 )
                                               : Icon(
                                                   Icons.mic,
-                                                  color:
-                                                      Get.theme.accentColor,
+                                                  color: Get.theme.accentColor,
                                                 ),
                                         ),
                                       ),
@@ -412,8 +398,7 @@ class ChatView extends GetView<ChatController> {
                                     color: controller.isRecording.value
                                         ? Colors.green
                                         : Colors.transparent,
-                                    borderRadius:
-                                        BorderRadius.circular(50.r)),
+                                    borderRadius: BorderRadius.circular(50.r)),
                               ))
                         ],
                       ),
@@ -429,10 +414,10 @@ class ChatView extends GetView<ChatController> {
                                   aspectRatio: 1.5,
                                   child: EmojiPicker(
                                     onEmojiSelected: (category, emoji) {
-                                      controller.textEditingController
-                                          .text = controller
-                                              .textEditingController.text +
-                                          emoji.emoji;
+                                      controller.textEditingController.text =
+                                          controller
+                                                  .textEditingController.text +
+                                              emoji.emoji;
                                       controller.scrollController.position
                                           .forcePixels(controller
                                                   .scrollController
@@ -451,8 +436,7 @@ class ChatView extends GetView<ChatController> {
                                         horizontalSpacing: 10.h,
                                         initCategory: Category.SMILEYS,
                                         bgColor: Color(0xFFF2F2F2),
-                                        indicatorColor:
-                                            Get.theme.primaryColor,
+                                        indicatorColor: Get.theme.primaryColor,
                                         iconColor: Colors.grey,
                                         iconColorSelected:
                                             Get.theme.primaryColor,
@@ -464,8 +448,7 @@ class ChatView extends GetView<ChatController> {
                                         noRecentsStyle: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.black26),
-                                        categoryIcons:
-                                            const CategoryIcons(),
+                                        categoryIcons: const CategoryIcons(),
                                         buttonMode: ButtonMode.MATERIAL),
                                   ),
                                 ),
@@ -568,10 +551,9 @@ class ChatView extends GetView<ChatController> {
                                         Flexible(
                                           flex: 3,
                                           child: Container(
-                                              alignment:
-                                                  Alignment.centerLeft,
-                                              padding: EdgeInsets.only(
-                                                  left: 10.w),
+                                              alignment: Alignment.centerLeft,
+                                              padding:
+                                                  EdgeInsets.only(left: 10.w),
                                               height: 50.h,
                                               child: Text(
                                                 "Tushar",
@@ -586,7 +568,7 @@ class ChatView extends GetView<ChatController> {
                               ),
                             ),
                             Expanded(
-                              flex:2,
+                              flex: 2,
                               child: Row(
                                 children: [
                                   Flexible(

@@ -20,9 +20,8 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> nameController =
       new TextEditingController(text: "Sangam").obs;
 
-  RxString aboutString=AppStrings.busy.obs;
-  RxString nameString="Sangam".obs;
-
+  RxString aboutString = AppStrings.busy.obs;
+  RxString nameString = "Sangam".obs;
 
   FocusNode aboutFocusNode = new FocusNode();
   FocusNode nameFocusNode = new FocusNode();
@@ -31,20 +30,26 @@ class UserProfileController extends GetxController {
     super.onInit();
     getUserTheme();
   }
-  getUserTheme(){
-    String storedTheme=AppGetStorage.storage.read(AppStrings.appTheme);
-    switch(storedTheme){
-      case AppStrings.smallLightTheme:
-        themeButton.value=2;
-        break;
-      case AppStrings.smallDarkTheme:
-        themeButton.value=1;
-        break;
-      case AppStrings.smallSystemTheme:
-        themeButton.value=0;
-        break;
+
+  getUserTheme() {
+    if (AppGetStorage.storage.hasData(AppStrings.appTheme)) {
+      String storedTheme = AppGetStorage.storage.read(AppStrings.appTheme);
+      switch (storedTheme) {
+        case AppStrings.smallLightTheme:
+          themeButton.value = 2;
+          break;
+        case AppStrings.smallDarkTheme:
+          themeButton.value = 1;
+          break;
+        case AppStrings.smallSystemTheme:
+          themeButton.value = 0;
+          break;
+      }
+    } else {
+      themeButton.value = 0;
     }
   }
+
   Rx<File> profileImage = File("").obs;
   RxBool setProfileImage = false.obs;
   Future imagePicker(ImageSource imageSource) async {

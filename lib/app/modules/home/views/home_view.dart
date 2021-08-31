@@ -8,6 +8,7 @@ import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
+import 'package:surya/app/utils/styles/theme_service.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -15,7 +16,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         appBar: AppBar(
           elevation: 0,
           title: Obx(
@@ -61,7 +61,10 @@ class HomeView extends GetView<HomeController> {
                       Get.back();
                     },
                     icon: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios,
+                      color: ThemeService.isDark.value
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   )
                 : SizedBox(),
@@ -94,7 +97,7 @@ class HomeView extends GetView<HomeController> {
                           color: AppColors.whiteColor,
                         ),
                         onSelected: (value) {
-                          if(value==AppStrings.settings.trim()){
+                          if (value == AppStrings.settings.trim()) {
                             Get.toNamed(Routes.USER_PROFILE);
                           }
                         },
@@ -155,7 +158,7 @@ class HomeView extends GetView<HomeController> {
                         return Material(
                           color: AppColors.transparent,
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               Get.toNamed(Routes.CHAT);
                             },
                             child: Row(
@@ -166,10 +169,7 @@ class HomeView extends GetView<HomeController> {
                                     flex: 1,
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                        left: 10.w,
-                                        top: 10.h,
-                                        bottom: 10.h
-                                      ),
+                                          left: 10.w, top: 10.h, bottom: 10.h),
                                       height: Get.height / 14,
                                       width: Get.height / 14,
                                       decoration: BoxDecoration(
@@ -178,8 +178,8 @@ class HomeView extends GetView<HomeController> {
                                             image: AssetImage(
                                                 AppImages.dummyProfileImage),
                                             fit: BoxFit.fill),
-                                        borderRadius:
-                                            BorderRadius.circular(Get.height / 2),
+                                        borderRadius: BorderRadius.circular(
+                                            Get.height / 2),
                                       ),
                                     )),
                                 Flexible(
@@ -194,19 +194,21 @@ class HomeView extends GetView<HomeController> {
                                         mainAxisSize: MainAxisSize.min,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
                                           Text("Tushar",
                                               textAlign: TextAlign.left,
-                                              style: AppTextStyle.multiChatName()),
+                                              style:
+                                                  AppTextStyle.multiChatName()),
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 top: Get.height / 100),
                                             child: Text(
                                               "Hii, This side Sangam ewfjw efr f ew f ewf ewf",
                                               textAlign: TextAlign.left,
-                                              style:
-                                                  AppTextStyle.multiChatMessage(),
+                                              style: AppTextStyle
+                                                  .multiChatMessage(),
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
                                             ),

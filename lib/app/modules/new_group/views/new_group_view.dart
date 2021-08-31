@@ -131,11 +131,14 @@ class NewGroupView extends GetView<NewGroupController> {
                         return Padding(
                           padding: EdgeInsets.only(right: 10.h),
                           child: GestureDetector(
-                            onTap: (){
-                              controller.contacts.remove(controller.contacts.keys.elementAt(index));
+                            onTap: () {
+                              controller.contacts.remove(
+                                  controller.contacts.keys.elementAt(index));
                             },
                             child: GroupContactListMember(
-                              name: controller.contacts.values.elementAt(index).name),
+                                name: controller.contacts.values
+                                    .elementAt(index)
+                                    .name),
                           ),
                         );
                       },
@@ -145,61 +148,64 @@ class NewGroupView extends GetView<NewGroupController> {
                 : Container()),
             // Divider(),
             // Obx(() => controller.totalList.length > 0?
-                ListView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    addAutomaticKeepAlives: true,
-                    itemBuilder: (_, i) {
-                      return Obx(()=>GroupContactListTile(
-                        onTap: () {
-                          if (controller.contacts
-                              .containsKey(controller.totalList[i].name)) {
-                            controller.contacts
-                                .remove(controller.totalList[i].name);
-                          } else {
-                            controller.contacts.putIfAbsent(
-                                controller.totalList[i].name,
-                                    () => controller.totalList[i]);
-                          }
-                         // controller.setGroupMemberList = 1;
-                        },
-                        isOnTap: true,
-                        title: controller.totalList[i].name,
-                        subTitle: Text(
-                          controller.totalList[i].number.toString(),
-                          textAlign: TextAlign.left,
-                          style: AppTextStyle.multiChatMessage(),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-
-                        customWidget: Text(""),
-                        circleAvatar: !controller.contacts.containsKey(controller.totalList[i].name)
-                            ?ContactCircleAvatar(imageUrl: AppImages.dummyProfileImage,)
-                            :SelectedContactCircleAvatar(imageUrl: AppImages.dummyProfileImage),
-                      ));
-                    },
-                    // separatorBuilder: (_, i) => Divider(),
-                    itemCount: controller.totalList.length,
-                  )
-                // : SizedBox())
+            ListView.builder(
+              physics: ScrollPhysics(),
+              shrinkWrap: true,
+              addAutomaticKeepAlives: true,
+              itemBuilder: (_, i) {
+                return Obx(() => GroupContactListTile(
+                      onTap: () {
+                        if (controller.contacts
+                            .containsKey(controller.totalList[i].name)) {
+                          controller.contacts
+                              .remove(controller.totalList[i].name);
+                        } else {
+                          controller.contacts.putIfAbsent(
+                              controller.totalList[i].name,
+                              () => controller.totalList[i]);
+                        }
+                        // controller.setGroupMemberList = 1;
+                      },
+                      onLongPress: () {},
+                      isOnTap: true,
+                      title: controller.totalList[i].name,
+                      subTitle: Text(
+                        controller.totalList[i].number.toString(),
+                        textAlign: TextAlign.left,
+                        style: AppTextStyle.multiChatMessage(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      customWidget: Text(""),
+                      circleAvatar: !controller.contacts
+                              .containsKey(controller.totalList[i].name)
+                          ? ContactCircleAvatar(
+                              imageUrl: AppImages.dummyProfileImage,
+                            )
+                          : SelectedContactCircleAvatar(
+                              imageUrl: AppImages.dummyProfileImage),
+                    ));
+              },
+              // separatorBuilder: (_, i) => Divider(),
+              itemCount: controller.totalList.length,
+            )
+            // : SizedBox())
           ],
         ),
-    floatingActionButton: Obx(() => controller.contacts.length > 0?FloatingActionButton(
-      onPressed: () {
-      },
-      child:Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r)
-        ),
-            child: Icon(
-        Icons.arrow_forward_ios,
-        size: AppDimen.normalSize,
-        color: Get.theme.accentColor,
-      ),
-          ),
-      backgroundColor: AppColors.lightAppColor,
-    ):SizedBox())
-    );
+        floatingActionButton: Obx(() => controller.contacts.length > 0
+            ? FloatingActionButton(
+                onPressed: () {},
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(10.r)),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    size: AppDimen.normalSize,
+                    color: Get.theme.accentColor,
+                  ),
+                ),
+                backgroundColor: AppColors.lightAppColor,
+              )
+            : SizedBox()));
   }
 }
