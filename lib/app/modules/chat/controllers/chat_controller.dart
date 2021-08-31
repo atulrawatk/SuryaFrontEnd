@@ -394,5 +394,6 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onClose() {
     recordSound.closeRecord();
+    stopAudio();
   }
 }

@@ -13,7 +13,7 @@ class AudioCallingView extends GetView<AudioCallingController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
+      backgroundColor: ThemeService.isDark.value?Get.theme.backgroundColor:Colors.white.withOpacity(0.9),
       body: SafeArea(
         child: Stack(
           children: [
@@ -62,7 +62,7 @@ class AudioCallingView extends GetView<AudioCallingController> {
                               icon: Icon(
                                 Icons.volume_up,
                                 color: ThemeService.isDark.value
-                                    ? Get.theme.accentColor
+                                    ?!controller.isSpeakerOn.value?Get.theme.accentColor:Colors.black
                                     : Colors.black,
                               ),
                               onPressed: () {
@@ -82,7 +82,7 @@ class AudioCallingView extends GetView<AudioCallingController> {
                               icon: Icon(
                                 Icons.videocam_off,
                                 color: ThemeService.isDark.value
-                                    ? Get.theme.accentColor
+                                    ? !controller.isVideoOn.value?Get.theme.accentColor:Colors.black
                                     : Colors.black,
                               ),
                               onPressed: () {
@@ -102,7 +102,7 @@ class AudioCallingView extends GetView<AudioCallingController> {
                               icon: Icon(
                                 Icons.mic_off,
                                 color: ThemeService.isDark.value
-                                    ? Get.theme.accentColor
+                                    ? !controller.isMute.value?Get.theme.accentColor:Colors.black
                                     : Colors.black,
                               ),
                               onPressed: () {
