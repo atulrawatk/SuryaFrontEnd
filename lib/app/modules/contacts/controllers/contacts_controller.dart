@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
 import 'package:surya/app/modules/home/controllers/home_controller.dart';
 import 'package:surya/app/utils/utils.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+// import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ContactsController extends GetxController {
   //
@@ -15,14 +15,14 @@ class ContactsController extends GetxController {
 
   int pageSize = 20;
 
-  final PagingController<int, ContactUsers> pagingController =
-      PagingController(firstPageKey: 0);
+  // final PagingController<int, ContactUsers> pagingController =
+  //     PagingController(firstPageKey: 0);
 
-  fetchpaging() {
-    pagingController.addPageRequestListener((pageKey) {
-      // fetchPage(pageKey);
-    });
-  }
+  // fetchpaging() {
+  //   pagingController.addPageRequestListener((pageKey) {
+  //     // fetchPage(pageKey);
+  //   });
+  // }
 
   RxBool _isSearch = false.obs;
   bool get isSearch => this._isSearch.value;
@@ -122,7 +122,7 @@ class ContactsController extends GetxController {
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
     mobileContactsList = homeController.mobileContactsList;
-    // setTotalList = ContactUsers.contacts;
+    setTotalList = ContactUsers.contacts;
     // scrollController.addListener(_scrollListener);
     // _scrollListener();
   }

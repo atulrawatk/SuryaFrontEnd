@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/app_dialog_box.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/app_text_style.dart';
@@ -239,7 +240,16 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      AppDialogBox.showDialog(
+                        AppStrings.areYouSureBlockUser,
+                        title: "",
+                        onTapYes: () {
+                          Get.back();
+                        },
+                        onTapNo: () {},
+                      );
+                    },
                     child: Container(
                       padding:
                           EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),
@@ -279,7 +289,16 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      AppDialogBox.showDialog(
+                        AppStrings.areYouSureRemoveFromContact,
+                        title: "",
+                        onTapYes: () {
+                          Get.back();
+                        },
+                        onTapNo: () {},
+                      );
+                    },
                     child: Container(
                       padding:
                           EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),

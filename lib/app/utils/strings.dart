@@ -259,6 +259,9 @@ class AppStrings {
   static final String logout = "Logout".tr;
   // static final String delete = "Logout".tr;
   static final String areYouSureLogout = "Are you sure logout?".tr;
+  static final String areYouSureBlockUser = "Are you sure block this user?".tr;
+  static final String areYouSureRemoveFromContact =
+      "Are you sure remove from your contact?".tr;
   static final String areYouSureDeleteAccount =
       "Are you sure delete account?".tr;
   static final String darkTheme = "Dark Theme".tr;
