@@ -131,10 +131,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller
-                                                      .replyMessage
-                                                      .value
-                                                      .message,
+                                                  controller.returnReplyMessage(),
                                                   maxLines: 2,
                                                   overflow:
                                                   TextOverflow
@@ -264,7 +261,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                                                 () {
                                                               controller.attachFile(
                                                                   file:
-                                                                  AppStrings.documentSmall);
+                                                                  MediaType.document);
                                                             },
                                                             hintText: AppStrings
                                                                 .document
@@ -277,7 +274,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                                                 () {
                                                               controller.attachFile(
                                                                   file:
-                                                                  AppStrings.videoSmall);
+                                                                  MediaType.video);
                                                             },
                                                             hintText: AppStrings
                                                                 .video
@@ -290,7 +287,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                                                 () {
                                                               controller.attachFile(
                                                                   file:
-                                                                  AppStrings.audioSmall);
+                                                                  MediaType.audio);
                                                             },
                                                             hintText: AppStrings
                                                                 .audio
@@ -303,7 +300,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                                                 () {
                                                               controller.attachFile(
                                                                   file:
-                                                                  AppStrings.imageSmall);
+                                                                  MediaType.image);
                                                             },
                                                             hintText: AppStrings
                                                                 .image

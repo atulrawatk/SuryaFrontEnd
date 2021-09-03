@@ -15,13 +15,14 @@ import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
 import 'package:surya/app/modules/other_user_profile/controllers/other_user_profile_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:video_player/video_player.dart';
-
 
 class ChatController extends GetxController with SingleGetTickerProviderMixin {
   RxBool sendStatus = false.obs;
@@ -59,21 +60,22 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
           isGroup: false,
           isMe: false,
           message: "",
-          messageType: "",
+          messageType: MessageType.text,
           time: "",
           messageSeen: "",
           repliedMessage: null,
           isSelected: false.obs,
           media: File(""),
-          mediaType: "",
+          mediaType: MediaType.none,
           isTapped: false.obs)
       .obs;
 
-  otherUserProfile(){
+  otherUserProfile() {
     // OtherUserProfileController otherUserProfileController=Get.put(OtherUserProfileController());
     // otherUserProfileController.mediaMessages=oneToOneChatModel.value;
-    Get.toNamed(Routes.OTHER_USER_PROFILE,arguments: oneToOneChatModel);
+    Get.toNamed(Routes.OTHER_USER_PROFILE, arguments: userModel.messageList);
   }
+
   focusNodeListen() {
     messageFocusField.addListener(() {
       if (messageFocusField.hasFocus) {
@@ -93,74 +95,74 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     myAnimation = CurvedAnimation(curve: Curves.linear, parent: animController);
   }
 
-  RxList<ChatMessageModel> oneToOneChatModel = [
-    ChatMessageModel(
-        name: "",
-        isGroup: false,
-        isMe: true,
-        message: "Hi",
-        messageType: "text",
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: "",
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "Harish",
-        isGroup: false,
-        isMe: false,
-        message: "Hello",
-        messageType: "text",
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: "",
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "",
-        isGroup: false,
-        isMe: true,
-        message: "How are you?",
-        messageType: "text",
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: "",
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "Harish",
-        isGroup: false,
-        isMe: false,
-        message:
-            "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
-        messageType: "text",
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: "",
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "",
-        isGroup: false,
-        isMe: true,
-        message: "Me too!!",
-        messageType: "text",
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: "",
-        isTapped: false.obs)
-  ].toList(growable: true).obs;
+  // RxList<ChatMessageModel> oneToOneChatModel = [
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: false,
+  //       isMe: true,
+  //       message: "Hi",
+  //       messageType: "text",
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: "",
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "Harish",
+  //       isGroup: false,
+  //       isMe: false,
+  //       message: "Hello",
+  //       messageType: "text",
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: "",
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: false,
+  //       isMe: true,
+  //       message: "How are you?",
+  //       messageType: "text",
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: "",
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "Harish",
+  //       isGroup: false,
+  //       isMe: false,
+  //       message:
+  //           "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
+  //       messageType: "text",
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: "",
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: false,
+  //       isMe: true,
+  //       message: "Me too!!",
+  //       messageType: "text",
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: "",
+  //       isTapped: false.obs)
+  // ].toList(growable: true).obs;
 
   timerStart() {
     if (stopTimer.value) {
@@ -190,18 +192,18 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   sendMessage() {
     if (textEditingController.text.length > 0) {
-      oneToOneChatModel.add(ChatMessageModel(
+      userModel.messageList.add(ChatMessageModel(
           name: "You",
           isGroup: false,
           isMe: true,
           message: textEditingController.text,
-          messageType: "text",
+          messageType: MessageType.text,
           time: TimeOfDay.now().toString(),
           messageSeen: "seen",
           repliedMessage: replyMsg.value ? replyMessage.value : null,
           isSelected: false.obs,
           media: File(""),
-          mediaType: "",
+          mediaType: MediaType.none,
           isTapped: false.obs));
       replyMsg.value = false;
       emojiOpen.value = false;
@@ -210,16 +212,19 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
           .forcePixels(scrollController.position.maxScrollExtent + 55.h);
     }
   }
+
   late ChatMediaController mediaController;
+  late ChatUserModel userModel;
   @override
   void onInit() {
     super.onInit();
+    userModel=Get.arguments;
     sendStatusCheck();
     focusNodeListen();
     recordSound = RecordSound();
     player = AudioPlayer();
     animationInitializer();
-     mediaController=Get.put(ChatMediaController());
+    mediaController = Get.put(ChatMediaController());
   }
 
   sendStatusCheck() {
@@ -235,23 +240,26 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   Future recordMessages() async {
-    await recordSound.getRecorderFn(path: "surya_recording${DateTime.now().toIso8601String()}.mp4").then((value) {
-      if(stopTimer.value){
+    await recordSound
+        .getRecorderFn(
+            path: "surya_recording${DateTime.now().toIso8601String()}.mp4")
+        .then((value) {
+      if (stopTimer.value) {
         // recordSound.recordedAudioPath="surya_recording${DateTime.now().toIso8601String()}.mp4";
-        Future.delayed(Duration(seconds: 1),(){
-          String audioPath=recordSound.recordedAudioPath;
-          oneToOneChatModel.add(ChatMessageModel(
+        Future.delayed(Duration(seconds: 1), () {
+          String audioPath = recordSound.recordedAudioPath;
+          userModel.messageList.add(ChatMessageModel(
               name: "You",
               isGroup: false,
               isMe: true,
               message: "",
-              messageType: "media",
+              messageType: MessageType.media,
               time: TimeOfDay.now().toString(),
               messageSeen: "seen",
               repliedMessage: replyMsg.value ? replyMessage.value : null,
               isSelected: false.obs,
               media: File(audioPath),
-              mediaType: "audio",
+              mediaType: MediaType.audio,
               isTapped: false.obs));
         });
       }
@@ -260,9 +268,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   Future playAudio(String path) async {
     //File file = File(path);
-    await player
-        .setFilePath(path)
-        .whenComplete(() => player.play());
+    await player.setFilePath(path).whenComplete(() => player.play());
   }
 
   Future stopAudio() async {
@@ -271,26 +277,26 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   removeMessages() {
     selectedMessages.removeWhere((element) {
-      if (oneToOneChatModel.contains(element)) {
-        oneToOneChatModel.remove(element);
+      if (userModel.messageList.contains(element)) {
+        userModel.messageList.remove(element);
         return true;
       } else {
         return false;
       }
     });
-    print(oneToOneChatModel.length);
+    print(userModel.messageList.length);
     print(selectedMessages.length);
   }
 
-  Future attachFile({required String file}) async {
+  Future attachFile({required MediaType file}) async {
     try {
       FilePickerResult? result = await FilePicker.platform
           .pickFiles(
-              type: file == AppStrings.audioSmall
+              type: file == MediaType.audio
                   ? FileType.audio
-                  : file == AppStrings.videoSmall
+                  : file == MediaType.video
                       ? FileType.video
-                      : file == AppStrings.imageSmall
+                      : file == MediaType.image
                           ? FileType.image
                           : FileType.any,
               allowCompression: true,
@@ -301,65 +307,65 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
               )
           .then((value) {
         switch (file) {
-          case AppStrings.videoSmall:
-            oneToOneChatModel.add(ChatMessageModel(
+          case MediaType.video:
+            userModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.videoSmall,
+                mediaType: MediaType.video,
                 isTapped: false.obs));
             //mediaController.videoController=VideoPlayerController.file(File(value.paths.first!))..initialize();
             break;
-          case AppStrings.audioSmall:
-            oneToOneChatModel.add(ChatMessageModel(
+          case MediaType.audio:
+            userModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType:MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.audioSmall,
+                mediaType: MediaType.audio,
                 isTapped: false.obs));
             break;
-          case AppStrings.imageSmall:
-            oneToOneChatModel.add(ChatMessageModel(
+          case MediaType.image:
+            userModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.imageSmall,
+                mediaType: MediaType.image,
                 isTapped: false.obs));
             break;
           default:
-            oneToOneChatModel.add(ChatMessageModel(
+            userModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.documentSmall,
+                mediaType: MediaType.document,
                 isTapped: false.obs));
         }
         Get.back();
@@ -373,25 +379,23 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
       Get.back();
     }
   }
-  String returnReplyMessage(){
-    if(replyMessage.value.messageType==AppStrings.mediaSmall){
-      switch(replyMessage.value.mediaType){
-        case AppStrings.videoSmall:
-          return AppStrings.video;
-        case AppStrings.imageSmall:
-          return AppStrings.image;
-        case AppStrings.documentSmall:
-          return AppStrings.document;
-        case AppStrings.audioSmall:
-          return AppStrings.audio;
-          default: return AppStrings.mediaSmall;
-      }
-    }
-    else{
 
-          return replyMessage
-          .value
-          .message;
+  String returnReplyMessage() {
+    if (replyMessage.value.messageType == MessageType.media) {
+      switch (replyMessage.value.mediaType) {
+        case MediaType.video:
+          return AppStrings.video;
+        case MediaType.image:
+          return AppStrings.image;
+        case MediaType.document:
+          return AppStrings.document;
+        case MediaType.audio:
+          return AppStrings.audio;
+        default:
+          return AppStrings.document;
+      }
+    } else {
+      return replyMessage.value.message;
     }
   }
 

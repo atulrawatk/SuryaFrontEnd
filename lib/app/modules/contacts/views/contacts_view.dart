@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:contacts_service/contacts_service.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
+import 'package:surya/app/data/models/chat_message_model.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/global_widgets/contact_circle_avatar.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/group_contact_list_member.dart';
@@ -279,7 +282,15 @@ class ContactsView extends GetView<ContactsController> {
                                     .putIfAbsent(contact.name, () => contact);
                               }
                             } else {
-                              Get.toNamed(Routes.CHAT);
+                              Get.toNamed(Routes.CHAT,
+                                  arguments: ChatUserModel(
+                                      name: contact.name.obs,
+                                      number: contact.number.toString(),
+                                      isGroup: false,
+                                      users: <ChatUserModel>[].obs,
+                                      profileImage: File("").obs,
+                                      isBlocked: false.obs,
+                                      messageList: <ChatMessageModel>[].obs));
                             }
                             // controller.setGroupMemberList = 1;
                           },

@@ -1,11 +1,9 @@
 import 'package:get/get.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
-import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 
-class OtherUserProfileController extends GetxController {
-
+class GroupProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();

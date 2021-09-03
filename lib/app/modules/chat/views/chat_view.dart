@@ -8,6 +8,7 @@ import 'package:surya/app/global_widgets/chat_message_field.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/user_image_edit_menu.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
@@ -41,7 +42,7 @@ class ChatView extends GetView<ChatController> {
                         bottom: controller.replyMsg.value ? 115.h : 55.h,
                         top: 55.h),
                     child: Obx(() => ChatMessage(
-                          modelList: controller.oneToOneChatModel.value,
+                          modelList: controller.userModel.messageList.value,
                           scrollController: controller.scrollController,
                           chatController: controller,
                         )),
@@ -255,7 +256,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                              AppStrings.documentSmall);
+                                                                          MediaType.document);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .document
@@ -267,7 +268,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                              AppStrings.videoSmall);
+                                                                          MediaType.video);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .video
@@ -279,7 +280,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                              AppStrings.audioSmall);
+                                                                          MediaType.audio);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .audio
@@ -291,7 +292,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                              AppStrings.imageSmall);
+                                                                          MediaType.image);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .image

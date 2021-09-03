@@ -11,6 +11,7 @@ import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 
 class GroupChatController extends GetxController with SingleGetTickerProviderMixin{
@@ -49,13 +50,13 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
       isGroup: true,
       isMe: false,
       message: "",
-      messageType: "",
+      messageType: MessageType.text,
       time: "",
       messageSeen: "",
       repliedMessage: null,
       isSelected: false.obs,
       media: File(""),
-      mediaType: "",
+      mediaType: MediaType.none,
       isTapped: false.obs)
       .obs;
 
@@ -84,39 +85,39 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isGroup: true,
         isMe: true,
         message: "Hi",
-        messageType: "text",
+        messageType: MessageType.text,
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
         repliedMessage: null,
         isSelected: false.obs,
         media: File(""),
-        mediaType: "",
+        mediaType: MediaType.none,
         isTapped: false.obs),
     ChatMessageModel(
         name: "Harish",
         isGroup: true,
         isMe: false,
         message: "Hello",
-        messageType: "text",
+        messageType: MessageType.text,
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
         repliedMessage: null,
         isSelected: false.obs,
         media: File(""),
-        mediaType: "",
+        mediaType: MediaType.none,
         isTapped: false.obs),
     ChatMessageModel(
         name: "",
         isGroup: true,
         isMe: true,
-        message: "How are you?",
-        messageType: "text",
+        message:"How are you?",
+        messageType: MessageType.text,
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
         repliedMessage: null,
         isSelected: false.obs,
         media: File(""),
-        mediaType: "",
+        mediaType: MediaType.none,
         isTapped: false.obs),
     ChatMessageModel(
         name: "Harish",
@@ -124,26 +125,26 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isMe: false,
         message:
         "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
-        messageType: "text",
+        messageType: MessageType.text,
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
         repliedMessage: null,
         isSelected: false.obs,
         media: File(""),
-        mediaType: "",
+        mediaType: MediaType.none,
         isTapped: false.obs),
     ChatMessageModel(
         name: "",
         isGroup: true,
         isMe: true,
         message: "Me too!!",
-        messageType: "text",
+        messageType: MessageType.text,
         time: "18:00:00 03-08-2021",
         messageSeen: "seen",
         repliedMessage: null,
         isSelected: false.obs,
         media: File(""),
-        mediaType: "",
+        mediaType: MediaType.none,
         isTapped: false.obs)
   ].toList(growable: true).obs;
 
@@ -180,13 +181,13 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           isGroup: true,
           isMe: true,
           message: textEditingController.text,
-          messageType: "text",
+          messageType: MessageType.text,
           time: TimeOfDay.now().toString(),
           messageSeen: "seen",
           repliedMessage: replyMsg.value ? replyMessage.value : null,
           isSelected: false.obs,
           media: File(""),
-          mediaType: "",
+          mediaType: MediaType.none,
           isTapped: false.obs));
       replyMsg.value = false;
       emojiOpen.value = false;
@@ -234,13 +235,13 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
               isGroup: true,
               isMe: true,
               message: "",
-              messageType: "media",
+              messageType: MessageType.media,
               time: TimeOfDay.now().toString(),
               messageSeen: "seen",
               repliedMessage: replyMsg.value ? replyMessage.value : null,
               isSelected: false.obs,
               media: File(audioPath),
-              mediaType: "audio",
+              mediaType: MediaType.audio,
               isTapped: false.obs));
         });
       }
@@ -271,15 +272,15 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     print(selectedMessages.length);
   }
 
-  Future attachFile({required String file}) async {
+  Future attachFile({required MediaType file}) async {
     try {
       FilePickerResult? result = await FilePicker.platform
           .pickFiles(
-          type: file == AppStrings.audioSmall
+          type: file == MediaType.audio
               ? FileType.audio
-              : file == AppStrings.videoSmall
+              : file == MediaType.video
               ? FileType.video
-              : file == AppStrings.imageSmall
+              : file == MediaType.image
               ? FileType.image
               : FileType.any,
           allowCompression: true,
@@ -290,50 +291,50 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
       )
           .then((value) {
         switch (file) {
-          case AppStrings.videoSmall:
+          case MediaType.video:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.videoSmall,
+                mediaType: MediaType.video,
                 isTapped: false.obs));
             //mediaController.videoController=VideoPlayerController.file(File(value.paths.first!))..initialize();
             break;
-          case AppStrings.audioSmall:
+          case MediaType.audio:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.audioSmall,
+                mediaType: MediaType.audio,
                 isTapped: false.obs));
             break;
-          case AppStrings.imageSmall:
+          case MediaType.image:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.imageSmall,
+                mediaType: MediaType.image,
                 isTapped: false.obs));
             break;
           default:
@@ -342,13 +343,13 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
                 isGroup: true,
                 isMe: true,
                 message: "",
-                messageType: AppStrings.mediaSmall,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
                 media: File(value!.paths.first!),
-                mediaType: AppStrings.documentSmall,
+                mediaType: MediaType.document,
                 isTapped: false.obs));
         }
         Get.back();
@@ -363,17 +364,17 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     }
   }
   String returnReplyMessage(){
-    if(replyMessage.value.messageType==AppStrings.mediaSmall){
+    if(replyMessage.value.messageType==MessageType.media){
       switch(replyMessage.value.mediaType){
-        case AppStrings.videoSmall:
+        case MediaType.video:
           return AppStrings.video;
-        case AppStrings.imageSmall:
+        case MediaType.image:
           return AppStrings.image;
-        case AppStrings.documentSmall:
+        case MediaType.document:
           return AppStrings.document;
-        case AppStrings.audioSmall:
+        case MediaType.audio:
           return AppStrings.audio;
-        default: return AppStrings.mediaSmall;
+        default: return AppStrings.document;
       }
     }
     else{
@@ -385,7 +386,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   }
 
   toOtherUserProfile(){
-   Get.toNamed(Routes.OTHER_USER_PROFILE,arguments: oneToOneChatModel);
+   Get.toNamed(Routes.GROUP_PROFILE,arguments: oneToOneChatModel);
   }
 
   Future startRecording() async {

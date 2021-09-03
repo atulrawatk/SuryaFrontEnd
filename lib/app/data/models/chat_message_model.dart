@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:surya/app/utils/utils.dart';
 
 class ChatMessageModel {
   bool isMe;
@@ -8,10 +9,10 @@ class ChatMessageModel {
   RxBool isSelected;
   String name;
   String message;
-  String messageType;
+  MessageType messageType;
   String time;
   String messageSeen;
-  String mediaType;
+  MediaType mediaType;
   File media;
   RxBool isTapped;
   ChatMessageModel? repliedMessage;

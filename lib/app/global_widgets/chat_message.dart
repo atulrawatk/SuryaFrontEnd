@@ -77,7 +77,7 @@ class ChatMessage extends StatelessWidget {
                           constraints: BoxConstraints(maxWidth: 200.w),
                           padding: EdgeInsets.all(10.h),
                           child: modelList[index].messageType ==
-                                  AppStrings.textSmall
+                                  MessageType.text
                               ? ListView(
                                   shrinkWrap: true,
                                   padding: EdgeInsets.zero,
@@ -182,7 +182,7 @@ class ChatMessage extends StatelessWidget {
                                   ],
                                 )
                               : modelList[index].mediaType ==
-                                      AppStrings.audioSmall
+                                      MediaType.audio
                                   ? IconButton(
                                       color: Get.theme.accentColor,
                                       icon: !modelList[index].isTapped.value
@@ -220,7 +220,7 @@ class ChatMessage extends StatelessWidget {
                                       },
                                     )
                                   : modelList[index].mediaType ==
-                                          AppStrings.imageSmall
+                                          MediaType.image
                                       ? Material(
                                           color: Colors.transparent,
                                           child: InkWell(
@@ -276,7 +276,7 @@ class ChatMessage extends StatelessWidget {
                                           ),
                                         )
                                       : modelList[index].mediaType ==
-                                              AppStrings.videoSmall
+                                              MediaType.video
                                           ? Material(
                                               color: Colors.transparent,
                                               child: InkWell(
@@ -354,7 +354,7 @@ class ChatMessage extends StatelessWidget {
                                               ),
                                             )
                                           : modelList[index].mediaType ==
-                                                  AppStrings.documentSmall
+                                                  MediaType.document
                                               ? Material(
                                                   child: InkWell(
                                                     onTap: () {},

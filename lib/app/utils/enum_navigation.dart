@@ -10,3 +10,16 @@ enum AppBarchange {
   search,
   selectcontacts,
 }
+
+enum MediaType{
+  video,
+  image,
+  document,
+  audio,
+  none
+}
+
+enum MessageType{
+  text,
+  media
+}

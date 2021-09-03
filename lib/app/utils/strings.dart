@@ -134,12 +134,12 @@ class AppStrings {
   static final String image="Image".tr;
   static final String fileNotSupported="File not supported".tr;
   static final String fileNotAdded="File not added".tr;
-  static const String imageSmall="image";
-  static const String videoSmall="video";
-  static const String documentSmall="document";
-  static const String audioSmall="audio";
-  static const String textSmall="text";
-  static const String mediaSmall="media";
+  // static const String imageSmall="image";
+  // static const String videoSmall="video";
+  // static const String documentSmall="document";
+  // static const String audioSmall="audio";
+  // static const String textSmall="text";
+  // static const String mediaSmall="media";
 
 
   //Other User Profile
