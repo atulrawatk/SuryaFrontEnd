@@ -502,6 +502,10 @@ class UserProfileView extends GetView<UserProfileController> {
                       SecureUserModel().deleteUserSessionSecure(
                         AppStrings.screenPin,
                       );
+                      // AppStrings.screenPin
+                      // SecureUserModel().deleteUserSessionSecure(
+                      //   AppStrings.screenPin,
+                      // );
                       AppGetStorage.clearStorage();
                       Get.back();
                     },

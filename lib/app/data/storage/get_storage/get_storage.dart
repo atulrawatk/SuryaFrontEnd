@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 
-class AppGetStorage{
+class AppGetStorage {
   static GetStorage _storage = GetStorage();
 
   static GetStorage get storage => _storage;
@@ -15,5 +15,7 @@ class AppGetStorage{
   static clearStorage() => _storage.erase();
 
   static bool hasData(String key) => _storage.hasData(key);
+
+  //  static listenValue(String key, dynamic value) => _storage.listenKey(key, (value) { });
 
 }
