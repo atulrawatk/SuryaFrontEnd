@@ -78,7 +78,10 @@ class ChatMessage extends StatelessWidget {
                           padding: EdgeInsets.all(10.h),
                           child: modelList[index].messageType ==
                                   AppStrings.textSmall
-                              ? Column(
+                              ? ListView(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  physics: NeverScrollableScrollPhysics(),
                                   children: [
                                     modelList[index].repliedMessage != null
                                         ? Container(
@@ -127,36 +130,50 @@ class ChatMessage extends StatelessWidget {
                                             ),
                                           )
                                         : SizedBox(),
-                                    chatController==GroupChatController()?
-                                    ListView(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      padding: EdgeInsets.zero,
-                                      children: [
-                                        Text(
-                                          modelList[index].name=="You"?"":modelList[index].name
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              top:
-                                              modelList[index].repliedMessage !=
-                                                  null
-                                                  ? 5.h
-                                                  : 0),
-                                          child: Text(
-                                            modelList[index].message,
-                                            maxLines: null,
-                                          ),
-                                        )
-                                      ],
-                                    ):
-                                    Padding(
+                                    modelList[index].isGroup
+                                        ?  !modelList[index].isMe
+                                    ?ListView(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            padding: EdgeInsets.zero,
+                                            children: [
+                                               Padding(
+                                                 padding:  EdgeInsets.only(bottom:6.h),
+                                                 child: Text(modelList[index].name,style: AppTextStyle.groupChatName(),),
+                                               ),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: modelList[index]
+                                                                .repliedMessage !=
+                                                            null
+                                                        ? 5.h
+                                                        : 0),
+                                                child: Text(
+                                                  modelList[index].message,
+                                                  maxLines: null,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                        : Padding(
                                       padding: EdgeInsets.only(
-                                          top:
-                                              modelList[index].repliedMessage !=
-                                                      null
-                                                  ? 5.h
-                                                  : 0),
+                                          top: modelList[index]
+                                              .repliedMessage !=
+                                              null
+                                              ? 5.h
+                                              : 0),
+                                      child: Text(
+                                        modelList[index].message,
+                                        maxLines: null,
+                                      ),
+                                    ):Padding(
+                                      padding: EdgeInsets.only(
+                                          top: modelList[index]
+                                              .repliedMessage !=
+                                              null
+                                              ? 5.h
+                                              : 0),
                                       child: Text(
                                         modelList[index].message,
                                         maxLines: null,
@@ -205,7 +222,7 @@ class ChatMessage extends StatelessWidget {
                                   : modelList[index].mediaType ==
                                           AppStrings.imageSmall
                                       ? Material(
-                              color: Colors.transparent,
+                                          color: Colors.transparent,
                                           child: InkWell(
                                             onTap: () {
                                               if (chatController
@@ -244,7 +261,9 @@ class ChatMessage extends StatelessWidget {
                                                 height: 150.h,
                                                 width: 150.h,
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10.r),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r),
                                                   image: DecorationImage(
                                                       image: FileImage(
                                                           modelList[index]
@@ -259,7 +278,7 @@ class ChatMessage extends StatelessWidget {
                                       : modelList[index].mediaType ==
                                               AppStrings.videoSmall
                                           ? Material(
-                            color: Colors.transparent,
+                                              color: Colors.transparent,
                                               child: InkWell(
                                                 onTap: () {
                                                   if (chatController
@@ -322,10 +341,12 @@ class ChatMessage extends StatelessWidget {
                                                   child: Center(
                                                     child: CircleAvatar(
                                                       radius: 20.r,
-                                                      backgroundColor: Colors.grey[800],
+                                                      backgroundColor:
+                                                          Colors.grey[800],
                                                       child: Icon(
                                                         Icons.play_arrow,
-                                                        color:AppColors.whiteColor,
+                                                        color: AppColors
+                                                            .whiteColor,
                                                       ),
                                                     ),
                                                   ),

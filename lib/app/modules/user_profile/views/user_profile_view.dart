@@ -115,7 +115,9 @@ class UserProfileView extends GetView<UserProfileController> {
                                   ],
                                 ),
                               ),
-                              backgroundColor: ThemeService.isDark.value?AppColors.snackBarColor:AppColors.grey_350);
+                              backgroundColor: ThemeService.isDark.value
+                                  ? AppColors.snackBarColor
+                                  : AppColors.grey_350);
                         },
                         icon: Icon(
                           Icons.camera_alt,
@@ -188,7 +190,9 @@ class UserProfileView extends GetView<UserProfileController> {
                                       GestureDetector(
                                         onTap: () {
                                           Get.back();
-                                          controller.nameString.value=controller.nameController.value.text;
+                                          controller.nameString.value =
+                                              controller
+                                                  .nameController.value.text;
                                         },
                                         child: Padding(
                                           padding: EdgeInsets.only(right: 15.w),
@@ -217,7 +221,9 @@ class UserProfileView extends GetView<UserProfileController> {
                             ),
                           ),
                         ),
-                        backgroundColor: ThemeService.isDark.value?AppColors.snackBarColor:AppColors.grey_350,
+                        backgroundColor: ThemeService.isDark.value
+                            ? AppColors.snackBarColor
+                            : AppColors.grey_350,
                       );
                     },
                   ),
@@ -290,7 +296,9 @@ class UserProfileView extends GetView<UserProfileController> {
                                       GestureDetector(
                                         onTap: () {
                                           Get.back();
-                                          controller.aboutString.value=controller.aboutController.value.text;
+                                          controller.aboutString.value =
+                                              controller
+                                                  .aboutController.value.text;
                                         },
                                         child: Padding(
                                           padding: EdgeInsets.only(right: 15.w),
@@ -319,7 +327,9 @@ class UserProfileView extends GetView<UserProfileController> {
                             ),
                           ),
                         ),
-                        backgroundColor: ThemeService.isDark.value?AppColors.snackBarColor:AppColors.grey_350,
+                        backgroundColor: ThemeService.isDark.value
+                            ? AppColors.snackBarColor
+                            : AppColors.grey_350,
                       );
                     },
                   ),
@@ -424,9 +434,12 @@ class UserProfileView extends GetView<UserProfileController> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               ElevatedButton(
-                                onPressed: () async{
-                                 await controller.changeAppTheme();
-
+                                onPressed: () async {
+                                  Get.back();
+                                  Future.delayed(
+                                      Duration(milliseconds: 100),
+                                      () async =>
+                                          await controller.changeAppTheme());
                                 },
                                 child: Text(
                                   AppStrings.save,

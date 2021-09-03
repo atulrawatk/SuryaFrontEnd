@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
 
 class GroupChatController extends GetxController with SingleGetTickerProviderMixin{
@@ -45,7 +46,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   RxList<ChatMessageModel> selectedMessages = <ChatMessageModel>[].obs;
   Rx<ChatMessageModel> replyMessage = ChatMessageModel(
       name: "",
-      isGroup: false,
+      isGroup: true,
       isMe: false,
       message: "",
       messageType: "",
@@ -80,7 +81,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   RxList<ChatMessageModel> oneToOneChatModel = [
     ChatMessageModel(
         name: "",
-        isGroup: false,
+        isGroup: true,
         isMe: true,
         message: "Hi",
         messageType: "text",
@@ -93,7 +94,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isTapped: false.obs),
     ChatMessageModel(
         name: "Harish",
-        isGroup: false,
+        isGroup: true,
         isMe: false,
         message: "Hello",
         messageType: "text",
@@ -106,7 +107,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isTapped: false.obs),
     ChatMessageModel(
         name: "",
-        isGroup: false,
+        isGroup: true,
         isMe: true,
         message: "How are you?",
         messageType: "text",
@@ -119,7 +120,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isTapped: false.obs),
     ChatMessageModel(
         name: "Harish",
-        isGroup: false,
+        isGroup: true,
         isMe: false,
         message:
         "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
@@ -133,7 +134,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         isTapped: false.obs),
     ChatMessageModel(
         name: "",
-        isGroup: false,
+        isGroup: true,
         isMe: true,
         message: "Me too!!",
         messageType: "text",
@@ -176,7 +177,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     if (textEditingController.text.length > 0) {
       oneToOneChatModel.add(ChatMessageModel(
           name: "You",
-          isGroup: false,
+          isGroup: true,
           isMe: true,
           message: textEditingController.text,
           messageType: "text",
@@ -195,6 +196,8 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     }
   }
   late ChatMediaController mediaController;
+  RxMap<String,Object> groupArguments=<String,Object>{}.obs;
+  RxString groupName="".obs;
   @override
   void onInit() {
     super.onInit();
@@ -204,6 +207,8 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     player = AudioPlayer();
     animationInitializer();
     mediaController=Get.put(ChatMediaController());
+    groupName.value=Get.arguments.values.first;
+    groupArguments.addAll(Get.arguments);
   }
 
   sendStatusCheck() {
@@ -226,7 +231,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           String audioPath=recordSound.recordedAudioPath;
           oneToOneChatModel.add(ChatMessageModel(
               name: "You",
-              isGroup: false,
+              isGroup: true,
               isMe: true,
               message: "",
               messageType: "media",
@@ -288,7 +293,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           case AppStrings.videoSmall:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
-                isGroup: false,
+                isGroup: true,
                 isMe: true,
                 message: "",
                 messageType: AppStrings.mediaSmall,
@@ -304,7 +309,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           case AppStrings.audioSmall:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
-                isGroup: false,
+                isGroup: true,
                 isMe: true,
                 message: "",
                 messageType: AppStrings.mediaSmall,
@@ -319,7 +324,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           case AppStrings.imageSmall:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
-                isGroup: false,
+                isGroup: true,
                 isMe: true,
                 message: "",
                 messageType: AppStrings.mediaSmall,
@@ -334,7 +339,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           default:
             oneToOneChatModel.add(ChatMessageModel(
                 name: "You",
-                isGroup: false,
+                isGroup: true,
                 isMe: true,
                 message: "",
                 messageType: AppStrings.mediaSmall,
@@ -377,6 +382,10 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           .value
           .message;
     }
+  }
+
+  toOtherUserProfile(){
+   Get.toNamed(Routes.OTHER_USER_PROFILE,arguments: oneToOneChatModel);
   }
 
   Future startRecording() async {

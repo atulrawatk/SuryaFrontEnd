@@ -7,6 +7,7 @@ import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/group_contact_list_member.dart';
 import 'package:surya/app/global_widgets/group_contact_list_tile.dart';
 import 'package:surya/app/global_widgets/selected_contact_circle_avatar.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
@@ -57,7 +58,7 @@ class NewGroupView extends GetView<NewGroupController> {
                       Get.back();
                     },
                     icon: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios,
                     ),
                   )
                 : IconButton(
@@ -192,9 +193,11 @@ class NewGroupView extends GetView<NewGroupController> {
             // : SizedBox())
           ],
         ),
-        floatingActionButton: Obx(() => controller.contacts.length > 0
+        floatingActionButton: Obx(() => controller.contacts.length > 1
             ? FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.NEW_GROUP_NAME_CHAT,arguments: controller.contacts);
+                },
                 child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10.r)),

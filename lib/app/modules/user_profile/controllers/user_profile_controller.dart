@@ -89,7 +89,6 @@ class UserProfileController extends GetxController {
             Get.isPlatformDarkMode ? ThemeMode.dark : ThemeMode.light);
         AppGetStorage.storage
             .write(AppStrings.appTheme, AppStrings.smallSystemTheme);
-        Get.back();
         ThemeService.isDark.value = Get.isPlatformDarkMode ? true : false;
         Logger().i(AppGetStorage.storage.hasData(AppStrings.appTheme));
         Logger().i("Theme is Dark=====>>> ${ThemeService.isDark.value}");
@@ -98,7 +97,7 @@ class UserProfileController extends GetxController {
         Get.changeThemeMode(ThemeMode.dark);
         AppGetStorage.storage
             .write(AppStrings.appTheme, AppStrings.smallDarkTheme);
-        Get.back();
+
         ThemeService.isDark.value = true;
         Logger().i(AppGetStorage.storage.hasData(AppStrings.appTheme));
         Logger().i("Theme is Dark=====>>> ${ThemeService.isDark.value}");
@@ -107,7 +106,7 @@ class UserProfileController extends GetxController {
         Get.changeThemeMode(ThemeMode.light);
         AppGetStorage.storage
             .write(AppStrings.appTheme, AppStrings.smallLightTheme);
-        Get.back();
+
         ThemeService.isDark.value = false;
         Logger().i(AppGetStorage.storage.hasData(AppStrings.appTheme));
         Logger().i("Theme is Dark=====>>> ${ThemeService.isDark.value}");

@@ -544,7 +544,7 @@ class GroupChatView extends GetView<GroupChatController> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: () {
-                              Get.toNamed(Routes.OTHER_USER_PROFILE);
+                              controller.toOtherUserProfile();
                             },
                             child: Padding(
                               padding:  EdgeInsets.only(left:10.w),
@@ -562,7 +562,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                       padding: EdgeInsets.only(left: 10.w),
                                       height: 50.h,
                                       child: Text(
-                                        "Tushar",
+                                        "Surya Group",
                                         style: AppTextStyle.chatLabelText(),
                                       )),
                                 ],

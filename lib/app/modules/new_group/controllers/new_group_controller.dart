@@ -24,7 +24,6 @@ class NewGroupController extends GetxController {
     _totalList.addAll(list);
   }
 
-  RxList<ContactUsers> selectedContacts=RxList.empty(growable: true);
 
   @override
   void onInit() {

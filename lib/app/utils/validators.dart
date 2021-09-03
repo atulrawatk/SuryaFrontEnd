@@ -13,6 +13,15 @@ class Validators{
       return null;
     }
   }
+  static String? name(String? value) {
+    if (value!.isEmpty) {
+      return AppStrings.fieldIsEmpty;
+    } else if (value.length < 2) {
+      return AppStrings.enterValidName;
+    } else {
+      return null;
+    }
+  }
 }
 // class Validators {
 //   const Validators._();

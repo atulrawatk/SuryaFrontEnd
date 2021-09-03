@@ -102,6 +102,7 @@ class AppStrings {
   static final String enterValidOTP="Please enter a valid OTP".tr;
   static final String userNotExist="User not Exist".tr;
   static final String fieldIsEmpty='Field is empty!'.tr;
+  static final String enterValidName='Enter Valid Name!'.tr;
 
   //Mobile Contact
   static final String mobileContact="Mobile Contact";
@@ -263,6 +264,17 @@ class AppStrings {
   static const String smallSystemTheme="system";
   static const String smallSeen="seen";
 
+  //New Group Name
+  static final String groupName="Group Name".tr;
+  static final String enterGroupName="Enter your group name".tr;
+  static final String provideGroupSubject="Provide a group subject and optional group icon".tr;
+  static final String participants="Participants".tr;
+  static final String createGroup="Create Group".tr;
+  static const String groupNameSmall="group name";
+  static const String groupListSmall="group list";
+
+  //Other User Profile
+  static final String thereIsNoMedia="There is no media yet".tr;
 
   //Audio Calling
   static final String calling="Calling".tr;

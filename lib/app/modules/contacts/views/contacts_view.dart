@@ -445,7 +445,10 @@ class ContactsView extends GetView<ContactsController> {
       floatingActionButton: Obx(
         () => controller.contacts.length > 1
             ? FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(Routes.NEW_GROUP_NAME_CHAT,
+                      arguments: controller.contacts);
+                },
                 child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10.r)),

@@ -17,6 +17,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
+import 'package:surya/app/modules/other_user_profile/controllers/other_user_profile_controller.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:video_player/video_player.dart';
 
@@ -67,6 +69,11 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
           isTapped: false.obs)
       .obs;
 
+  otherUserProfile(){
+    // OtherUserProfileController otherUserProfileController=Get.put(OtherUserProfileController());
+    // otherUserProfileController.mediaMessages=oneToOneChatModel.value;
+    Get.toNamed(Routes.OTHER_USER_PROFILE,arguments: oneToOneChatModel);
+  }
   focusNodeListen() {
     messageFocusField.addListener(() {
       if (messageFocusField.hasFocus) {

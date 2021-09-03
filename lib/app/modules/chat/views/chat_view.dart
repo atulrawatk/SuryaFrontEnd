@@ -135,18 +135,6 @@ class ChatView extends GetView<ChatController> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                // controller.replyMessage.value.messageType=="media"?
-                                                                // controller.replyMessage.value.mediaType==AppStrings.videoSmall?
-                                                                //     AppStrings.video:
-                                                                // controller.replyMessage.value.mediaType==AppStrings.audioSmall?
-                                                                // AppStrings.audio:
-                                                                // controller.replyMessage.value.mediaType==AppStrings.imageSmall?
-                                                                // AppStrings.image:controller.replyMessage.value.mediaType==AppStrings.documentSmall?
-                                                                // AppStrings.document:
-                                                                // controller
-                                                                //     .replyMessage
-                                                                //     .value
-                                                                //     .message,
                                                                 controller.returnReplyMessage(),
                                                                 maxLines: 2,
                                                                 overflow:
@@ -543,7 +531,7 @@ class ChatView extends GetView<ChatController> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () {
-                                    Get.toNamed(Routes.OTHER_USER_PROFILE);
+                                    controller.otherUserProfile();
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 10.w),
