@@ -58,6 +58,7 @@ class HomeView extends GetView<HomeController> {
             () => controller.isSearch == true
                 ? IconButton(
                     onPressed: () {
+                      controller.isSearch = false;
                       Get.back();
                     },
                     icon: Icon(

@@ -5,10 +5,24 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
 import 'package:surya/app/modules/home/controllers/home_controller.dart';
 import 'package:surya/app/utils/utils.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ContactsController extends GetxController {
+  //
   HomeController homeController = Get.find<HomeController>();
+
   ScrollController scrollController = ScrollController();
+
+  int pageSize = 20;
+
+  final PagingController<int, ContactUsers> pagingController =
+      PagingController(firstPageKey: 0);
+
+  fetchpaging() {
+    pagingController.addPageRequestListener((pageKey) {
+      // fetchPage(pageKey);
+    });
+  }
 
   RxBool _isSearch = false.obs;
   bool get isSearch => this._isSearch.value;
@@ -53,12 +67,19 @@ class ContactsController extends GetxController {
     _groupMemberList.add(singleValue);
   }
 
+  int listLength = 0;
+
   RxMap<String, ContactUsers> contacts = <String, ContactUsers>{}.obs;
   RxList<ContactUsers> _totalList = RxList.empty();
   List<ContactUsers> get totalList => _totalList;
   set setTotalList(List<ContactUsers> list) {
     _totalList.addAll(list);
   }
+
+  // setTotalList1(index, List<ContactUsers> list) {
+  //   _totalList.insertAll(index, list);
+  //   print(_totalList);
+  // }
 
   RxList<ContactUsers> selectedContacts = RxList.empty(growable: true);
 
@@ -81,6 +102,18 @@ class ContactsController extends GetxController {
     // if (controller.position.extentAfter < 100) {
     //   setTotalList = ContactUsers.contacts.sublist(8, 15);
     // }
+    // scrollController.addListener(() {
+    //   setTotalList1(10, ContactUsers.contacts);
+    //   if (scrollController.position.maxScrollExtent ==
+    //       scrollController.position.pixels) {
+    //     for (int i = 0; i < 8; i++) {
+    //       listLength++;
+    //       setTotalList1(listLength, ContactUsers.contacts);
+    //       print(listLength);
+    //       // update();
+    //     }
+    //   }
+    // });
   }
 
   @override
@@ -89,17 +122,9 @@ class ContactsController extends GetxController {
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
     mobileContactsList = homeController.mobileContactsList;
-    setTotalList = ContactUsers.contacts;
-    scrollController.addListener(_scrollListener);
-    // searchController.addListener(() {
-    //   searchContactList = mobileContactsList
-    //       .where(
-    //         (element) => element.phones!.first.value!
-    //             .toLowerCase()
-    //             .contains(searchController.text),
-    //       )
-    //       .toList();
-    // });
+    // setTotalList = ContactUsers.contacts;
+    // scrollController.addListener(_scrollListener);
+    // _scrollListener();
   }
 
   @override

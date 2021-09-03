@@ -26,7 +26,6 @@ import '../controllers/contacts_controller.dart';
 class ContactsView extends GetView<ContactsController> {
   @override
   Widget build(BuildContext context) {
-    // controller.onReady();
     return Scaffold(
       appBar: AppBar(
         title: Obx(
@@ -230,43 +229,11 @@ class ContactsView extends GetView<ContactsController> {
                     controller.searchContacts.isBlank == true
                 ? ListView.builder(
                     physics: ScrollPhysics(),
-                    // semanticChildCount: 2,
-                    // cacheExtent: max(0, 2),
-                    // itemExtent: max(0, 2000),
-                    // addSemanticIndexes: true,
-                    // addRepaintBoundaries: true,
                     shrinkWrap: true,
-                    // addAutomaticKeepAlives: true,
-                    // semanticChildCount: 8,
-                    // itemExtent: 50,
                     controller: controller.scrollController,
-
                     itemBuilder: (_, i) {
-                      //controller.mobileContactsList
-                      // Contact contact =
-                      //     controller.mobileContactsList.elementAt(i);
                       ContactUsers contact = controller.totalList.elementAt(i);
-                      return
-                          // UserListTile(
-                          //   onTap: () {},
-                          //   isOnTap: true,
-                          //   title: contact.displayName != null
-                          //       ? contact.displayName!
-                          //       : "",
-                          //   subTitle: Text(
-                          //     contact.phones != null && contact.phones!.isNotEmpty
-                          //         ? contact.phones!.first.value!
-                          //         : "",
-                          //     textAlign: TextAlign.left,
-                          //     style: AppTextStyle.multiChatMessage(),
-                          //     overflow: TextOverflow.ellipsis,
-                          //     maxLines: 1,
-                          //   ),
-                          //   imageUrl: AppImages.appLogo,
-                          //   customWidget: Text(""),
-                          // );
-
-                          Obx(
+                      return Obx(
                         () => GroupContactListTile(
                           onTap: () {
                             if (controller.contacts.length > 0) {
@@ -292,7 +259,6 @@ class ContactsView extends GetView<ContactsController> {
                                       isBlocked: false.obs,
                                       messageList: <ChatMessageModel>[].obs));
                             }
-                            // controller.setGroupMemberList = 1;
                           },
                           onLongPress: () {
                             if (controller.contacts.containsKey(contact.name)) {
@@ -330,20 +296,9 @@ class ContactsView extends GetView<ContactsController> {
                 : ListView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
+                    controller: controller.scrollController,
                     addAutomaticKeepAlives: true,
                     itemBuilder: (_, i) {
-                      //controller.mobileContactsList
-                      // Contact contact = controller.mobileContactsList
-                      //     .where(
-                      //       (element) =>
-                      //           element.displayName!
-                      //               .toLowerCase()
-                      //               .contains(controller.searchContacts) ||
-                      //           element.phones!.first.value!.contains(
-                      //               controller.searchContacts.toString()),
-                      //     )
-                      //     .elementAt(i);
-
                       ContactUsers contact = controller.totalList
                           .where(
                             (element) =>
@@ -354,8 +309,7 @@ class ContactsView extends GetView<ContactsController> {
                                     controller.searchContacts.toString()),
                           )
                           .elementAt(i);
-                      // print(
-                      //     "Contacts clicks : ${contact.displayName ?? contact.phones!.first.value}");
+
                       Logger().i(
                           "Here is total number of contacts =====>>>>> ${contact.name} ${contact.number}");
 
@@ -365,24 +319,7 @@ class ContactsView extends GetView<ContactsController> {
                                 contact.number.toString().isNotEmpty ||
                                 contact.number.isBlank == false ||
                                 contact.name.isBlank == false
-                            ?
-                            // UserListTile(
-                            //     onTap: () {},
-                            //     isOnTap: true,
-                            //     title: contact.displayName!,
-                            //     subTitle: Text(
-                            //       contact.phones != null
-                            //           ? contact.phones!.first.value.toString()
-                            //           : "",
-                            //       textAlign: TextAlign.left,
-                            //       style: AppTextStyle.multiChatMessage(),
-                            //       overflow: TextOverflow.ellipsis,
-                            //       maxLines: 1,
-                            //     ),
-                            //     imageUrl: AppImages.appLogo,
-                            //     customWidget: Text(""),
-                            //   )
-                            GroupContactListTile(
+                            ? GroupContactListTile(
                                 onTap: () {
                                   if (controller.contacts.length > 0) {
                                     if (controller.contacts
@@ -399,7 +336,6 @@ class ContactsView extends GetView<ContactsController> {
                                   } else {
                                     Get.toNamed(Routes.CHAT);
                                   }
-                                  // controller.setGroupMemberList = 1;
                                 },
                                 onLongPress: () {
                                   if (controller.contacts
@@ -438,7 +374,6 @@ class ContactsView extends GetView<ContactsController> {
                               ),
                       );
                     },
-                    // separatorBuilder: (_, i) => Divider(),
                     itemCount: controller.totalList
                         .where(
                           (element) =>
