@@ -8,6 +8,7 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
 import 'package:surya/app/data/models/basic_user_model.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/data/models/mobile_contact_list_model.dart';
 import 'package:surya/app/data/models/mobile_local_contact_model.dart';
 import 'package:surya/app/data/socket/SocketService.dart';
@@ -26,6 +27,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
 
   //Tab Index Setter & Getter
   var tabIndex = 0.obs;
+  late RxList<ChatUserModel> usersMessageList = <ChatUserModel>[].obs;
 
   //Chat Type Status
   RxString _chatType = "".obs;
@@ -58,10 +60,15 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     _mobileContactList.addAll(list);
   }
 
+  getUserMessages() {
+    if (AppGetStorage.hasData(AppStrings.userMessagesList)) {
+      usersMessageList.value = AppGetStorage.getValue(AppStrings.userMessagesList);
+    }
+  }
 
   Future getContacts() async {
-    mobileContactsList =
-      await ContactsService.getContacts(withThumbnails: false,orderByGivenName: true);
+    mobileContactsList = await ContactsService.getContacts(
+        withThumbnails: false, orderByGivenName: true);
 
     Logger().i(
         "Here is total number of contacts =====>>>>> ${mobileContactsList.length}");
@@ -83,7 +90,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     });
     onInitializer();
     getContacts();
-    fetchUserValues();
+    getUserMessages();
   }
 
 //Get User Details from DB
@@ -109,11 +116,15 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
           "Token =====>>>> ${otpVerifyModel!.success!.data!.verificationToken}");
       Logger().i("=>>>Successfully User Model Imported from DB");
     }
-    if(BasicUserModel.userEncNumber==""&&BasicUserModel.userId==""&&BasicUserModel.userToken==""){
+    if (BasicUserModel.userEncNumber == "" &&
+        BasicUserModel.userId == "" &&
+        BasicUserModel.userToken == "") {
       //Setting Basic User Values at Home Page
-      BasicUserModel.userEncNumber=otpVerifyModel!.success!.data!.phoneNumber!;
-      BasicUserModel.userId=otpVerifyModel!.success!.data!.id!;
-      BasicUserModel.userToken=otpVerifyModel!.success!.data!.verificationToken!;
+      BasicUserModel.userEncNumber =
+          otpVerifyModel!.success!.data!.phoneNumber!;
+      BasicUserModel.userId = otpVerifyModel!.success!.data!.id!;
+      BasicUserModel.userToken =
+          otpVerifyModel!.success!.data!.verificationToken!;
     }
   }
 
@@ -149,10 +160,9 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  //Fetching User Details
-  fetchUserValues(){
-
-  }
+  messageTime(int index){
+    print(DateTime.now().toUtc().toString().compareTo(usersMessageList[index].messageList.last.time));
+ }
 
   @override
   void onReady() {

@@ -122,7 +122,7 @@ class ContactsController extends GetxController {
     debugPrint(homeController.chatType);
     contactList = Get.arguments;
     mobileContactsList = homeController.mobileContactsList;
-    // setTotalList = ContactUsers.contacts;
+     setTotalList = ContactUsers.contacts;
     // scrollController.addListener(_scrollListener);
     // _scrollListener();
   }

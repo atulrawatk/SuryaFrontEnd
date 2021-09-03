@@ -152,15 +152,15 @@ class HomeView extends GetView<HomeController> {
               child: TabBarView(
                 controller: controller.tabController,
                 children: [
-                  ListView.builder(
-                      itemCount: 1,
+                  controller.usersMessageList.length>0?ListView.builder(
+                      itemCount: controller.usersMessageList.length,
                       shrinkWrap: true,
-                      itemBuilder: (context, snapshot) {
+                      itemBuilder: (context, index) {
                         return Material(
                           color: AppColors.transparent,
                           child: InkWell(
                             onTap: () {
-                              Get.toNamed(Routes.CHAT);
+                              Get.toNamed(Routes.CHAT,arguments: controller.usersMessageList[index]);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -198,7 +198,7 @@ class HomeView extends GetView<HomeController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Text("Tushar",
+                                          Text(controller.usersMessageList[index].name.value,
                                               textAlign: TextAlign.left,
                                               style:
                                                   AppTextStyle.multiChatName()),
@@ -206,7 +206,7 @@ class HomeView extends GetView<HomeController> {
                                             padding: EdgeInsets.only(
                                                 top: Get.height / 100),
                                             child: Text(
-                                              "Hii, This side Sangam ewfjw efr f ew f ewf ewf",
+                                              controller.usersMessageList[index].messageList.last.message,
                                               textAlign: TextAlign.left,
                                               style: AppTextStyle
                                                   .multiChatMessage(),
@@ -234,7 +234,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         );
-                      }),
+                      }):Align(
+                    child: Text(AppStrings.thereIsNoMessages,style: AppTextStyle.mainPageHeading(),),
+                  ),
                   ListView.separated(
                       shrinkWrap: true,
                       itemBuilder: (_, i) {

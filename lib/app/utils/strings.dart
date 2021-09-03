@@ -126,10 +126,13 @@ class AppStrings {
 
   //Internet Check
   static final String internetProblem = "Internet Problem!!".tr;
+
   //HomePage
   static const String newGroup = ' New Group ';
   static const String settings = ' Settings ';
   static final String success = "Success".tr;
+  static const String userMessagesList= "User Messages List";
+  static final String thereIsNoMessages= "There is no messages yet !!";
 
 
   //Chat Screen
