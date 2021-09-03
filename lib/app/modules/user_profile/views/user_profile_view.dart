@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:surya/app/data/storage/flutter_secure/user.dart';
+import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/global_widgets/edit_user_text_field.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/profile_image.dart';
 import 'package:surya/app/global_widgets/user_image_edit_menu.dart';
+import 'package:surya/app/utils/app_dialog_box.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
@@ -485,7 +488,103 @@ class UserProfileView extends GetView<UserProfileController> {
                 ),
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  AppDialogBox.showDialog(
+                    AppStrings.areYouSureDeleteAccount,
+                    title: "",
+                    onTapYes: () {
+                      SecureUserModel().deleteUserSessionSecure(
+                        AppStrings.screenPin,
+                      );
+                      AppGetStorage.clearStorage();
+                      Get.back();
+                    },
+                    onTapNo: () {},
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
+                  decoration: BoxDecoration(color: Colors.black12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Icon(
+                          Icons.delete_forever_outlined,
+                          color: AppColors.appColor,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          AppStrings.delete,
+                          style: AppTextStyle.chatLabelText().copyWith(
+                            color: AppColors.appColor,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  AppDialogBox.showDialog(
+                    AppStrings.areYouSureLogout,
+                    title: "",
+                    onTapYes: () {
+                      SecureUserModel().deleteUserSessionSecure(
+                        AppStrings.screenPin,
+                      );
+                      AppGetStorage.clearStorage();
+                      Get.back();
+                    },
+                    onTapNo: () {},
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.only(top: 15.h, bottom: 15.h),
+                  decoration: BoxDecoration(color: Colors.black12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Icon(
+                          Icons.logout_outlined,
+                          color: AppColors.appColor,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          AppStrings.logout,
+                          style: AppTextStyle.chatLabelText().copyWith(
+                            color: AppColors.appColor,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
