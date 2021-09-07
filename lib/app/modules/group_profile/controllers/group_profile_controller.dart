@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/data/models/chat_user_model.dart';
@@ -5,24 +6,31 @@ import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 
 class GroupProfileController extends GetxController {
+  //
   late ChatUserModel groupModel;
+
+  RxBool _checkBox = RxBool(true);
+  bool get checkBox => this._checkBox.value;
+  set checkBox(bool v) => this._checkBox.value = v;
+
+  TextEditingController textController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
-    groupModel=Get.arguments;
+    groupModel = Get.arguments;
     groupModel.messageList.forEach((element) {
-      if(element.messageType==MessageType.media){
+      if (element.messageType == MessageType.media) {
         _mediaMessages.add(element);
       }
     });
   }
-  RxList<ChatMessageModel> _mediaMessages=<ChatMessageModel>[].obs;
 
-  List<ChatMessageModel> get mediaMessages=>_mediaMessages.value;
+  RxList<ChatMessageModel> _mediaMessages = <ChatMessageModel>[].obs;
 
-  set mediaMessages(List<ChatMessageModel> list){
+  List<ChatMessageModel> get mediaMessages => _mediaMessages.value;
 
-  }
+  set mediaMessages(List<ChatMessageModel> list) {}
 
   @override
   void onReady() {
@@ -33,5 +41,4 @@ class GroupProfileController extends GetxController {
   void onClose() {
     _mediaMessages.clear();
   }
-
 }

@@ -112,12 +112,10 @@ class AppStrings {
   //Mobile Contact
   static final String mobileContact = "Mobile Contact";
 
-
   //Method Channel
   static final String methodChannel = "com.surya.surya";
 
   static final String loading = "Loading".tr;
-
 
   //New Chat
   static final String chat = "Chat".tr;
@@ -131,9 +129,8 @@ class AppStrings {
   static const String newGroup = ' New Group ';
   static const String settings = ' Settings ';
   static final String success = "Success".tr;
-  static const String userMessagesList= "User Messages List";
-  static final String thereIsNoMessages= "There is no messages yet !!";
-
+  static const String userMessagesList = "User Messages List";
+  static final String thereIsNoMessages = "There is no messages yet !!";
 
   //Chat Screen
   static final String enterAMessage = 'Enter you message'.tr;
@@ -147,7 +144,6 @@ class AppStrings {
   // static const String audioSmall="audio";
   // static const String textSmall="text";
   // static const String mediaSmall="media";
-
 
   //Other User Profile
   static final String mediaLinks = "Media, links and docs".tr;
@@ -163,7 +159,6 @@ class AppStrings {
   static final String payment = "Payment".tr;
   static final String location = "Location".tr;
   static final String contact = "Contact".tr;
-
 
   //Chat Settings Menu
   static final String viewContact = "View Contact".tr;
@@ -264,6 +259,14 @@ class AppStrings {
   static final String gallery = "Gallery".tr;
   static final String removeImage = "Remove Image".tr;
   static final String changeTheme = "Change Theme".tr;
+  static final String enterNewSubject = "Enter new subject".tr;
+  static final String exit = "EXIT".tr;
+  static final String reportThisGroup = "Report this group to $appName?".tr;
+  static final String reportMessage =
+      "The most recent messages from this group will be forwared to $appName. No one in this group will be notified."
+          .tr;
+  static final String exitGroupAndDeleteChat = "Exit group and delete chat".tr;
+  static final String report = "Report".tr;
   static final String logout = "Logout".tr;
   // static final String delete = "Logout".tr;
   static final String areYouSureLogout = "Are you sure logout?".tr;
@@ -284,6 +287,7 @@ class AppStrings {
   static final String provideGroupSubject =
       "Provide a group subject and optional group icon".tr;
   static final String participants = "Participants".tr;
+  static final String editParticipants = "Edit participants".tr;
   static final String createGroup = "Create Group".tr;
   static const String groupNameSmall = "group name";
   static const String groupListSmall = "group list";
@@ -298,10 +302,9 @@ class AppStrings {
   static final String appFontFamily = 'Helvetica Neue Ultra Light'.tr;
 
   //Group Profile
-  static final String exitGroup="Exit Group".tr;
-  static final String reportGroup="Report Group".tr;
+  static final String exitGroup = "Exit Group".tr;
+  static final String reportGroup = "Report Group".tr;
 
   // Get Storage Keys
-  static const String userList="Users List";
-
+  static const String userList = "Users List";
 }

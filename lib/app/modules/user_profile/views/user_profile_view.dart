@@ -10,6 +10,7 @@ import 'package:surya/app/global_widgets/edit_user_text_field.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/profile_image.dart';
 import 'package:surya/app/global_widgets/user_image_edit_menu.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/app_dialog_box.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/strings.dart';
@@ -503,7 +504,7 @@ class UserProfileView extends GetView<UserProfileController> {
                         AppStrings.screenPin,
                       );
                       AppGetStorage.clearStorage();
-                      Get.back();
+                      Get.offNamed(Routes.WELCOME);
                     },
                     onTapNo: () {},
                   );
@@ -551,7 +552,7 @@ class UserProfileView extends GetView<UserProfileController> {
                         AppStrings.screenPin,
                       );
                       AppGetStorage.clearStorage();
-                      Get.back();
+                      Get.offNamed(Routes.WELCOME);
                     },
                     onTapNo: () {},
                   );

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:surya/app/global_widgets/edit_user_text_field.dart';
 import './utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -85,5 +86,190 @@ class AppDialogBox {
             ],
           ),
         ),
+      );
+
+  //
+  static Widget groupNameChange({
+    required TextEditingController controller,
+    required FocusNode focusNode,
+    required String hintText,
+    required Function() onTapYes,
+    required Function() onTapNo,
+    required String buttontext1,
+    required String buttontext2,
+  }) =>
+      SimpleDialog(
+        title: Text(
+          AppStrings.enterNewSubject,
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: AppTextStyle.chatLabelText(),
+        backgroundColor:
+            ThemeService.isDark.value ? AppColors.snackBarColor : Colors.white,
+        children: [
+          Container(
+            margin: EdgeInsets.all(10.r),
+            child: EditTextField(
+              controller: controller,
+              focusNode: FocusNode(),
+              hintText: hintText,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  onTapYes.call();
+                },
+                child: Text(
+                  buttontext1,
+                  style: AppTextStyle.normalText(),
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  onTapNo.call();
+                },
+                child: Text(buttontext2, style: AppTextStyle.normalText()),
+              ),
+              SizedBox(
+                width: 10.w,
+              )
+            ],
+          )
+        ],
+      );
+
+  static Widget removeGroup({
+    required FocusNode focusNode,
+    required String hintText,
+    required Function() onTapYes,
+    required Function() onTapNo,
+    required String buttontext1,
+    required String buttontext2,
+  }) =>
+      SimpleDialog(
+        title: Text(
+          hintText,
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: AppTextStyle.chatLabelText(),
+        backgroundColor:
+            ThemeService.isDark.value ? AppColors.snackBarColor : Colors.white,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  onTapYes.call();
+                },
+                child: Text(
+                  buttontext1,
+                  style: AppTextStyle.normalText(),
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  onTapNo.call();
+                },
+                child: Text(buttontext2, style: AppTextStyle.normalText()),
+              ),
+              SizedBox(
+                width: 10.w,
+              )
+            ],
+          )
+        ],
+      );
+
+  // report group
+  static Widget reportGroup({
+    required FocusNode focusNode,
+    required String title,
+    required String message,
+    required String message2,
+    required Function() onTapYes,
+    required Function() onTapNo,
+    required String buttontext1,
+    required String buttontext2,
+    required void Function(bool?)? onChanged,
+    required bool? value,
+  }) =>
+      SimpleDialog(
+        title: Text(
+          title,
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: AppTextStyle.chatLabelText(),
+        contentPadding: EdgeInsets.all(10.r),
+        backgroundColor:
+            ThemeService.isDark.value ? AppColors.snackBarColor : Colors.white,
+        children: [
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: AppTextStyle.chatLabelText().copyWith(
+              fontSize: 12.sp,
+            ),
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: value,
+                onChanged: onChanged,
+                fillColor: MaterialStateProperty.all(
+                  AppColors.primaryDarkColor,
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Text(
+                message2,
+                textAlign: TextAlign.center,
+                style: AppTextStyle.chatLabelText().copyWith(
+                  fontSize: 12.sp,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  onTapYes.call();
+                },
+                child: Text(
+                  buttontext1,
+                  style: AppTextStyle.normalText(),
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  onTapNo.call();
+                },
+                child: Text(buttontext2, style: AppTextStyle.normalText()),
+              ),
+              SizedBox(
+                width: 10.w,
+              )
+            ],
+          )
+        ],
       );
 }

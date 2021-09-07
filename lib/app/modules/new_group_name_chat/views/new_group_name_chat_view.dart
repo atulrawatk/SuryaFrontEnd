@@ -180,6 +180,30 @@ class NewGroupNameChatView extends GetView<NewGroupNameChatController> {
                       style: AppTextStyle.nameHeading(),
                     ),
                   ),
+                  // ListTile(
+                  //   title: Text(
+                  //     AppStrings.editParticipants,
+                  //     textAlign: TextAlign.left,
+                  //     style: AppTextStyle.multiChatName(),
+                  //     textDirection: TextDirection.ltr,
+                  //   ),
+                  //   selected: true,
+                  //   // contentPadding: EdgeInsets.only(top: 10.h,),
+
+                  //   leading: CircleAvatar(
+                  //     radius: 30,
+                  //     child: Icon(
+                  //       Icons.group_add,
+                  //       color: Colors.white,
+                  //     ),
+                  //     backgroundColor: AppColors.lightAppColor,
+                  //   ),
+                  //   trailing: Text(""),
+                  //   onTap: () {
+                  //     Get.toNamed(Routes.NEW_GROUP);
+                  //   },
+                  //   onLongPress: () {},
+                  // ),
                   GridView.count(
                     childAspectRatio: (1 / 1),
                     crossAxisSpacing: 0,
@@ -199,8 +223,11 @@ class NewGroupNameChatView extends GetView<NewGroupNameChatController> {
                           Padding(
                             padding: EdgeInsets.all(10.w),
                             child: Center(
-                                child: Text(
-                                    controller.contactUsers.value[index].name)),
+                              child: Text(
+                                controller.contactUsers.value[index].name,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
                           )
                         ],
                       );
