@@ -1,9 +1,5 @@
 import 'dart:io';
-import 'dart:math';
-
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
@@ -15,12 +11,10 @@ import 'package:surya/app/global_widgets/group_contact_list_member.dart';
 import 'package:surya/app/global_widgets/group_contact_list_tile.dart';
 import 'package:surya/app/global_widgets/selected_contact_circle_avatar.dart';
 import 'package:surya/app/routes/app_pages.dart';
-
 import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
 import 'package:surya/app/utils/styles/theme_service.dart';
 import 'package:surya/app/utils/utils.dart';
-
 import '../controllers/contacts_controller.dart';
 
 class ContactsView extends GetView<ContactsController> {
@@ -45,7 +39,6 @@ class ContactsView extends GetView<ContactsController> {
                       keyboardType: TextInputType.text,
                       autofocus: true,
                       onChanged: (v) => controller.searchContacts = v,
-                      // controller: _searchtextController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.transparent,
@@ -101,6 +94,7 @@ class ContactsView extends GetView<ContactsController> {
                         // select contacts remove
                         // controller.isSearch = false;
                         controller.isAppBarChange = AppBarchange.normal;
+                        controller.contacts.clear();
                       },
                       icon: Icon(
                         Icons.arrow_back_ios,

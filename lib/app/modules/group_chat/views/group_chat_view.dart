@@ -24,8 +24,8 @@ class GroupChatView extends GetView<GroupChatController> {
                 image: Image.asset(
                   AppStrings.chatBackground,
                   color: AppColors.transparentAppColor,
-                  fit: BoxFit.fitWidth,
-                ).image)),
+                ).image,
+            fit: BoxFit.cover)),
         child: Stack(
           children: [
             //Chat Messages
@@ -36,7 +36,7 @@ class GroupChatView extends GetView<GroupChatController> {
                     bottom: controller.replyMsg.value ? 115.h : 55.h,
                     top: 55.h),
                 child: Obx(() => ChatMessage(
-                  modelList: controller.oneToOneChatModel.value,
+                  modelList: controller.groupModel.messageList.value,
                   scrollController: controller.scrollController,
                   chatController: controller,
                 )),
@@ -532,7 +532,16 @@ class GroupChatView extends GetView<GroupChatController> {
                       Flexible(
                         child: Padding(
                           padding: EdgeInsets.only(left: 10.w),
-                          child: IosBackButton(),
+                          child: IconButton(
+                              onPressed: () {
+                                Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: ThemeService.isDark.value
+                                    ? Colors.white
+                                    : Colors.black,
+                              )),
                         ),
                       ),
                       Expanded(
@@ -559,7 +568,7 @@ class GroupChatView extends GetView<GroupChatController> {
                                       padding: EdgeInsets.only(left: 10.w),
                                       height: 50.h,
                                       child: Text(
-                                        "Surya Group",
+                                        controller.groupModel.name.value,
                                         style: AppTextStyle.chatLabelText(),
                                       )),
                                 ],

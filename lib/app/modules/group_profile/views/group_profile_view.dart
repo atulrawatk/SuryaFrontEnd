@@ -35,8 +35,8 @@ class GroupProfileView extends GetView<GroupProfileController> {
                 pinned: true,
                 backgroundColor: AppColors.primaryDarkColor,
                 flexibleSpace: FlexibleSpaceBar(
-                  //centerTitle: true,
-                    title: Text("Tushar",
+                    //centerTitle: true,
+                    title: Text(controller.groupModel.name.value,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.h,
@@ -75,18 +75,18 @@ class GroupProfileView extends GetView<GroupProfileController> {
                         children: [
                           Flexible(
                               child: Text(
-                                AppStrings.mediaLinks,
-                                style: AppTextStyle.chatLabelText(),
-                              )),
+                            AppStrings.mediaLinks,
+                            style: AppTextStyle.chatLabelText(),
+                          )),
                           controller.mediaMessages.length > 0
                               ? Flexible(
-                              child: IconButton(
-                                icon: Icon(Icons.arrow_forward_ios),
-                                onPressed: () {},
-                              ))
+                                  child: IconButton(
+                                  icon: Icon(Icons.arrow_forward_ios),
+                                  onPressed: () {},
+                                ))
                               : Flexible(
-                            child: Container(),
-                          )
+                                  child: Container(),
+                                )
                         ],
                       ),
                     ),
@@ -96,93 +96,104 @@ class GroupProfileView extends GetView<GroupProfileController> {
                           alignment: Alignment.topLeft,
                           child: Obx(() => controller.mediaMessages.length > 0
                               ? ListView.builder(
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return controller.mediaMessages.length > 0
-                                  ? Material(
-                                child: InkWell(
-                                  onTap: () {
-                                    GroupChatController chatController =
-                                    Get.find<GroupChatController>();
-                                    if(controller.mediaMessages[index].mediaType==MediaType.video){
-                                      chatController
-                                          .mediaController
-                                          .videoController
-                                          .value =
-                                      VideoPlayerController
-                                          .file(
-                                          controller.mediaMessages[index]
-                                              .media)
-                                        ..initialize()
-                                            .whenComplete(() {
-                                          Future.delayed(
-                                              Duration.zero,
-                                                  () => Get.toNamed(
-                                                  Routes
-                                                      .CHAT_MEDIA));
-                                          chatController
-                                              .mediaController
-                                              .videoListeners();
-                                        });
-                                      chatController
-                                          .mediaController
-                                          .chatModel =
-                                      controller.mediaMessages[index];
-                                    }
-                                    else if(controller.mediaMessages[index].mediaType==MediaType.image){
-                                      Future.delayed(
-                                          Duration.zero,
-                                              () => Get.toNamed(
-                                              Routes.CHAT_MEDIA,arguments: controller.mediaMessages[index]));
-                                      chatController.mediaController
-                                          .chatModel =
-                                      controller
-                                          .mediaMessages[index];
-                                    }
+                                  shrinkWrap: true,
+                                  physics: ScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return controller.mediaMessages.length > 0
+                                        ? Material(
+                                            child: InkWell(
+                                              onTap: () {
+                                                GroupChatController
+                                                    chatController = Get.find<
+                                                        GroupChatController>();
+                                                if (controller
+                                                        .mediaMessages[index]
+                                                        .mediaType ==
+                                                    MediaType.video) {
+                                                  chatController
+                                                          .mediaController
+                                                          .videoController
+                                                          .value =
+                                                      VideoPlayerController
+                                                          .file(controller
+                                                              .mediaMessages[
+                                                                  index]
+                                                              .media)
+                                                        ..initialize()
+                                                            .whenComplete(() {
+                                                          Future.delayed(
+                                                              Duration.zero,
+                                                              () => Get.toNamed(
+                                                                  Routes
+                                                                      .CHAT_MEDIA));
+                                                          chatController
+                                                              .mediaController
+                                                              .videoListeners();
+                                                        });
+                                                  chatController.mediaController
+                                                          .chatModel =
+                                                      controller
+                                                          .mediaMessages[index];
+                                                } else if (controller
+                                                        .mediaMessages[index]
+                                                        .mediaType ==
+                                                    MediaType.image) {
+                                                  Future.delayed(
+                                                      Duration.zero,
+                                                      () => Get.toNamed(
+                                                          Routes.CHAT_MEDIA,
+                                                          arguments: controller
+                                                                  .mediaMessages[
+                                                              index]));
+                                                  chatController.mediaController
+                                                          .chatModel =
+                                                      controller
+                                                          .mediaMessages[index];
+                                                }
+                                              },
+                                              child: Container(
+                                                  width: 120.h,
+                                                  margin: EdgeInsets.only(
+                                                      left: 5.w, right: 5.w),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      image: controller
+                                                                  .mediaMessages[
+                                                                      index]
+                                                                  .mediaType ==
+                                                              MediaType.image
+                                                          ? DecorationImage(
+                                                              image: FileImage(controller
+                                                                  .mediaMessages[
+                                                                      index]
+                                                                  .media),
+                                                              fit: BoxFit.cover)
+                                                          : null),
+                                                  child: controller.mediaMessages[index].mediaType ==
+                                                          MediaType.audio
+                                                      ? Center(
+                                                          child: Icon(
+                                                              Icons.audiotrack))
+                                                      : controller.mediaMessages[index].mediaType ==
+                                                              MediaType.video
+                                                          ? Center(child: Icon(Icons.play_arrow))
+                                                          : controller.mediaMessages[index].mediaType == MediaType.document
+                                                              ? Center(child: Text(controller.mediaMessages[index].message))
+                                                              : Container()),
+                                            ),
+                                          )
+                                        : Container();
                                   },
-                                  child: Container(
-                                      width: 120.h,
-                                      margin: EdgeInsets.only(
-                                          left: 5.w, right: 5.w),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          image: controller.mediaMessages[index].mediaType ==
-                                              MediaType.image
-                                              ? DecorationImage(
-                                              image: FileImage(
-                                                  controller
-                                                      .mediaMessages[
-                                                  index]
-                                                      .media),
-                                              fit: BoxFit.cover)
-                                              : null),
-                                      child: controller.mediaMessages[index].mediaType ==
-                                          MediaType.audio
-                                          ? Center(
-                                          child: Icon(
-                                              Icons.audiotrack))
-                                          : controller.mediaMessages[index]
-                                          .mediaType ==
-                                          MediaType.video
-                                          ? Center(child: Icon(Icons.play_arrow))
-                                          : controller.mediaMessages[index].mediaType == MediaType.document
-                                          ? Center(child: Text(controller.mediaMessages[index].message))
-                                          : Container()),
-                                ),
-                              )
-                                  : Container();
-                            },
-                            itemCount: controller.mediaMessages.length,
-                            scrollDirection: Axis.horizontal,
-                            padding:
-                            EdgeInsets.only(top: 10.h, bottom: 10.h),
-                          )
+                                  itemCount: controller.mediaMessages.length,
+                                  scrollDirection: Axis.horizontal,
+                                  padding:
+                                      EdgeInsets.only(top: 10.h, bottom: 10.h),
+                                )
                               : Center(
-                              child: Text(
-                                AppStrings.thereIsNoMedia,
-                                style: AppTextStyle.mainPageHeading(),
-                              )))),
+                                  child: Text(
+                                  AppStrings.thereIsNoMedia,
+                                  style: AppTextStyle.mainPageHeading(),
+                                )))),
                     ),
                   ],
                 ),
@@ -193,110 +204,84 @@ class GroupProfileView extends GetView<GroupProfileController> {
                     color: ThemeService.isDark.value
                         ? Colors.black26
                         : Colors.white.withOpacity(0.9)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   children: [
-                    Flexible(
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 15.w, top: 10.h),
-                            child: Text(
-                              AppStrings.phoneNumber,
-                              style: AppTextStyle.chatLabelText(),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: 15.h, left: 15.w, bottom: 20.h),
-                            child: ListView(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              physics: NeverScrollableScrollPhysics(),
-                              children: [
-                                Text(
-                                  "+91 7011575173",
-                                  style: AppTextStyle.phoneNumber(),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10.h),
-                                  child: Text(
-                                    AppStrings.mobile,
-                                    style: AppTextStyle.nameHeading(),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 15.w, top: 5.h, bottom: 5.h),
+                      child: Text(
+                        controller.groupModel.users.length.toString() +
+                            " " +
+                            AppStrings.participants,
+                        style: AppTextStyle.repliedUserNameChat(),
                       ),
                     ),
-                    Flexible(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.message),
-                              onPressed: () {},
+                    ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            onTap: () {},
+                            title: Text(
+                              controller.groupModel.users[index].name.value,
+                              style: AppTextStyle.chatLabelText(),
+                            ),
+                            leading: CircleAvatar(
+                              child: controller.groupModel.users[index]
+                                              .profileImage.value.path ==
+                                          null ||
+                                      controller.groupModel.users[index]
+                                              .profileImage.value.path ==
+                                          ""
+                                  ? Image.asset(AppImages.dummyProfileImage)
+                                  : Image.file(controller.groupModel
+                                      .users[index].profileImage.value),
+                              radius: 20.r,
+                            ),
+                            subtitle: Text(
+                              controller.groupModel.users[index].number,
+                              style: AppTextStyle.nameHeading(),
                             ),
                           ),
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.call),
-                              onPressed: () {},
-                            ),
-                          ),
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.videocam),
-                              onPressed: () {},
-                            ),
-                          )
-                        ],
-                      ),
+                        );
+                      },
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: controller.groupModel.users.length,
                     )
                   ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding:
-                      EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),
-                      decoration: BoxDecoration(
-                        color: ThemeService.isDark.value
-                            ? Colors.black26
-                            : Colors.white.withOpacity(0.9),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              child: Icon(
-                                Icons.block,
-                                color: AppColors.red,
-                                size: 25.h,
-                              )),
-                          Flexible(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 30.w),
-                              child: Text(
-                                AppStrings.block,
-                                style: AppTextStyle.headingText(
-                                    color: AppColors.red,
-                                    fontSize: 17.h,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          )
-                        ],
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: ThemeService.isDark.value
+                        ? Colors.black26
+                        : Colors.white.withOpacity(0.9),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: ListTile(
+                        onTap: () {},
+                        leading: Icon(
+                          Icons.exit_to_app,
+                          color: AppColors.red,
+                          size: 20.h,
+                        ),
+                        title: Text(
+                          AppStrings.exitGroup,
+                          style: AppTextStyle.headingText(
+                              color: AppColors.red,
+                              fontSize: 17.h,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ),
                   ),
@@ -304,45 +289,35 @@ class GroupProfileView extends GetView<GroupProfileController> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding:
-                      EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),
-                      decoration: BoxDecoration(
-                        color: ThemeService.isDark.value
-                            ? Colors.black26
-                            : Colors.white.withOpacity(0.9),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              child: Icon(
-                                Icons.clear,
-                                color: AppColors.red,
-                                size: 25.h,
-                              )),
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 30.w),
-                              child: Text(
-                                AppStrings.removeFromContact,
-                                style: AppTextStyle.headingText(
-                                    color: AppColors.red,
-                                    fontSize: 17.h,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          )
-                        ],
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: ThemeService.isDark.value
+                        ? Colors.black26
+                        : Colors.white.withOpacity(0.9),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: ListTile(
+                        onTap: () {},
+                        leading: Icon(
+                          Icons.thumb_down_sharp,
+                          color: AppColors.red,
+                          size: 20.h,
+                        ),
+                        title: Text(
+                          AppStrings.reportGroup,
+                          style: AppTextStyle.headingText(
+                              color: AppColors.red,
+                              fontSize: 17.h,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ));

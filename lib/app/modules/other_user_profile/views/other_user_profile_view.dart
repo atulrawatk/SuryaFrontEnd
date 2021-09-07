@@ -36,7 +36,7 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                 backgroundColor: AppColors.primaryDarkColor,
                 flexibleSpace: FlexibleSpaceBar(
                     //centerTitle: true,
-                    title: Text("Tushar",
+                    title: Text(controller.model.name.value,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.h,
@@ -187,116 +187,129 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                   ],
                 ),
               ),
-              Container(
+              Material(
+                color: ThemeService.isDark.value?Colors.transparent:Colors.white.withOpacity(0.9),
+                child: InkWell(
+                  splashColor: ThemeService.isDark.value?Colors.grey[600]:Colors.black,
+                  onTap: (){},
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.h),
+                    decoration: BoxDecoration(
+                        color: ThemeService.isDark.value
+                            ? Colors.black26
+                            : Colors.white.withOpacity(0.9)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.zero,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 15.w, top: 10.h),
+                                child: Text(
+                                  AppStrings.phoneNumber,
+                                  style: AppTextStyle.chatLabelText(),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(
+                                    top: 15.h, left: 15.w, bottom: 20.h),
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.zero,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  children: [
+                                    Text(
+                                      controller.model.number,
+                                      style: AppTextStyle.phoneNumber(),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 10.h),
+                                      child: Text(
+                                        AppStrings.mobile,
+                                        style: AppTextStyle.nameHeading(),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    icon: Icon(Icons.message),
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    icon: Icon(Icons.call),
+                                    onPressed: () {
+                                      Get.toNamed(Routes.AUDIO_CALLING);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: IconButton(
+                                    icon: Icon(Icons.videocam),
+                                    onPressed: () {
+                                      Get.toNamed(Routes.AUDIO_CALLING);
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
                 padding: EdgeInsets.only(top: 10.h),
-                decoration: BoxDecoration(
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
                     color: ThemeService.isDark.value
                         ? Colors.black26
-                        : Colors.white.withOpacity(0.9)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 15.w, top: 10.h),
-                            child: Text(
-                              AppStrings.phoneNumber,
-                              style: AppTextStyle.chatLabelText(),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                top: 15.h, left: 15.w, bottom: 20.h),
-                            child: ListView(
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              physics: NeverScrollableScrollPhysics(),
-                              children: [
-                                Text(
-                                  "+91 7011575173",
-                                  style: AppTextStyle.phoneNumber(),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10.h),
-                                  child: Text(
-                                    AppStrings.mobile,
-                                    style: AppTextStyle.nameHeading(),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Flexible(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.message),
-                              onPressed: () {},
-                            ),
-                          ),
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.call),
-                              onPressed: () {},
-                            ),
-                          ),
-                          Flexible(
-                            child: IconButton(
-                              icon: Icon(Icons.videocam),
-                              onPressed: () {},
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding:
-                          EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),
-                      decoration: BoxDecoration(
-                        color: ThemeService.isDark.value
-                            ? Colors.black26
-                            : Colors.white.withOpacity(0.9),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              child: Icon(
-                            Icons.block,
-                            color: AppColors.red,
-                            size: 25.h,
-                          )),
-                          Flexible(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 30.w),
-                              child: Text(
-                                AppStrings.block,
-                                style: AppTextStyle.headingText(
-                                    color: AppColors.red,
-                                    fontSize: 17.h,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          )
-                        ],
+                        : Colors.white.withOpacity(0.9),
+                  ),
+                  child:  Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: ListTile(
+                        onTap: (){},
+                        leading: Icon(
+                          Icons.block,
+                          color: AppColors.red,
+                          size: 20.h,
+                        ),
+                        title: Text(
+                          AppStrings.block,
+                          style: AppTextStyle.headingText(
+                              color: AppColors.red,
+                              fontSize: 17.h,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ),
                   ),
@@ -304,45 +317,35 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10.h),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding:
-                          EdgeInsets.only(left: 15.w, top: 20.h, bottom: 20.h),
-                      decoration: BoxDecoration(
-                        color: ThemeService.isDark.value
-                            ? Colors.black26
-                            : Colors.white.withOpacity(0.9),
-                      ),
-                      child: Row(
-                        children: [
-                          Flexible(
-                              child: Icon(
-                            Icons.clear,
-                            color: AppColors.red,
-                            size: 25.h,
-                          )),
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 30.w),
-                              child: Text(
-                                AppStrings.removeFromContact,
-                                style: AppTextStyle.headingText(
-                                    color: AppColors.red,
-                                    fontSize: 17.h,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ),
-                          )
-                        ],
+                child: Container(
+                  padding: EdgeInsets.zero,
+                  decoration: BoxDecoration(
+                    color: ThemeService.isDark.value
+                        ? Colors.black26
+                        : Colors.white.withOpacity(0.9),
+                  ),
+                  child:  Material(
+                    color: Colors.transparent,
+                    child: Center(
+                      child: ListTile(
+                        onTap: (){},
+                        leading: Icon(
+                          Icons.clear,
+                          color: AppColors.red,
+                          size: 20.h,
+                        ),
+                        title: Text(
+                          AppStrings.removeFromContact,
+                          style: AppTextStyle.headingText(
+                              color: AppColors.red,
+                              fontSize: 17.h,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ));

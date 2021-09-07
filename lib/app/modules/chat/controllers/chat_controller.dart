@@ -17,12 +17,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/data/record_sound.dart';
+import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
+import 'package:surya/app/modules/home/controllers/home_controller.dart';
 import 'package:surya/app/modules/other_user_profile/controllers/other_user_profile_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:convert' as JSON;
 
 class ChatController extends GetxController with SingleGetTickerProviderMixin {
   RxBool sendStatus = false.obs;
@@ -71,9 +74,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
       .obs;
 
   otherUserProfile() {
-    // OtherUserProfileController otherUserProfileController=Get.put(OtherUserProfileController());
-    // otherUserProfileController.mediaMessages=oneToOneChatModel.value;
-    Get.toNamed(Routes.OTHER_USER_PROFILE, arguments: userModel.messageList);
+    Get.toNamed(Routes.OTHER_USER_PROFILE, arguments: userModel);
   }
 
   focusNodeListen() {
@@ -192,24 +193,76 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   sendMessage() {
     if (textEditingController.text.length > 0) {
-      userModel.messageList.add(ChatMessageModel(
-          name: "You",
-          isGroup: false,
-          isMe: true,
-          message: textEditingController.text,
-          messageType: MessageType.text,
-          time: TimeOfDay.now().toString(),
-          messageSeen: "seen",
-          repliedMessage: replyMsg.value ? replyMessage.value : null,
-          isSelected: false.obs,
-          media: File(""),
-          mediaType: MediaType.none,
-          isTapped: false.obs));
-      replyMsg.value = false;
-      emojiOpen.value = false;
-      textEditingController.clear();
-      scrollController.position
-          .forcePixels(scrollController.position.maxScrollExtent + 55.h);
+      HomeController homeController=Get.find<HomeController>();
+      RxList<ChatUserModel> userList=homeController.userList;
+      userList.forEach((element) {
+        if(element==userModel){
+          element.messageList.add(ChatMessageModel(
+              name: "You",
+              isGroup: false,
+              isMe: true,
+              message: textEditingController.text,
+              messageType: MessageType.text,
+              time: TimeOfDay.now().toString(),
+              messageSeen: "seen",
+              repliedMessage: replyMsg.value ? replyMessage.value : null,
+              isSelected: false.obs,
+              media: File(""),
+              mediaType: MediaType.none,
+              isTapped: false.obs));
+        }
+        else{
+
+        }
+      });
+      if (userModel.messageList.isEmpty) {
+        userModel.messageList.add(ChatMessageModel(
+            name: "You",
+            isGroup: false,
+            isMe: true,
+            message: textEditingController.text,
+            messageType: MessageType.text,
+            time: TimeOfDay.now().toString(),
+            messageSeen: "seen",
+            repliedMessage: replyMsg.value ? replyMessage.value : null,
+            isSelected: false.obs,
+            media: File(""),
+            mediaType: MediaType.none,
+            isTapped: false.obs));
+        replyMsg.value = false;
+        emojiOpen.value = false;
+        textEditingController.clear();
+        scrollController.position
+            .forcePixels(scrollController.position.maxScrollExtent + 55.h);
+        List<ChatUserModel> chatUserlist = List.empty(growable: true);
+        chatUserlist.add(userModel);
+        AppGetStorage.saveValue(
+            AppStrings.userMessagesList, JSON.jsonEncode(chatUserlist));
+      }
+      else if (AppGetStorage.hasData(AppStrings.userMessagesList)) {
+        AppGetStorage.storage
+            .listenKey(AppStrings.userMessagesList, (value) {
+              
+        });
+        userModel.messageList.add(ChatMessageModel(
+            name: "You",
+            isGroup: false,
+            isMe: true,
+            message: textEditingController.text,
+            messageType: MessageType.text,
+            time: TimeOfDay.now().toString(),
+            messageSeen: "seen",
+            repliedMessage: replyMsg.value ? replyMessage.value : null,
+            isSelected: false.obs,
+            media: File(""),
+            mediaType: MediaType.none,
+            isTapped: false.obs));
+        replyMsg.value = false;
+        emojiOpen.value = false;
+        textEditingController.clear();
+        scrollController.position
+            .forcePixels(scrollController.position.maxScrollExtent + 55.h);
+      }
     }
   }
 
@@ -218,7 +271,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     super.onInit();
-    userModel=Get.arguments;
+    userModel = Get.arguments;
     sendStatusCheck();
     focusNodeListen();
     recordSound = RecordSound();
@@ -329,7 +382,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 isGroup: false,
                 isMe: true,
                 message: "",
-                messageType:MessageType.media,
+                messageType: MessageType.media,
                 time: DateTime.now().toUtc().toString(),
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,

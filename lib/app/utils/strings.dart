@@ -296,4 +296,12 @@ class AppStrings {
 
 //App Font Family
   static final String appFontFamily = 'Helvetica Neue Ultra Light'.tr;
+
+  //Group Profile
+  static final String exitGroup="Exit Group".tr;
+  static final String reportGroup="Report Group".tr;
+
+  // Get Storage Keys
+  static const String userList="Users List";
+
 }

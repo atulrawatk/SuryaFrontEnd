@@ -136,7 +136,8 @@ class ChatView extends GetView<ChatController> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                controller.returnReplyMessage(),
+                                                                controller
+                                                                    .returnReplyMessage(),
                                                                 maxLines: 2,
                                                                 overflow:
                                                                     TextOverflow
@@ -256,7 +257,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                          MediaType.document);
+                                                                              MediaType.document);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .document
@@ -268,7 +269,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                          MediaType.video);
+                                                                              MediaType.video);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .video
@@ -280,7 +281,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                          MediaType.audio);
+                                                                              MediaType.audio);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .audio
@@ -292,7 +293,7 @@ class ChatView extends GetView<ChatController> {
                                                                         () {
                                                                       controller.attachFile(
                                                                           file:
-                                                                          MediaType.image);
+                                                                              MediaType.image);
                                                                     },
                                                                     hintText: AppStrings
                                                                         .image
@@ -523,7 +524,16 @@ class ChatView extends GetView<ChatController> {
                             Flexible(
                               child: Padding(
                                 padding: EdgeInsets.only(left: 10.w),
-                                child: IosBackButton(),
+                                child: IconButton(
+                                    onPressed: () {
+                                      Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: ThemeService.isDark.value
+                                          ? Colors.white
+                                          : Colors.black,
+                                    )),
                               ),
                             ),
                             Expanded(
@@ -554,7 +564,7 @@ class ChatView extends GetView<ChatController> {
                                                   EdgeInsets.only(left: 10.w),
                                               height: 50.h,
                                               child: Text(
-                                                "Tushar",
+                                                controller.userModel.name.value,
                                                 style: AppTextStyle
                                                     .chatLabelText(),
                                               )),

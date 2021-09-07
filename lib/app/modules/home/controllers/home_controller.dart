@@ -60,11 +60,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     _mobileContactList.addAll(list);
   }
 
-  getUserMessages() {
-    if (AppGetStorage.hasData(AppStrings.userMessagesList)) {
-      usersMessageList.value = AppGetStorage.getValue(AppStrings.userMessagesList);
-    }
-  }
+  // getUserMessages() {
+  //   if (AppGetStorage.hasData(AppStrings.userMessagesList)) {
+  //     usersMessageList.value = AppGetStorage.getValue(AppStrings.userMessagesList);
+  //   }
+  // }
 
   Future getContacts() async {
     mobileContactsList = await ContactsService.getContacts(
@@ -79,6 +79,8 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   bool get isSearch => this._isSearch.value;
   set isSearch(bool v) => this._isSearch.value = v;
 
+  RxList<ChatUserModel> userList=List<ChatUserModel>.empty(growable: true).obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -90,7 +92,16 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     });
     onInitializer();
     getContacts();
-    getUserMessages();
+
+  }
+
+  getUsersList(){
+    if(AppGetStorage.hasData(AppStrings.userList)){
+      userList=AppGetStorage.getValue(AppStrings.userList);
+    }
+    else{
+      AppGetStorage.saveValue(AppStrings.userList, userList);
+    }
   }
 
 //Get User Details from DB

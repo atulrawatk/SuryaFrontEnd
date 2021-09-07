@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:surya/app/data/models/chat_message_model.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/user_image_edit_menu.dart';
 import 'package:surya/app/routes/app_pages.dart';
@@ -213,14 +215,7 @@ class NewGroupNameChatView extends GetView<NewGroupNameChatController> {
                     padding: EdgeInsets.all(10.h),
                     child: ElevatedButton(
                         onPressed: () {
-                          if (controller.key.currentState!.validate()) {
-                            Get.toNamed(Routes.GROUP_CHAT, arguments: {
-                              AppStrings.groupNameSmall:
-                                  controller.groupNameController.text,
-                              AppStrings.groupListSmall:
-                                  controller.contactUsers.value
-                            });
-                          }
+                          controller.toGroupChat();
                         },
                         child: Padding(
                           padding: EdgeInsets.all(20.w),

@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
+import 'package:surya/app/data/models/chat_message_model.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
+import 'package:surya/app/routes/app_pages.dart';
 
 class NewGroupNameChatController extends GetxController {
   late TextEditingController groupNameController;
@@ -53,6 +56,41 @@ class NewGroupNameChatController extends GetxController {
       });
     }
   }
+
+  toGroupChat(){
+    if (key.currentState!.validate()) {
+      List<ChatUserModel> groupUsers =
+      List.empty(growable: true);
+      contactUsers.forEach((element) {
+        groupUsers.add( ChatUserModel(
+            name: element.name.obs,
+            number: element.number.toString(),
+            isGroup: true,
+            users: <ChatUserModel>[].obs,
+            profileImage: File("").obs,
+            isBlocked: false.obs,
+            messageList: <ChatMessageModel>[].obs));
+      });
+      Get.toNamed(Routes.GROUP_CHAT,
+          arguments:
+          // {
+          //   AppStrings.groupNameSmall:
+          //       controller.groupNameController.text,
+          //   AppStrings.groupListSmall:
+          //       controller.contactUsers.value
+          // }
+          ChatUserModel(
+              name:
+              groupNameController.text.obs,
+              number: "",
+              isGroup: true,
+              users: groupUsers.obs,
+              profileImage: profileImage,
+              isBlocked: false.obs,
+              messageList: <ChatMessageModel>[].obs));
+    }
+  }
+
   @override
   void onReady() {
     super.onReady();

@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
+import 'package:surya/app/data/models/chat_user_model.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
@@ -78,75 +79,75 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
 
     myAnimation = CurvedAnimation(curve: Curves.linear, parent: animController);
   }
-
-  RxList<ChatMessageModel> oneToOneChatModel = [
-    ChatMessageModel(
-        name: "",
-        isGroup: true,
-        isMe: true,
-        message: "Hi",
-        messageType: MessageType.text,
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: MediaType.none,
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "Harish",
-        isGroup: true,
-        isMe: false,
-        message: "Hello",
-        messageType: MessageType.text,
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: MediaType.none,
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "",
-        isGroup: true,
-        isMe: true,
-        message:"How are you?",
-        messageType: MessageType.text,
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: MediaType.none,
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "Harish",
-        isGroup: true,
-        isMe: false,
-        message:
-        "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
-        messageType: MessageType.text,
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: MediaType.none,
-        isTapped: false.obs),
-    ChatMessageModel(
-        name: "",
-        isGroup: true,
-        isMe: true,
-        message: "Me too!!",
-        messageType: MessageType.text,
-        time: "18:00:00 03-08-2021",
-        messageSeen: "seen",
-        repliedMessage: null,
-        isSelected: false.obs,
-        media: File(""),
-        mediaType: MediaType.none,
-        isTapped: false.obs)
-  ].toList(growable: true).obs;
+  //
+  // RxList<ChatMessageModel> oneToOneChatModel = [
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: true,
+  //       isMe: true,
+  //       message: "Hi",
+  //       messageType: MessageType.text,
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: MediaType.none,
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "Harish",
+  //       isGroup: true,
+  //       isMe: false,
+  //       message: "Hello",
+  //       messageType: MessageType.text,
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: MediaType.none,
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: true,
+  //       isMe: true,
+  //       message:"How are you?",
+  //       messageType: MessageType.text,
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: MediaType.none,
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "Harish",
+  //       isGroup: true,
+  //       isMe: false,
+  //       message:
+  //       "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
+  //       messageType: MessageType.text,
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: MediaType.none,
+  //       isTapped: false.obs),
+  //   ChatMessageModel(
+  //       name: "",
+  //       isGroup: true,
+  //       isMe: true,
+  //       message: "Me too!!",
+  //       messageType: MessageType.text,
+  //       time: "18:00:00 03-08-2021",
+  //       messageSeen: "seen",
+  //       repliedMessage: null,
+  //       isSelected: false.obs,
+  //       media: File(""),
+  //       mediaType: MediaType.none,
+  //       isTapped: false.obs)
+  // ].toList(growable: true).obs;
 
   timerStart() {
     if (stopTimer.value) {
@@ -176,7 +177,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
 
   sendMessage() {
     if (textEditingController.text.length > 0) {
-      oneToOneChatModel.add(ChatMessageModel(
+      groupModel.messageList.add(ChatMessageModel(
           name: "You",
           isGroup: true,
           isMe: true,
@@ -197,8 +198,8 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     }
   }
   late ChatMediaController mediaController;
-  RxMap<String,Object> groupArguments=<String,Object>{}.obs;
   RxString groupName="".obs;
+  late ChatUserModel groupModel;
   @override
   void onInit() {
     super.onInit();
@@ -208,8 +209,12 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     player = AudioPlayer();
     animationInitializer();
     mediaController=Get.put(ChatMediaController());
-    groupName.value=Get.arguments.values.first;
-    groupArguments.addAll(Get.arguments);
+    getGroupModel();
+  }
+
+  getGroupModel(){
+    groupModel=Get.arguments;
+    groupName.value=groupModel.name.value;
   }
 
   sendStatusCheck() {
@@ -230,7 +235,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         // recordSound.recordedAudioPath="surya_recording${DateTime.now().toIso8601String()}.mp4";
         Future.delayed(Duration(seconds: 1),(){
           String audioPath=recordSound.recordedAudioPath;
-          oneToOneChatModel.add(ChatMessageModel(
+          groupModel.messageList.add(ChatMessageModel(
               name: "You",
               isGroup: true,
               isMe: true,
@@ -261,14 +266,14 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
 
   removeMessages() {
     selectedMessages.removeWhere((element) {
-      if (oneToOneChatModel.contains(element)) {
-        oneToOneChatModel.remove(element);
+      if (groupModel.messageList.contains(element)) {
+        groupModel.messageList.remove(element);
         return true;
       } else {
         return false;
       }
     });
-    print(oneToOneChatModel.length);
+    print(groupModel.messageList.length);
     print(selectedMessages.length);
   }
 
@@ -292,7 +297,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           .then((value) {
         switch (file) {
           case MediaType.video:
-            oneToOneChatModel.add(ChatMessageModel(
+            groupModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
@@ -308,7 +313,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
             //mediaController.videoController=VideoPlayerController.file(File(value.paths.first!))..initialize();
             break;
           case MediaType.audio:
-            oneToOneChatModel.add(ChatMessageModel(
+            groupModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
@@ -323,7 +328,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
                 isTapped: false.obs));
             break;
           case MediaType.image:
-            oneToOneChatModel.add(ChatMessageModel(
+            groupModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
@@ -338,7 +343,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
                 isTapped: false.obs));
             break;
           default:
-            oneToOneChatModel.add(ChatMessageModel(
+            groupModel.messageList.add(ChatMessageModel(
                 name: "You",
                 isGroup: true,
                 isMe: true,
@@ -386,7 +391,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   }
 
   toOtherUserProfile(){
-   Get.toNamed(Routes.GROUP_PROFILE,arguments: oneToOneChatModel);
+   Get.toNamed(Routes.GROUP_PROFILE,arguments: groupModel);
   }
 
   Future startRecording() async {
