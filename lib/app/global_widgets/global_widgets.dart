@@ -6,3 +6,4 @@ export './pin_widget.dart';
 export './progress_indicator.dart';
 export './user_listtile.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
+export './dynamic_hightlight.dart';

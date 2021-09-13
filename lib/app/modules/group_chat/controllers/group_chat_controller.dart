@@ -18,7 +18,8 @@ import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
 
-class GroupChatController extends GetxController with SingleGetTickerProviderMixin{
+class GroupChatController extends GetxController
+    with SingleGetTickerProviderMixin {
   RxBool sendStatus = false.obs;
   ScrollController scrollController = new ScrollController();
   TextEditingController textEditingController = new TextEditingController();
@@ -48,20 +49,28 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   RxBool isRecording = false.obs;
   RxBool stopTimer = false.obs;
 
+  RxBool _issearch = RxBool(false);
+  bool get issearch => this._issearch.value;
+  set issearch(bool v) => this._issearch.value = v;
+
+  RxString _searchText = "".obs;
+  String get searchText => this._searchText.value;
+  set searchText(String v) => this._searchText.value = v;
+
   RxList<MessageDBList> selectedMessages = <MessageDBList>[].obs;
   Rx<MessageDBList> replyMessage = MessageDBList(
-      name: "",
-      isGroup: true,
-      isMe: false,
-      message: "",
-      messageType: MessageType.text,
-      time: "",
-      messageSeen: "",
-      repliedMessage: null,
-      isSelected: false.obs,
-      media: "",
-      mediaType: MediaType.none,
-      isTapped: false.obs)
+          name: "",
+          isGroup: true,
+          isMe: false,
+          message: "",
+          messageType: MessageType.text,
+          time: "",
+          messageSeen: "",
+          repliedMessage: null,
+          isSelected: false.obs,
+          media: "",
+          mediaType: MediaType.none,
+          isTapped: false.obs)
       .obs;
 
   focusNodeListen() {
@@ -81,6 +90,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
 
     myAnimation = CurvedAnimation(curve: Curves.linear, parent: animController);
   }
+
   timerStart() {
     if (stopTimer.value) {
       setTimer = 0;
@@ -106,16 +116,18 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
       return " 0${timerMin.value}:0" + timer.toString();
     }
   }
-  storingMessageInDb(){
+
+  storingMessageInDb() {
     //Adding messages into User List which is fetched at Home Screen
-    HomeController homeController=Get.find<HomeController>();
-    if(homeController.userList.contains(groupModel)){
+    HomeController homeController = Get.find<HomeController>();
+    if (homeController.userList.contains(groupModel)) {
       homeController.userList.remove(groupModel);
     }
     homeController.userList.add(groupModel);
 
     //Storing Messages in Local Db into Storage
-    AppGetStorage.storage.write(AppStrings.userList, homeController.userList.value);
+    AppGetStorage.storage
+        .write(AppStrings.userList, homeController.userList.value);
     Logger().wtf(AppGetStorage.getValue(AppStrings.userList));
   }
 
@@ -141,6 +153,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
       scrollController.jumpTo(scrollController.position.minScrollExtent);
     }
   }
+
   late ChatMediaController mediaController;
   late ChatUserDBModel groupModel;
   @override
@@ -151,12 +164,12 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     recordSound = RecordSound();
     player = AudioPlayer();
     animationInitializer();
-    mediaController=Get.put(ChatMediaController());
+    mediaController = Get.put(ChatMediaController());
     getGroupModel();
   }
 
-  getGroupModel(){
-    groupModel=Get.arguments;
+  getGroupModel() {
+    groupModel = Get.arguments;
   }
 
   sendStatusCheck() {
@@ -171,11 +184,14 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   }
 
   Future recordMessages() async {
-    await recordSound.getRecorderFn(path: "surya_recording${DateTime.now().toIso8601String()}.mp4").then((value) {
-      if(stopTimer.value){
+    await recordSound
+        .getRecorderFn(
+            path: "surya_recording${DateTime.now().toIso8601String()}.mp4")
+        .then((value) {
+      if (stopTimer.value) {
         // recordSound.recordedAudioPath="surya_recording${DateTime.now().toIso8601String()}.mp4";
-        Future.delayed(Duration(seconds: 1),(){
-          String audioPath=recordSound.recordedAudioPath;
+        Future.delayed(Duration(seconds: 1), () {
+          String audioPath = recordSound.recordedAudioPath;
           groupModel.messageList!.add(MessageDBList(
               name: "You",
               isGroup: true,
@@ -197,9 +213,7 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
 
   Future playAudio(String path) async {
     //File file = File(path);
-    await player
-        .setFilePath(path)
-        .whenComplete(() => player.play());
+    await player.setFilePath(path).whenComplete(() => player.play());
   }
 
   Future stopAudio() async {
@@ -215,8 +229,8 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
         return false;
       }
     });
-    if(groupModel.messageList!.length<=0){
-      HomeController homeController=Get.find<HomeController>();
+    if (groupModel.messageList!.length <= 0) {
+      HomeController homeController = Get.find<HomeController>();
       homeController.userList.remove(groupModel);
       AppGetStorage.storage.write(AppStrings.userList, homeController.userList);
     }
@@ -228,19 +242,19 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
     try {
       FilePickerResult? result = await FilePicker.platform
           .pickFiles(
-          type: file == MediaType.audio
-              ? FileType.audio
-              : file == MediaType.video
-              ? FileType.video
-              : file == MediaType.image
-              ? FileType.image
-              : FileType.any,
-          allowCompression: true,
-          allowMultiple: false,
-          withData: false,
-          onFileLoading: (file) {}
-        //allowedExtensions: ['jpg', 'jpeg', 'gif', "png", "raw", "eps", "svg"],
-      )
+              type: file == MediaType.audio
+                  ? FileType.audio
+                  : file == MediaType.video
+                      ? FileType.video
+                      : file == MediaType.image
+                          ? FileType.image
+                          : FileType.any,
+              allowCompression: true,
+              allowMultiple: false,
+              withData: false,
+              onFileLoading: (file) {}
+              //allowedExtensions: ['jpg', 'jpeg', 'gif', "png", "raw", "eps", "svg"],
+              )
           .then((value) {
         switch (file) {
           case MediaType.video:
@@ -315,9 +329,10 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
       Get.back();
     }
   }
-  String? returnReplyMessage(){
-    if(replyMessage.value.messageType=="media"){
-      switch(replyMessage.value.mediaType){
+
+  String? returnReplyMessage() {
+    if (replyMessage.value.messageType == "media") {
+      switch (replyMessage.value.mediaType) {
         case "video":
           return AppStrings.video;
         case "image":
@@ -326,19 +341,16 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
           return AppStrings.document;
         case "audio":
           return AppStrings.audio;
-        default: return AppStrings.document;
+        default:
+          return AppStrings.document;
       }
-    }
-    else{
-
-      return replyMessage
-          .value
-          .message;
+    } else {
+      return replyMessage.value.message;
     }
   }
 
-  toOtherUserProfile(){
-   Get.toNamed(Routes.GROUP_PROFILE,arguments: groupModel);
+  toOtherUserProfile() {
+    Get.toNamed(Routes.GROUP_PROFILE, arguments: groupModel);
   }
 
   Future startRecording() async {
@@ -368,5 +380,29 @@ class GroupChatController extends GetxController with SingleGetTickerProviderMix
   void onClose() {
     recordSound.closeRecord();
     stopAudio();
+    // _issearch.close();
+    // _searchText.close();
+    // _timer.close();
+    // scrollController.dispose();
+    // animController.dispose();
+    // emojiOpen.close();
+    // filePlayer.close();
+    // isPlaying.close();
+    // isRecording.close();
+    // mediaController.dispose();
+    // messageFocusField.dispose();
+    // myAnimation.isDismissed;
+    // player.dispose();
+    // recordSound.dispose();
+    // recordingTimer.close();
+    // replyMessage.close();
+    // replyMsg.close();
+    // selectMsg.close();
+    // selectedMessages.close();
+    // sendStatus.close();
+    // stopTimer.close();
+    // textEditingController.dispose();
+    // textFieldHeight.close();
+    // timerMin.close();
   }
 }

@@ -11,6 +11,7 @@ import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/app_dialog_box.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/images.dart';
+import 'package:surya/app/utils/lists.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/colors.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
@@ -159,7 +160,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                   if (controller
                                                           .mediaMessages[index]
                                                           .mediaType ==
-                                                     "video") {
+                                                      "video") {
                                                     chatController
                                                             .mediaController
                                                             .videoController
@@ -215,7 +216,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                                     .mediaMessages[
                                                                         index]
                                                                     .mediaType ==
-                                                               "image"
+                                                                "image"
                                                             ? DecorationImage(
                                                                 image: FileImage(
                                                                     File(controller
@@ -226,8 +227,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                                     .cover)
                                                             : null),
                                                     child: controller
-                                                                .mediaMessages[
-                                                                    index]
+                                                                .mediaMessages[index]
                                                                 .mediaType ==
                                                             "audio"
                                                         ? Center(child: Icon(Icons.audiotrack))
@@ -279,7 +279,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                       ),
                       ListTile(
                         title: Text(
-                          AppStrings.editParticipants,
+                          AppStrings.addParticipants,
                           textAlign: TextAlign.left,
                           style: AppTextStyle.multiChatName(),
                           textDirection: TextDirection.ltr,
@@ -298,27 +298,72 @@ class GroupProfileView extends GetView<GroupProfileController> {
                         trailing: Text(""),
                         onTap: () {
                           // Get.toNamed(Routes.NEW_GROUP);
+                          // controller.editparticipants =
+                          //     !controller.editparticipants;
                         },
                         onLongPress: () {},
                       ),
-                      //
                       Obx(
-                        () => controller.groupModel.users!.length > 0
-                            ? AspectRatio(
-                                aspectRatio: 4,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  padding:
-                                      EdgeInsets.only(right: 15.h, left: 15.h),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(right: 10.h),
-                                      child: GestureDetector(
-                                        onTap: () {
+                        () => ListView.builder(
+                          itemBuilder: (context, index) {
+                            return Material(
+                              // color: Colors.transparent,
+                              child: Obx(() => PopupMenuButton(
+                                    offset: Offset(20, 20),
+                                    padding: EdgeInsets.only(bottom: 40.h),
+                                    icon: ListTile(
+                                      onTap: null,
+                                      title: Text(
+                                        controller.groupModel.users![index]
+                                            .name!.value,
+                                        style: AppTextStyle.chatLabelText(),
+                                      ),
+                                      leading: CircleAvatar(
+                                        child: controller
+                                                        .groupModel
+                                                        .users![index]
+                                                        .profileImage!
+                                                        .value ==
+                                                    null ||
+                                                controller
+                                                        .groupModel
+                                                        .users![index]
+                                                        .profileImage!
+                                                        .value ==
+                                                    ""
+                                            ? Image.asset(
+                                                AppImages.dummyProfileImage)
+                                            : Image.file(File(controller
+                                                .groupModel
+                                                .users![index]
+                                                .profileImage!
+                                                .value)),
+                                        radius: 20.r,
+                                      ),
+                                      subtitle: Text(
+                                        controller
+                                            .groupModel.users![index].number!,
+                                        style: AppTextStyle.nameHeading(),
+                                      ),
+                                    ),
+                                    onSelected: (value) {
+                                      switch (value) {
+                                        case "Block":
+                                          AppDialogBox.showDialog(
+                                            AppStrings.areYouSureToBlock,
+                                            title: "",
+                                            onTapYes: () {
+                                              Get.back();
+                                            },
+                                            onTapNo: () {},
+                                          );
+                                          break;
+
+                                        //  break;
+                                        case "delete":
                                           if (controller
                                                   .groupModel.users!.length >
-                                              1) {
+                                              2) {
                                             controller.groupModel.users!.remove(
                                                 controller.groupModel.users!
                                                     .elementAt(index));
@@ -347,57 +392,31 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                               ),
                                             );
                                           }
-                                        },
-                                        child: GroupContactListMember(
-                                          name: controller.groupModel.users!
-                                              .elementAt(index)
-                                              .name!
-                                              .value,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  itemCount: controller.groupModel.users!.length,
-                                ),
-                              )
-                            : Container(),
+                                          //  Get.toNamed(Routes.MEDIA_LINKS_DOCS,arguments: controller.userModel);
+                                          break;
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) {
+                                      return AppLists.groupParticipants
+                                          .map((String choices) {
+                                        return PopupMenuItem<String>(
+                                          value: choices,
+                                          child: Text(choices),
+                                          textStyle:
+                                              AppTextStyle.multiChatMessage(),
+                                        );
+                                      }).toList();
+                                    },
+                                  )),
+                            );
+                          },
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.groupModel.users!.length,
+                          // addRepaintBoundaries: true,
+                        ),
                       ),
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          return Material(
-                            color: Colors.transparent,
-                            child: Obx(
-                              () => ListTile(
-                                onTap: () {},
-                                title: Text(
-                                  controller.groupModel.users![index].name!.value,
-                                  style: AppTextStyle.chatLabelText(),
-                                ),
-                                leading: CircleAvatar(
-                                  child: controller.groupModel.users![index]
-                                                  .profileImage!.value ==
-                                              null ||
-                                          controller.groupModel.users![index]
-                                                  .profileImage!.value ==
-                                              ""
-                                      ? Image.asset(AppImages.dummyProfileImage)
-                                      : Image.file(File(controller.groupModel
-                                          .users![index].profileImage!.value)),
-                                  radius: 20.r,
-                                ),
-                                subtitle: Text(
-                                  controller.groupModel.users![index].number!,
-                                  style: AppTextStyle.nameHeading(),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.groupModel.users!.length,
-                      )
                     ],
                   ),
                 ),

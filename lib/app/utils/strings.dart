@@ -64,7 +64,7 @@ class AppStrings {
   static final String groupNameError = "Please Provide Group Name".tr;
   static final String notConnectedText = "You are not connected".tr;
   static final String connectingText = "Connecting ...".tr;
-  static final String addParticipants = "Edit participants".tr;
+  // static final String addParticipants = "Edit participants".tr;
   static final String cropImage = "Crop Image".tr;
   static final String defaultAbout = "Hey! I am using Surya ".tr;
   static final String messageNotSent = "Message Not Sent".tr;
@@ -131,9 +131,9 @@ class AppStrings {
   static final String success = "Success".tr;
   static const String userMessagesList = "User Messages List";
   static final String thereIsNoMessages = "There is no messages yet !!";
-  static final String today="Today".tr;
-  static final String yesterday="Yesterday".tr;
-  static final String group="Group".tr;
+  static final String today = "Today".tr;
+  static final String yesterday = "Yesterday".tr;
+  static final String group = "Group".tr;
 
   //Chat Screen
   static final String enterAMessage = 'Enter you message'.tr;
@@ -142,12 +142,12 @@ class AppStrings {
   static final String fileNotSupported = "File not supported".tr;
   static final String fileNotAdded = "File not added".tr;
 
-  static final String busy="Busy".tr;
+  static final String busy = "Busy".tr;
 
   //Create User Name
-  static final String createUserName="Add User Name".tr;
+  static final String createUserName = "Add User Name".tr;
 
-  static final String userDetails="User Details".tr;
+  static final String userDetails = "User Details".tr;
 
   //Other User Profile
   static final String mediaLinks = "Media, links and docs".tr;
@@ -273,7 +273,8 @@ class AppStrings {
   static final String logout = "Logout".tr;
   // static final String delete = "Logout".tr;
   static final String areYouSureLogout = "Are you sure logout?".tr;
-  static final String areYouSureDeleteAccount = "Are you sure delete account?".tr;
+  static final String areYouSureDeleteAccount =
+      "Are you sure delete account?".tr;
   static final String areYouSureToBlock = "Are you sure to block this user?".tr;
   static final String darkTheme = "Dark Theme".tr;
   static final String lightTheme = "Light Theme".tr;
@@ -291,6 +292,7 @@ class AppStrings {
       "Provide a group subject and optional group icon".tr;
   static final String participants = "Participants".tr;
   static final String editParticipants = "Edit participants".tr;
+  static final String addParticipants = "Add participants".tr;
   static final String createGroup = "Create Group".tr;
   static const String groupNameSmall = "group name";
   static const String groupListSmall = "group list";
@@ -319,10 +321,8 @@ class AppStrings {
   static const String textSmall = "text";
   static const String mediaSmall = "media";
 
-
   //Media Links Docs
 
- //static final String media
-
+  //static final String media
 
 }
