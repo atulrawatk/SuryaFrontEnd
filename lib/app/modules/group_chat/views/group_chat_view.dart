@@ -473,176 +473,269 @@ class GroupChatView extends GetView<GroupChatController> {
                         ],
                       )),
                 ),
-                Obx(() => controller.selectedMessages.length > 0
-                    ? Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 85.h,
-                          width: Get.width,
-                          decoration:
-                              BoxDecoration(color: AppColors.primaryDarkColor),
-                          child: SafeArea(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 10.w),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        controller.selectedMessages
-                                            .forEach((element) {
-                                          element.isSelected!.value = false;
-                                        });
-                                        controller.selectedMessages.clear();
-                                        controller.selectMsg.value = false;
-                                      },
-                                      icon: Icon(
-                                        Icons.clear,
-                                        size: 20.h,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
+                Obx(
+                  () => controller.selectedMessages.length > 0 &&
+                          controller.issearch == false
+                      ? Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            height: 85.h,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryDarkColor),
+                            child: SafeArea(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10.w),
                                       child: IconButton(
                                         onPressed: () {
-                                          controller.removeMessages();
+                                          controller.selectedMessages
+                                              .forEach((element) {
+                                            element.isSelected!.value = false;
+                                          });
+                                          controller.selectedMessages.clear();
+                                          controller.selectMsg.value = false;
                                         },
                                         icon: Icon(
-                                          Icons.delete,
+                                          Icons.clear,
                                           size: 20.h,
                                         ),
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    : Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 85.h,
-                          width: Get.width,
-                          decoration:
-                              BoxDecoration(color: AppColors.primaryDarkColor),
-                          child: SafeArea(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 10.w),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          Get.offNamedUntil(Routes.HOME,
-                                              ModalRoute.withName(Routes.HOME));
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: ThemeService.isDark.value
-                                              ? Colors.white
-                                              : Colors.black,
-                                        )),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: InkWell(
-                                      onTap: () {
-                                        controller.toOtherUserProfile();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 10.w),
-                                        child: Row(
-                                          children: [
-                                            Flexible(
-                                              child: CircleAvatar(
-                                                child: Hero(
-                                                    tag: "chat_head",
-                                                    child: Image.asset(AppImages
-                                                        .dummyProfileImage)),
-                                              ),
-                                            ),
-                                            Container(
-                                                alignment: Alignment.centerLeft,
-                                                padding:
-                                                    EdgeInsets.only(left: 10.w),
-                                                height: 50.h,
-                                                child: Text(
-                                                  controller
-                                                      .groupModel.name!.value,
-                                                  style: AppTextStyle
-                                                      .chatLabelText(),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: InkWell(
+                                  Flexible(
+                                    child: Material(
+                                      color: Colors.transparent,
                                       child: Align(
                                         alignment: Alignment.centerRight,
-                                        child: PopupMenuButton(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            controller.removeMessages();
+                                          },
                                           icon: Icon(
-                                            Icons.more_vert,
-                                            size: AppDimen.normalSize,
-                                            color: AppColors.whiteColor,
+                                            Icons.delete,
+                                            size: 20.h,
                                           ),
-                                          onSelected: (value) {
-                                            switch (value) {
-                                              case "Block":
-                                                AppDialogBox.showDialog(
-                                                  AppStrings.areYouSureToBlock,
-                                                  title: "",
-                                                  onTapYes: () {
-                                                    Get.back();
-                                                  },
-                                                  onTapNo: () {},
-                                                );
-                                                break;
-                                              case "View Contact":
-                                                controller.toOtherUserProfile();
-                                                break;
-                                              case "Media,links and docs":
-                                                Get.toNamed(Routes.MEDIA_LINKS_DOCS,arguments: controller.groupModel);
-                                                break;
-                                            }
-                                          },
-                                          itemBuilder: (BuildContext context) {
-                                            return AppLists.chatMenu
-                                                .map((String choices) {
-                                              return PopupMenuItem<String>(
-                                                value: choices,
-                                                child: Text(choices),
-                                                textStyle: AppTextStyle
-                                                    .multiChatMessage(),
-                                              );
-                                            }).toList();
-                                          },
                                         ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )),
+                        )
+                      : controller.issearch == false &&
+                              controller.selectedMessages.length < 1
+                          ? Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                height: 85.h,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryDarkColor),
+                                child: SafeArea(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 10.w),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                Get.offNamedUntil(
+                                                    Routes.HOME,
+                                                    ModalRoute.withName(
+                                                        Routes.HOME));
+                                              },
+                                              icon: Icon(
+                                                Icons.arrow_back_ios,
+                                                color: ThemeService.isDark.value
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                              )),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: InkWell(
+                                            onTap: () {
+                                              controller.toOtherUserProfile();
+                                            },
+                                            child: Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 10.w),
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                    child: CircleAvatar(
+                                                      child: Hero(
+                                                          tag: "chat_head",
+                                                          child: Image.asset(
+                                                              AppImages
+                                                                  .dummyProfileImage)),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      padding: EdgeInsets.only(
+                                                          left: 10.w),
+                                                      height: 50.h,
+                                                      child: Text(
+                                                        controller.groupModel
+                                                            .name!.value,
+                                                        style: AppTextStyle
+                                                            .chatLabelText(),
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: InkWell(
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: PopupMenuButton(
+                                                icon: Icon(
+                                                  Icons.more_vert,
+                                                  size: AppDimen.normalSize,
+                                                  color: AppColors.whiteColor,
+                                                ),
+                                                onSelected: (value) {
+                                                  switch (value) {
+                                                    case "Block":
+                                                      AppDialogBox.showDialog(
+                                                        AppStrings
+                                                            .areYouSureToBlock,
+                                                        title: "",
+                                                        onTapYes: () {
+                                                          Get.back();
+                                                        },
+                                                        onTapNo: () {},
+                                                      );
+                                                      break;
+                                                    case "View Contact":
+                                                      controller
+                                                          .toOtherUserProfile();
+                                                      break;
+                                                    case "Media,links and docs":
+                                                      Get.toNamed(
+                                                          Routes
+                                                              .MEDIA_LINKS_DOCS,
+                                                          arguments: controller
+                                                              .groupModel);
+                                                      break;
+                                                    case "Search":
+                                                      controller.issearch =
+                                                          true;
+                                                      break;
+                                                  }
+                                                },
+                                                itemBuilder:
+                                                    (BuildContext context) {
+                                                  return AppLists.chatMenu
+                                                      .map((String choices) {
+                                                    return PopupMenuItem<
+                                                        String>(
+                                                      value: choices,
+                                                      child: Text(choices),
+                                                      textStyle: AppTextStyle
+                                                          .multiChatMessage(),
+                                                    );
+                                                  }).toList();
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                height: 85.h,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryDarkColor),
+                                child: SafeArea(
+                                  child: Row(
+                                    // mainAxisAlignment:
+                                    // MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 10.w),
+                                          child: IconButton(
+                                            onPressed: () {
+                                              controller.issearch = false;
+                                            },
+                                            icon: Icon(
+                                              Icons.clear,
+                                              size: 20.h,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 3,
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: TextFormField(
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontSize: 18.sp,
+                                                color: Colors.white,
+                                              ),
+                                              textInputAction:
+                                                  TextInputAction.search,
+                                              keyboardType: TextInputType.text,
+                                              autofocus: true,
+                                              onChanged: (v) =>
+                                                  controller.searchText = v,
+                                              decoration: InputDecoration(
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.all(10),
+                                                border: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                focusedBorder: InputBorder.none,
+                                                errorBorder: InputBorder.none,
+                                                hintText: 'Search...',
+                                                hintStyle: TextStyle(
+                                                  color:
+                                                      AppColors.lightGreyColor,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                ),
               ],
             ),
           ),
