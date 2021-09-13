@@ -31,7 +31,7 @@ class AudioCallingView extends GetView<AudioCallingController> {
                             image: AssetImage(AppImages.dummyProfileImage))),
                   ),
                   Text(
-                    AppStrings.name,
+                    controller.callModel.name!,
                     style: AppTextStyle.mainPageHeading(),
                   ),
                   Padding(

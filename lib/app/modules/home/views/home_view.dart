@@ -153,7 +153,7 @@ class HomeView extends GetView<HomeController> {
                 controller: controller.tabController,
                 children: [
                   Obx(() {
-                    controller.sortingMessages();
+                    controller.sortingMessages(controller.userList.value);
                     return controller.userList.length > 0
                         ? ListView.builder(
                             itemCount: controller.userList.length,
@@ -237,32 +237,38 @@ class HomeView extends GetView<HomeController> {
                                                       ),
                                                     ),
                                                     Flexible(
-                                                        child:controller.userList[index].isGroup!?Container(
-                                                      height: 15.h,
-                                                      width: 30.w,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors
-                                                              .transparent,
-                                                          border: Border.all(
-                                                              color: Get.theme
-                                                                  .accentColor),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20.r)),
-                                                      child: Center(
-                                                          child: Text(
-                                                        AppStrings.group,
-                                                        style: AppTextStyle
-                                                            .headingText(
-                                                                color: Get.theme
-                                                                    .accentColor,
-                                                                fontSize: 8.h,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal),
-                                                      )),
-                                                    ):Container())
+                                                        child: controller
+                                                                .userList[index]
+                                                                .isGroup!
+                                                            ? Container(
+                                                                height: 15.h,
+                                                                width: 30.w,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    border: Border.all(
+                                                                        color: Get
+                                                                            .theme
+                                                                            .accentColor),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20.r)),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  AppStrings
+                                                                      .group,
+                                                                  style: AppTextStyle.headingText(
+                                                                      color: Get
+                                                                          .theme
+                                                                          .accentColor,
+                                                                      fontSize:
+                                                                          8.h,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal),
+                                                                )),
+                                                              )
+                                                            : Container())
                                                   ],
                                                 ),
                                                 Padding(
@@ -337,43 +343,56 @@ class HomeView extends GetView<HomeController> {
                             ),
                           );
                   }),
-                  ListView.separated(
-                      shrinkWrap: true,
-                      itemBuilder: (_, i) {
-                        return UserListTile(
-                          isOnTap: true,
-                          onTap: () {
-                            Get.toNamed(Routes.AUDIO_CALLING);
-                          },
-                          title: "Sangam ",
-                          subTitle: Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.call_made,
+                  Obx(() => controller.callLogsList.value.length > 0
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          itemBuilder: (_, i) {
+                            return UserListTile(
+                              isOnTap: true,
+                              onTap: () {
+                                Get.toNamed(Routes.AUDIO_CALLING,arguments: controller.callLogsList[i]);
+                              },
+                              title: controller.callLogsList[i].name!,
+                              subTitle: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(
+                                    Icons.call_made,
+                                    color: Colors.red,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  Text(
+                                    controller.callLogsList[i].time!
+                                            .split("T")[0] +
+                                        " " +
+                                        controller.callLogsList[i].time!
+                                            .split("T")[1]
+                                            .split(".")[0],
+                                    textAlign: TextAlign.left,
+                                    style: AppTextStyle.multiChatMessage(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                              imageUrl: AppImages.appLogo,
+                              customWidget: Icon(
+                                Icons.call,
                                 color: Colors.red,
                               ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                "subTitle",
-                                textAlign: TextAlign.left,
-                                style: AppTextStyle.multiChatMessage(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                            ],
+                            );
+                          },
+                          separatorBuilder: (_, i) => Divider(),
+                          itemCount: controller.callLogsList.length)
+                      : Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            child: Text(AppStrings.thereIsNoCalls,
+                                style: AppTextStyle.mainPageHeading()),
                           ),
-                          imageUrl: AppImages.appLogo,
-                          customWidget: Icon(
-                            Icons.call,
-                            color: Colors.red,
-                          ),
-                        );
-                      },
-                      separatorBuilder: (_, i) => Divider(),
-                      itemCount: 10),
+                        )),
                 ],
               ),
             )

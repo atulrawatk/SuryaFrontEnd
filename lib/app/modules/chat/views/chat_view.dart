@@ -570,13 +570,15 @@ class ChatView extends GetView<ChatController> {
                                   Flexible(
                                       child: IconButton(
                                           onPressed: () {
-                                            Get.toNamed(Routes.AUDIO_CALLING);
+                                            controller.calling();
+                                          //  Get.toNamed(Routes.AUDIO_CALLING);
                                           },
                                           icon: Icon(Icons.call))),
                                   Flexible(
                                       child: IconButton(
                                           onPressed: () {
-                                            Get.toNamed(Routes.AUDIO_CALLING);
+                                            controller.calling();
+                                            // Get.toNamed(Routes.AUDIO_CALLING);
                                           },
                                           icon: Icon(Icons.videocam))),
                                   Material(

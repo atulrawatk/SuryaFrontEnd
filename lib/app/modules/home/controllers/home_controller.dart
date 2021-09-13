@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
 import 'package:surya/app/data/models/basic_user_model.dart';
+import 'package:surya/app/data/models/call_d_b_model.dart';
 import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
@@ -71,7 +72,8 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   set isSearch(bool v) => this._isSearch.value = v;
 
   RxList<ChatUserDBModel> userList = <ChatUserDBModel>[].obs;
-  List dbUserList = [];
+  RxList<CallDBModel> callLogsList = <CallDBModel>[].obs;
+
 
 
 
@@ -87,9 +89,12 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     onInitializer();
     getContacts();
     getUsersList();
+    getCallLogs();
+    getListenCallLogs();
   }
 
   getUsersList() async {
+    List dbUserList = [];
     //AppGetStorage.removeValue(AppStrings.userList);
     Logger().wtf(AppGetStorage.getValue(AppStrings.userList));
     if (AppGetStorage.hasData(AppStrings.userList)) {
@@ -102,13 +107,20 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     } else {
       //  AppGetStorage.saveValue(AppStrings.userList, userList);
     }
-    sortingMessages();
+    sortingMessages(userList.value);
   }
 
-  sortingMessages() {
-    userList.value.sort((a, b) {
+  sortingMessages(List list) {
+    list.sort((a, b) {
       var aDate = a.messageList!.last.time;
       var bDate = b.messageList!.last.time;
+      return -aDate!.compareTo(bDate!);
+    });
+  }
+  sortingCallLogs(){
+    callLogsList.sort((a,b){
+      var aDate=a.time;
+      var bDate=b.time;
       return -aDate!.compareTo(bDate!);
     });
   }
@@ -180,6 +192,30 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
+  getCallLogs(){
+    if(AppGetStorage.storage.hasData(AppStrings.callLogs)){
+      List tempCallLogs=AppGetStorage.getValue(AppStrings.callLogs);
+      tempCallLogs.forEach((element) {
+        callLogsList.add(CallDBModel.fromJson(element));
+      });
+      sortingCallLogs();
+      Logger().w(callLogsList.value);
+    }
+
+  }
+
+  getListenCallLogs(){
+      AppGetStorage.storage.listenKey(AppStrings.callLogs, (value) {
+        List<CallDBModel> temporary = List.empty(growable: true);
+        value.forEach((element) {
+          temporary.add(element);
+        });
+        callLogsList.value = temporary;
+        Logger().wtf(value);
+        // callLogsList.add(CallDBModel.fromJson(value));
+        sortingCallLogs();
+      });
+  }
   String messageTime(int index) {
     int value =DateTime.now()
         .toUtc().day

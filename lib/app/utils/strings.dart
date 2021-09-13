@@ -131,6 +131,7 @@ class AppStrings {
   static final String success = "Success".tr;
   static const String userMessagesList = "User Messages List";
   static final String thereIsNoMessages = "There is no messages yet !!";
+  static final String thereIsNoCalls = "There is no calls yet !!";
   static final String today="Today".tr;
   static final String yesterday="Yesterday".tr;
   static final String group="Group".tr;
@@ -310,6 +311,7 @@ class AppStrings {
 
   // Get Storage Keys
   static const String userList = "Users List";
+  static const String callLogs="Call Logs";
 
   //Media Type & Message Type
   static const String imageSmall = "image";
@@ -319,6 +321,8 @@ class AppStrings {
   static const String textSmall = "text";
   static const String mediaSmall = "media";
 
+
+  // Call Logs
 
   //Media Links Docs
 

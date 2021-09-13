@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:surya/app/data/models/call_d_b_model.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
@@ -225,6 +226,19 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   Future stopAudio() async {
     await player.stop();
+  }
+
+  calling(){
+    HomeController homeController =Get.find<HomeController>();
+    CallDBModel callDBModel=CallDBModel(
+      name: userModel.name!.value, time: DateTime.now().toIso8601String().toString(), callType: "called", callTimes: 1.obs,
+    );
+    List<CallDBModel> callList=List.empty(growable: true);
+    callList.addAll(homeController.callLogsList.value);
+    callList.add(callDBModel);
+    AppGetStorage.storage.write(AppStrings.callLogs,callList);
+    // debugPrint(AppGetStorage.getValue(AppStrings.callLogs));
+    Get.toNamed(Routes.AUDIO_CALLING,arguments:callDBModel );
   }
 
   removeMessages() {

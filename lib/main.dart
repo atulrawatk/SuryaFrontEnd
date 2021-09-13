@@ -21,14 +21,15 @@ void main() async {
   Initializer.init();
   //
   print(await DeviceServices.deviceInfo());
-  runZonedGuarded<Future<void>>(
-    () async {
-      runApp(MyApp());
-    },
-    (dynamic error, StackTrace stackTrace) {
-      Get.defaultDialog(title: 'Error occurred', middleText: '$error');
-    },
-  );
+  runApp(MyApp());
+  // runZonedGuarded<Future<void>>(
+  //   () async {
+  //
+  //   },
+  //   (dynamic error, StackTrace stackTrace) {
+  //     Get.defaultDialog(title: 'Error occurred', middleText: '$error');
+  //   },
+  // );
 }
 
 class MyApp extends StatelessWidget {
