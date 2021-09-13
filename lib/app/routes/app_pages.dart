@@ -16,6 +16,8 @@ import 'package:surya/app/modules/contacts/bindings/contacts_binding.dart';
 import 'package:surya/app/modules/contacts/views/contacts_view.dart';
 import 'package:surya/app/modules/createPin/bindings/create_pin_binding.dart';
 import 'package:surya/app/modules/createPin/views/create_pin_view.dart';
+import 'package:surya/app/modules/create_user_name/bindings/create_user_name_binding.dart';
+import 'package:surya/app/modules/create_user_name/views/create_user_name_view.dart';
 import 'package:surya/app/modules/enterPin/bindings/enter_pin_binding.dart';
 import 'package:surya/app/modules/enterPin/views/enter_pin_view.dart';
 import 'package:surya/app/modules/group_chat/bindings/group_chat_binding.dart';
@@ -26,6 +28,8 @@ import 'package:surya/app/modules/home/bindings/home_binding.dart';
 import 'package:surya/app/modules/home/views/home_view.dart';
 import 'package:surya/app/modules/login/bindings/login_binding.dart';
 import 'package:surya/app/modules/login/views/login_view.dart';
+import 'package:surya/app/modules/media_links_docs/bindings/media_links_docs_binding.dart';
+import 'package:surya/app/modules/media_links_docs/views/media_links_docs_view.dart';
 import 'package:surya/app/modules/new_chat_list/bindings/new_chat_list_binding.dart';
 import 'package:surya/app/modules/new_chat_list/views/new_chat_list_view.dart';
 import 'package:surya/app/modules/new_group/bindings/new_group_binding.dart';
@@ -157,6 +161,16 @@ class AppPages {
       name: _Paths.GROUP_PROFILE,
       page: () => GroupProfileView(),
       binding: GroupProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_USER_NAME,
+      page: () => CreateUserNameView(),
+      binding: CreateUserNameBinding(),
+    ),
+    GetPage(
+      name: _Paths.MEDIA_LINKS_DOCS,
+      page: () => MediaLinksDocsView(),
+      binding: MediaLinksDocsBinding(),
     ),
   ];
 }

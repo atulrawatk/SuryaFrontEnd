@@ -1,4 +1,8 @@
-/// success : {"message":"Otp verified successfuly.","data":{"_id":"60f00c18bf5e430f30bfc81d","phone_number":"993494f61a23a1b8a9fb3b66ee66513a","verificationToken":"e34abba4d3b6a28128718f7cf61df1410d0a3ca226413d1f625c8f467e06a30814deb967b1c8bf386bb779e45d99444a","profile_pic":null,"thumbnail":null,"about":null,"name":"35f2d6ef23e081d486f232f49816277c","push_token":"dpNNVC2wS6CTEV6VWmjmW0:APA91bG9fSMjbiTWUqynkMR-MpMXFt7MaJWQhkhJeGioYi9wWNsgtdXLNDbjN3ugi6E5g_ptOotp8PnWXHAZeHnP9xmbxLiEoP_4bsudRCg79phYhr5L-lS_ECxJ58_3x9vrcltqn6Fs"}}
+/// success : {"message":"Otp verified successfuly.","data":{"_id":"60f00c18bf5e430f30bfc81d","phone_number":"993494f61a23a1b8a9fb3b66ee66513a",
+/// "verificationToken":"e34abba4d3b6a28128718f7cf61df1410d0a3ca226413d1f625c8f467e06a30814deb967b1c8bf386bb779e45d99444a",
+/// "profile_pic":null,"thumbnail":null,
+/// "about":null,"name":"35f2d6ef23e081d486f232f49816277c",
+/// "push_token":"dpNNVC2wS6CTEV6VWmjmW0:APA91bG9fSMjbiTWUqynkMR-MpMXFt7MaJWQhkhJeGioYi9wWNsgtdXLNDbjN3ugi6E5g_ptOotp8PnWXHAZeHnP9xmbxLiEoP_4bsudRCg79phYhr5L-lS_ECxJ58_3x9vrcltqn6Fs"}}
 
 class OtpVerifyModel {
   Success? _success;

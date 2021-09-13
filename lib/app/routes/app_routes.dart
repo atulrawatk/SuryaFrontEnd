@@ -26,6 +26,8 @@ abstract class Routes {
   static const CHAT_MEDIA_LIST = _Paths.CHAT_MEDIA_LIST;
   static const NEW_GROUP_NAME_CHAT = _Paths.NEW_GROUP_NAME_CHAT;
   static const GROUP_PROFILE = _Paths.GROUP_PROFILE;
+  static const CREATE_USER_NAME = _Paths.CREATE_USER_NAME;
+  static const MEDIA_LINKS_DOCS = _Paths.MEDIA_LINKS_DOCS;
 }
 
 abstract class _Paths {
@@ -51,4 +53,6 @@ abstract class _Paths {
   static const CHAT_MEDIA_LIST = '/chat-media-list';
   static const NEW_GROUP_NAME_CHAT = '/new-group-name-chat';
   static const GROUP_PROFILE = '/group-profile';
+  static const CREATE_USER_NAME = '/create-user-name';
+  static const MEDIA_LINKS_DOCS = '/media-links-docs';
 }

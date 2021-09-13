@@ -57,15 +57,14 @@ class UserProfileView extends GetView<UserProfileController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100.r),
                               image: DecorationImage(
-                                  image: !controller.setProfileImage.value ||
-                                          controller.profileImage.value.path ==
+                                  image: controller.profileImage.value ==
                                               ""
                                       ? Image.asset(AppImages.dummyProfileImage)
                                           .image
                                       : Image.file(
-                                              controller.profileImage.value)
+                                              File(controller.profileImage.value))
                                           .image,
-                                  fit: BoxFit.fill),
+                                  fit: BoxFit.cover),
                             ),
                           ),
                         ),
@@ -109,8 +108,7 @@ class UserProfileView extends GetView<UserProfileController> {
                                     ),
                                     UserImageEditMenu(
                                       callback: () {
-                                        controller.profileImage.value =
-                                            File("");
+                                        controller.removeProfilePicture();
                                         Get.back();
                                       },
                                       hintText: AppStrings.removeImage,
@@ -194,9 +192,7 @@ class UserProfileView extends GetView<UserProfileController> {
                                       GestureDetector(
                                         onTap: () {
                                           Get.back();
-                                          controller.nameString.value =
-                                              controller
-                                                  .nameController.value.text;
+                                          controller.setName();
                                         },
                                         child: Padding(
                                           padding: EdgeInsets.only(right: 15.w),
@@ -274,7 +270,6 @@ class UserProfileView extends GetView<UserProfileController> {
                             padding: EdgeInsets.only(
                                 left: 20.w, top: 20.h, right: 20.w),
                             child: Column(
-                              //  crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Align(
                                   alignment: Alignment.topLeft,
@@ -300,9 +295,7 @@ class UserProfileView extends GetView<UserProfileController> {
                                       GestureDetector(
                                         onTap: () {
                                           Get.back();
-                                          controller.aboutString.value =
-                                              controller
-                                                  .aboutController.value.text;
+                                          controller.setAbout();
                                         },
                                         child: Padding(
                                           padding: EdgeInsets.only(right: 15.w),

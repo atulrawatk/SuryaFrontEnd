@@ -2,12 +2,12 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/global_widgets/chat_message.dart';
 import 'package:surya/app/global_widgets/chat_message_field.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/user_image_edit_menu.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/app_dialog_box.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/images.dart';
 import 'package:surya/app/utils/lists.dart';
@@ -42,7 +42,7 @@ class ChatView extends GetView<ChatController> {
                         bottom: controller.replyMsg.value ? 115.h : 55.h,
                         top: 55.h),
                     child: Obx(() => ChatMessage(
-                          modelList: controller.userModel.messageList.value,
+                          modelList: controller.userModel.messageList!.value,
                           scrollController: controller.scrollController,
                           chatController: controller,
                         )),
@@ -123,12 +123,12 @@ class ChatView extends GetView<ChatController> {
                                                                   controller
                                                                           .replyMessage
                                                                           .value
-                                                                          .name
+                                                                          .name!
                                                                           .isNotEmpty
                                                                       ? controller
                                                                           .replyMessage
                                                                           .value
-                                                                          .name
+                                                                          .name!
                                                                       : AppStrings
                                                                           .you,
                                                                   style: AppTextStyle
@@ -137,7 +137,7 @@ class ChatView extends GetView<ChatController> {
                                                               ),
                                                               Text(
                                                                 controller
-                                                                    .returnReplyMessage(),
+                                                                    .returnReplyMessage()!,
                                                                 maxLines: 2,
                                                                 overflow:
                                                                     TextOverflow
@@ -476,7 +476,7 @@ class ChatView extends GetView<ChatController> {
                                   onPressed: () {
                                     controller.selectedMessages
                                         .forEach((element) {
-                                      element.isSelected.value = false;
+                                      element.isSelected!.value = false;
                                     });
                                     controller.selectedMessages.clear();
                                     controller.selectMsg.value = false;
@@ -522,19 +522,7 @@ class ChatView extends GetView<ChatController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Flexible(
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 10.w),
-                                child: IconButton(
-                                    onPressed: () {
-                                      Get.offNamedUntil(Routes.HOME, ModalRoute.withName(Routes.HOME));
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_back_ios,
-                                      color: ThemeService.isDark.value
-                                          ? Colors.white
-                                          : Colors.black,
-                                    )),
-                              ),
+                              child: IosBackButton(),
                             ),
                             Expanded(
                               flex: 3,
@@ -564,7 +552,7 @@ class ChatView extends GetView<ChatController> {
                                                   EdgeInsets.only(left: 10.w),
                                               height: 50.h,
                                               child: Text(
-                                                controller.userModel.name.value,
+                                                controller.userModel.name!.value,
                                                 style: AppTextStyle
                                                     .chatLabelText(),
                                               )),
@@ -602,7 +590,26 @@ class ChatView extends GetView<ChatController> {
                                             size: AppDimen.normalSize,
                                             color: AppColors.whiteColor,
                                           ),
-                                          onSelected: (value) {},
+                                          onSelected: (value) {
+                                           switch(value){
+                                             case "Block":
+                                               AppDialogBox.showDialog(
+                                                 AppStrings.areYouSureToBlock,
+                                                 title: "",
+                                                 onTapYes: () {
+                                                   Get.back();
+                                                 },
+                                                 onTapNo: () {},
+                                               );
+                                               break;
+                                             case "View Contact":
+                                               controller.otherUserProfile();
+                                               break;
+                                             case "Media,links and docs":
+                                               Get.toNamed(Routes.MEDIA_LINKS_DOCS,arguments: controller.userModel);
+                                               break;
+                                           }
+                                          },
                                           itemBuilder: (BuildContext context) {
                                             return AppLists.chatMenu
                                                 .map((String choices) {

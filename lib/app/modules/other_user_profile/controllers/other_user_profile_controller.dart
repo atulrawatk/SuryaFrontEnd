@@ -1,29 +1,25 @@
 import 'package:get/get.dart';
-import 'package:surya/app/data/models/chat_message_model.dart';
-import 'package:surya/app/data/models/chat_user_model.dart';
-import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
-import 'package:surya/app/utils/enum_navigation.dart';
-import 'package:surya/app/utils/strings.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 
 class OtherUserProfileController extends GetxController {
 
-  late ChatUserModel model;
+  late ChatUserDBModel model;
   @override
   void onInit() {
     super.onInit();
     model=Get.arguments;
-    RxList<ChatMessageModel> chatList=model.messageList;
+    RxList<MessageDBList> chatList=model.messageList!;
     chatList.forEach((element) {
-      if(element.messageType==MessageType.media){
+      if(element.messageType=="media"){
         _mediaMessages.add(element);
       }
     });
   }
-  RxList<ChatMessageModel> _mediaMessages=<ChatMessageModel>[].obs;
+  RxList<MessageDBList> _mediaMessages=<MessageDBList>[].obs;
 
-  List<ChatMessageModel> get mediaMessages=>_mediaMessages.value;
+  List<MessageDBList> get mediaMessages=>_mediaMessages.value;
 
-  set mediaMessages(List<ChatMessageModel> list){
+  set mediaMessages(List<MessageDBList> list){
 
   }
 

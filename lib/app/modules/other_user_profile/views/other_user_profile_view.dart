@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -36,7 +38,7 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                 backgroundColor: AppColors.primaryDarkColor,
                 flexibleSpace: FlexibleSpaceBar(
                     //centerTitle: true,
-                    title: Text(controller.model.name.value,
+                    title: Text(controller.model.name!.value,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15.h,
@@ -104,41 +106,50 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                                             child: InkWell(
                                               onTap: () {
                                                 ChatController chatController =
-                                                Get.find<ChatController>();
-                                                if(controller.mediaMessages[index].mediaType==MediaType.video){
+                                                    Get.find<ChatController>();
+                                                if (controller
+                                                        .mediaMessages[index]
+                                                        .mediaType ==
+                                                    "video") {
                                                   chatController
-                                                      .mediaController
-                                                      .videoController
-                                                      .value =
-                                                  VideoPlayerController
-                                                      .file(
-                                                      controller.mediaMessages[index]
-                                                          .media)
-                                                    ..initialize()
-                                                        .whenComplete(() {
-                                                      Future.delayed(
-                                                          Duration.zero,
-                                                              () => Get.toNamed(
-                                                              Routes
-                                                                  .CHAT_MEDIA));
-                                                      chatController
                                                           .mediaController
-                                                          .videoListeners();
-                                                    });
-                                                  chatController
-                                                      .mediaController
-                                                      .chatModel =
-                                                  controller.mediaMessages[index];
-                                                }
-                                                else if(controller.mediaMessages[index].mediaType==MediaType.image){
+                                                          .videoController
+                                                          .value =
+                                                      VideoPlayerController
+                                                          .file(File(controller
+                                                              .mediaMessages[
+                                                                  index]
+                                                              .media!))
+                                                        ..initialize()
+                                                            .whenComplete(() {
+                                                          Future.delayed(
+                                                              Duration.zero,
+                                                              () => Get.toNamed(
+                                                                  Routes
+                                                                      .CHAT_MEDIA));
+                                                          chatController
+                                                              .mediaController
+                                                              .videoListeners();
+                                                        });
+                                                  chatController.mediaController
+                                                          .chatModel =
+                                                      controller
+                                                          .mediaMessages[index];
+                                                } else if (controller
+                                                        .mediaMessages[index]
+                                                        .mediaType ==
+                                                    "image") {
                                                   Future.delayed(
                                                       Duration.zero,
-                                                          () => Get.toNamed(
-                                                          Routes.CHAT_MEDIA,arguments: controller.mediaMessages[index]));
+                                                      () => Get.toNamed(
+                                                          Routes.CHAT_MEDIA,
+                                                          arguments: controller
+                                                                  .mediaMessages[
+                                                              index]));
                                                   chatController.mediaController
-                                                      .chatModel =
-                                                  controller
-                                                      .mediaMessages[index];
+                                                          .chatModel =
+                                                      controller
+                                                          .mediaMessages[index];
                                                 }
                                               },
                                               child: Container(
@@ -147,27 +158,35 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                                                       left: 5.w, right: 5.w),
                                                   decoration: BoxDecoration(
                                                       color: Colors.black,
-                                                      image: controller.mediaMessages[index].mediaType ==
-                                                              MediaType.image
+                                                      image: controller
+                                                                  .mediaMessages[
+                                                                      index]
+                                                                  .mediaType ==
+                                                              "image"
                                                           ? DecorationImage(
                                                               image: FileImage(
-                                                                  controller
+                                                                  File(controller
                                                                       .mediaMessages[
                                                                           index]
-                                                                      .media),
+                                                                      .media!)),
                                                               fit: BoxFit.cover)
                                                           : null),
-                                                  child: controller.mediaMessages[index].mediaType ==
-                                                          MediaType.audio
-                                                      ? Center(
-                                                          child: Icon(
-                                                              Icons.audiotrack))
-                                                      : controller.mediaMessages[index]
-                                                                  .mediaType ==
-                                                              MediaType.video
-                                                          ? Center(child: Icon(Icons.play_arrow))
-                                                          : controller.mediaMessages[index].mediaType == MediaType.document
-                                                              ? Center(child: Text(controller.mediaMessages[index].message))
+                                                  child: controller
+                                                              .mediaMessages[index]
+                                                              .mediaType ==
+                                                          "audio"
+                                                      ? Center(child: Icon(Icons.audiotrack, color:
+                                                  AppColors.whiteColor))
+                                                      : controller.mediaMessages[index].mediaType == "video"
+                                                          ? Center(
+                                                              child: Icon(
+                                                              Icons.play_arrow,
+                                                              color:
+                                                                  AppColors.whiteColor,
+                                                            ))
+                                                          : controller.mediaMessages[index].mediaType == "document"
+                                                              ? Center(child: Icon(Icons.perm_media,color:
+                                                  AppColors.whiteColor))
                                                               : Container()),
                                             ),
                                           )
@@ -188,10 +207,14 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                 ),
               ),
               Material(
-                color: ThemeService.isDark.value?Colors.transparent:Colors.white.withOpacity(0.9),
+                color: ThemeService.isDark.value
+                    ? Colors.transparent
+                    : Colors.white.withOpacity(0.9),
                 child: InkWell(
-                  splashColor: ThemeService.isDark.value?Colors.grey[600]:Colors.black,
-                  onTap: (){},
+                  splashColor: ThemeService.isDark.value
+                      ? Colors.grey[600]
+                      : Colors.black,
+                  onTap: () {},
                   child: Container(
                     padding: EdgeInsets.only(top: 10.h),
                     decoration: BoxDecoration(
@@ -223,7 +246,7 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                                   physics: NeverScrollableScrollPhysics(),
                                   children: [
                                     Text(
-                                      controller.model.number,
+                                      controller.model.number!,
                                       style: AppTextStyle.phoneNumber(),
                                     ),
                                     Padding(
@@ -293,11 +316,11 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                         ? Colors.black26
                         : Colors.white.withOpacity(0.9),
                   ),
-                  child:  Material(
+                  child: Material(
                     color: Colors.transparent,
                     child: Center(
                       child: ListTile(
-                        onTap: (){},
+                        onTap: () {},
                         leading: Icon(
                           Icons.block,
                           color: AppColors.red,
@@ -324,11 +347,11 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                         ? Colors.black26
                         : Colors.white.withOpacity(0.9),
                   ),
-                  child:  Material(
+                  child: Material(
                     color: Colors.transparent,
                     child: Center(
                       child: ListTile(
-                        onTap: (){},
+                        onTap: () {},
                         leading: Icon(
                           Icons.clear,
                           color: AppColors.red,

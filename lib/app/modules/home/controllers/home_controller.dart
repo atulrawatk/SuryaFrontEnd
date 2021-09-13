@@ -1,25 +1,17 @@
-import 'dart:ffi';
-
 import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/api/api_helper.dart';
 import 'package:surya/app/data/models/OTPVerify.dart';
 import 'package:surya/app/data/models/basic_user_model.dart';
-import 'package:surya/app/data/models/chat_user_model.dart';
-import 'package:surya/app/data/models/mobile_contact_list_model.dart';
-import 'package:surya/app/data/models/mobile_local_contact_model.dart';
-import 'package:surya/app/data/socket/SocketService.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage_keys.dart';
-import 'package:surya/app/data/storage/get_storage/otp_verify_get_storage_service.dart';
 import 'package:surya/app/modules/otp/controllers/otp_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/enum_navigation.dart';
 import 'package:surya/app/utils/strings.dart';
-import 'dart:convert' as JSON;
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin {
   late TabController tabController;
@@ -27,7 +19,6 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
 
   //Tab Index Setter & Getter
   var tabIndex = 0.obs;
-  late RxList<ChatUserModel> usersMessageList = <ChatUserModel>[].obs;
 
   //Chat Type Status
   RxString _chatType = "".obs;
@@ -79,7 +70,10 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   bool get isSearch => this._isSearch.value;
   set isSearch(bool v) => this._isSearch.value = v;
 
-  RxList<ChatUserModel> userList=List<ChatUserModel>.empty(growable: true).obs;
+  RxList<ChatUserDBModel> userList = <ChatUserDBModel>[].obs;
+  List dbUserList = [];
+
+
 
   @override
   void onInit() {
@@ -92,16 +86,31 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     });
     onInitializer();
     getContacts();
-
+    getUsersList();
   }
 
-  getUsersList(){
-    if(AppGetStorage.hasData(AppStrings.userList)){
-      userList=AppGetStorage.getValue(AppStrings.userList);
+  getUsersList() async {
+    //AppGetStorage.removeValue(AppStrings.userList);
+    Logger().wtf(AppGetStorage.getValue(AppStrings.userList));
+    if (AppGetStorage.hasData(AppStrings.userList)) {
+      if (userList.length <= 0) {
+        dbUserList = AppGetStorage.getValue(AppStrings.userList);
+        dbUserList.forEach((element) {
+          userList.add(ChatUserDBModel.fromJson(element));
+        });
+      }
+    } else {
+      //  AppGetStorage.saveValue(AppStrings.userList, userList);
     }
-    else{
-      AppGetStorage.saveValue(AppStrings.userList, userList);
-    }
+    sortingMessages();
+  }
+
+  sortingMessages() {
+    userList.value.sort((a, b) {
+      var aDate = a.messageList!.last.time;
+      var bDate = b.messageList!.last.time;
+      return -aDate!.compareTo(bDate!);
+    });
   }
 
 //Get User Details from DB
@@ -171,9 +180,21 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  messageTime(int index){
-    print(DateTime.now().toUtc().toString().compareTo(usersMessageList[index].messageList.last.time));
- }
+  String messageTime(int index) {
+    int value =DateTime.now()
+        .toUtc().day
+        .compareTo(DateTime.tryParse(userList[index].messageList!.last.time!)!.day);
+    if(value<24){
+      return AppStrings.today;
+    }
+    else if(value<48&& value>24){
+      return AppStrings.yesterday;
+    }
+    else{
+      return DateTime.tryParse(userList[index].messageList!.last.time!)!.toIso8601String().split("T")[0].toString();
+    }
+
+  }
 
   @override
   void onReady() {

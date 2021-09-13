@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:surya/app/utils/strings.dart';
-import 'package:surya/app/utils/utils.dart';
 import 'package:video_player/video_player.dart';
 
 import '../controllers/chat_media_controller.dart';
@@ -26,18 +24,18 @@ class ChatMediaView extends GetView<ChatMediaController> {
             Align(
               alignment: Alignment.center,
               child: Hero(
-                tag: controller.chatModel.time,
-                child: controller.chatModel.mediaType == MediaType.image
+                tag: controller.chatModel.time!,
+                child: controller.chatModel.mediaType == "image"
                     ? Container(
                           height: Get.height*0.8,
                         width: Get.width,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: FileImage(controller.chatModel.media),
+                                image: FileImage(File(controller.chatModel.media!)),
                                 fit: BoxFit.fitHeight),
                             borderRadius: BorderRadius.circular(10.r)),
                       )
-                    : controller.chatModel.mediaType ==MediaType.video
+                    : controller.chatModel.mediaType =="video"
                         ? controller.videoController.value.value.isInitialized
                             ? AspectRatio(
                                 aspectRatio: controller
@@ -58,7 +56,7 @@ class ChatMediaView extends GetView<ChatMediaController> {
                         : SizedBox(),
               ),
             ),
-            controller.chatModel.mediaType == MediaType.video
+            controller.chatModel.mediaType == "video"
                 ? Obx(() => !controller.isPlaying.value
                     ? Align(
                         alignment: Alignment.center,
@@ -88,7 +86,7 @@ class ChatMediaView extends GetView<ChatMediaController> {
                     size: 30.h,
                   ),
                 )),
-            controller.chatModel.mediaType == MediaType.video
+            controller.chatModel.mediaType == "video"
                 ? Obx(() => !controller.isPlaying.value
                     ? Align(
                         alignment: Alignment.bottomCenter,

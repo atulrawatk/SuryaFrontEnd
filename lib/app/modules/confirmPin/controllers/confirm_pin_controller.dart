@@ -17,8 +17,7 @@ class ConfirmPinController extends GetxController {
   confirmPin(String pin){
     if(pin==myPrevPin){
       PinStorage().setScreenPin(pin);
-      AppGetStorage.saveValue(AppStrings.isLogin, true);
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.CREATE_USER_NAME);
     }
     else{
       Get.snackbar(AppStrings.screenPin, AppStrings.wrongPin);

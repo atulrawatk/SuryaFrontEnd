@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/data/models/chat_user_model.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/global_widgets/contact_circle_avatar.dart';
 import 'package:surya/app/global_widgets/global_widgets.dart';
 import 'package:surya/app/global_widgets/group_contact_list_member.dart';
@@ -243,15 +244,7 @@ class ContactsView extends GetView<ContactsController> {
                                     .putIfAbsent(contact.name, () => contact);
                               }
                             } else {
-                              Get.toNamed(Routes.CHAT,
-                                  arguments: ChatUserModel(
-                                      name: contact.name.obs,
-                                      number: contact.number.toString(),
-                                      isGroup: false,
-                                      users: <ChatUserModel>[].obs,
-                                      profileImage: File("").obs,
-                                      isBlocked: false.obs,
-                                      messageList: <ChatMessageModel>[].obs));
+                              controller.toChat(contact.name,contact);
                             }
                           },
                           onLongPress: () {
@@ -328,7 +321,7 @@ class ContactsView extends GetView<ContactsController> {
                                           contact.name, () => contact);
                                     }
                                   } else {
-                                    Get.toNamed(Routes.CHAT);
+                                    controller.toChat(contact.name,contact);
                                   }
                                 },
                                 onLongPress: () {
@@ -386,7 +379,7 @@ class ContactsView extends GetView<ContactsController> {
         () => controller.contacts.length > 1
             ? FloatingActionButton(
                 onPressed: () {
-                  Get.toNamed(Routes.NEW_GROUP_NAME_CHAT,
+                  Get.offAndToNamed(Routes.NEW_GROUP_NAME_CHAT,
                       arguments: controller.contacts);
                 },
                 child: Container(

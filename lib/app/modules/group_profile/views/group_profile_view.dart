@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -48,7 +50,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                       children: [
                         Obx(
                           () => Text(
-                            controller.groupModel.name.value,
+                            controller.groupModel.name!.value,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.white,
@@ -67,12 +69,12 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                   buttontext2: AppStrings.cancel,
                                   controller: controller.textController,
                                   focusNode: FocusNode(),
-                                  hintText: controller.groupModel.name.value,
+                                  hintText: controller.groupModel.name!.value,
                                   onTapNo: () {
                                     Get.back();
                                   },
                                   onTapYes: () {
-                                    controller.groupModel.name.value =
+                                    controller.groupModel.name!.value =
                                         controller.textController.text;
                                     Get.back();
                                   },
@@ -157,16 +159,16 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                   if (controller
                                                           .mediaMessages[index]
                                                           .mediaType ==
-                                                      MediaType.video) {
+                                                     "video") {
                                                     chatController
                                                             .mediaController
                                                             .videoController
                                                             .value =
                                                         VideoPlayerController
-                                                            .file(controller
+                                                            .file(File(controller
                                                                 .mediaMessages[
                                                                     index]
-                                                                .media)
+                                                                .media!))
                                                           ..initialize()
                                                               .whenComplete(() {
                                                             Future.delayed(
@@ -187,7 +189,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                   } else if (controller
                                                           .mediaMessages[index]
                                                           .mediaType ==
-                                                      MediaType.image) {
+                                                      "image") {
                                                     Future.delayed(
                                                         Duration.zero,
                                                         () => Get.toNamed(
@@ -213,13 +215,13 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                                     .mediaMessages[
                                                                         index]
                                                                     .mediaType ==
-                                                                MediaType.image
+                                                               "image"
                                                             ? DecorationImage(
                                                                 image: FileImage(
-                                                                    controller
+                                                                    File(controller
                                                                         .mediaMessages[
                                                                             index]
-                                                                        .media),
+                                                                        .media!)),
                                                                 fit: BoxFit
                                                                     .cover)
                                                             : null),
@@ -227,12 +229,12 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                                 .mediaMessages[
                                                                     index]
                                                                 .mediaType ==
-                                                            MediaType.audio
+                                                            "audio"
                                                         ? Center(child: Icon(Icons.audiotrack))
-                                                        : controller.mediaMessages[index].mediaType == MediaType.video
+                                                        : controller.mediaMessages[index].mediaType == "video"
                                                             ? Center(child: Icon(Icons.play_arrow))
-                                                            : controller.mediaMessages[index].mediaType == MediaType.document
-                                                                ? Center(child: Text(controller.mediaMessages[index].message))
+                                                            : controller.mediaMessages[index].mediaType == "document"
+                                                                ? Center(child: Text(controller.mediaMessages[index].message!))
                                                                 : Container()),
                                               ),
                                             )
@@ -268,7 +270,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                           padding: EdgeInsets.only(
                               left: 15.w, top: 5.h, bottom: 5.h),
                           child: Text(
-                            controller.groupModel.users.length.toString() +
+                            controller.groupModel.users!.length.toString() +
                                 " " +
                                 AppStrings.participants,
                             style: AppTextStyle.repliedUserNameChat(),
@@ -301,7 +303,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                       ),
                       //
                       Obx(
-                        () => controller.groupModel.users.length > 0
+                        () => controller.groupModel.users!.length > 0
                             ? AspectRatio(
                                 aspectRatio: 4,
                                 child: ListView.builder(
@@ -315,10 +317,10 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                       child: GestureDetector(
                                         onTap: () {
                                           if (controller
-                                                  .groupModel.users.length >
+                                                  .groupModel.users!.length >
                                               1) {
-                                            controller.groupModel.users.remove(
-                                                controller.groupModel.users
+                                            controller.groupModel.users!.remove(
+                                                controller.groupModel.users!
                                                     .elementAt(index));
                                           } else {
                                             Get.dialog(
@@ -329,12 +331,12 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                                       AppStrings.cancel,
                                                   focusNode: FocusNode(),
                                                   hintText:
-                                                      'Exit "${controller.groupModel.name.value}" group?',
+                                                      'Exit "${controller.groupModel.name!.value}" group?',
                                                   onTapNo: () {
                                                     Get.back();
                                                   },
                                                   onTapYes: () {
-                                                    controller.groupModel.name
+                                                    controller.groupModel.name!
                                                             .value =
                                                         controller
                                                             .textController
@@ -347,15 +349,15 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                           }
                                         },
                                         child: GroupContactListMember(
-                                          name: controller.groupModel.users
+                                          name: controller.groupModel.users!
                                               .elementAt(index)
-                                              .name
+                                              .name!
                                               .value,
                                         ),
                                       ),
                                     );
                                   },
-                                  itemCount: controller.groupModel.users.length,
+                                  itemCount: controller.groupModel.users!.length,
                                 ),
                               )
                             : Container(),
@@ -368,23 +370,23 @@ class GroupProfileView extends GetView<GroupProfileController> {
                               () => ListTile(
                                 onTap: () {},
                                 title: Text(
-                                  controller.groupModel.users[index].name.value,
+                                  controller.groupModel.users![index].name!.value,
                                   style: AppTextStyle.chatLabelText(),
                                 ),
                                 leading: CircleAvatar(
-                                  child: controller.groupModel.users[index]
-                                                  .profileImage.value.path ==
+                                  child: controller.groupModel.users![index]
+                                                  .profileImage!.value ==
                                               null ||
-                                          controller.groupModel.users[index]
-                                                  .profileImage.value.path ==
+                                          controller.groupModel.users![index]
+                                                  .profileImage!.value ==
                                               ""
                                       ? Image.asset(AppImages.dummyProfileImage)
-                                      : Image.file(controller.groupModel
-                                          .users[index].profileImage.value),
+                                      : Image.file(File(controller.groupModel
+                                          .users![index].profileImage!.value)),
                                   radius: 20.r,
                                 ),
                                 subtitle: Text(
-                                  controller.groupModel.users[index].number,
+                                  controller.groupModel.users![index].number!,
                                   style: AppTextStyle.nameHeading(),
                                 ),
                               ),
@@ -394,7 +396,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: controller.groupModel.users.length,
+                        itemCount: controller.groupModel.users!.length,
                       )
                     ],
                   ),
@@ -420,12 +422,12 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                   buttontext2: AppStrings.cancel,
                                   focusNode: FocusNode(),
                                   hintText:
-                                      'Exit "${controller.groupModel.name.value}" group?',
+                                      'Exit "${controller.groupModel.name!.value}" group?',
                                   onTapNo: () {
                                     Get.back();
                                   },
                                   onTapYes: () {
-                                    controller.groupModel.name.value =
+                                    controller.groupModel.name!.value =
                                         controller.textController.text;
                                     Get.back();
                                   },
@@ -476,7 +478,7 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                     Get.back();
                                   },
                                   onTapYes: () {
-                                    controller.groupModel.name.value =
+                                    controller.groupModel.name!.value =
                                         controller.textController.text;
                                     Get.back();
                                   },

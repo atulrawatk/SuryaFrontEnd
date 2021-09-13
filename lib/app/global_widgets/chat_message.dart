@@ -1,23 +1,18 @@
-import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:surya/app/data/models/chat_message_model.dart';
-import 'package:surya/app/modules/chat/controllers/chat_controller.dart';
-import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
-import 'package:surya/app/modules/chat_media/views/chat_media_view.dart';
-import 'package:surya/app/modules/group_chat/controllers/group_chat_controller.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/styles/custom_styles.dart';
-import 'package:surya/app/utils/styles/theme_service.dart';
 import 'package:surya/app/utils/utils.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 
 class ChatMessage extends StatelessWidget {
-  final List<ChatMessageModel> modelList;
+   List<MessageDBList> modelList;
   final ScrollController scrollController;
   final dynamic chatController;
   ChatMessage(
@@ -29,14 +24,15 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    modelList=modelList.reversed.toList(growable: true);
     return ListView.builder(
       controller: scrollController,
-      // reverse: true,
+       reverse: true,
       itemBuilder: (context, index) {
         return Obx(() => GestureDetector(
               onLongPress: () {
                 if (chatController.selectedMessages.isEmpty) {
-                  modelList[index].isSelected.value = true;
+                  modelList[index].isSelected!.value = true;
                   chatController.selectedMessages.add(modelList[index]);
                 }
               },
@@ -44,10 +40,10 @@ class ChatMessage extends StatelessWidget {
                 if (chatController.selectedMessages.isNotEmpty) {
                   if (chatController.selectedMessages
                       .contains(modelList[index])) {
-                    modelList[index].isSelected.value = false;
+                    modelList[index].isSelected!.value = false;
                     chatController.selectedMessages.remove(modelList[index]);
                   } else {
-                    modelList[index].isSelected.value = true;
+                    modelList[index].isSelected!.value = true;
                     chatController.selectedMessages.add(modelList[index]);
                   }
                 }
@@ -62,22 +58,22 @@ class ChatMessage extends StatelessWidget {
                     child: Icon(Icons.reply),
                   ),
                   child: Container(
-                    margin: EdgeInsets.only(top: 5.h, bottom: 5.h),
-                    color: modelList[index].isSelected.value
+                   // margin: EdgeInsets.only(top: 5.h, bottom: 5.h),
+                    color: modelList[index].isSelected!.value
                         ? Get.theme.primaryColor.withOpacity(0.5)
                         : Colors.transparent,
                     child: Padding(
                       padding: EdgeInsets.only(
                           bottom: 10.h, right: 5.w, left: 5.w, top: 10.h),
                       child: Align(
-                        alignment: modelList[index].isMe
+                        alignment: modelList[index].isMe!
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
                         child: Container(
                           constraints: BoxConstraints(maxWidth: 200.w),
                           padding: EdgeInsets.all(10.h),
                           child: modelList[index].messageType ==
-                                  MessageType.text
+                                  "text"
                               ? ListView(
                                   shrinkWrap: true,
                                   padding: EdgeInsets.zero,
@@ -107,11 +103,11 @@ class ChatMessage extends StatelessWidget {
                                                     child: Text(
                                                       modelList[index]
                                                               .repliedMessage!
-                                                              .name
+                                                              .name!
                                                               .isNotEmpty
                                                           ? modelList[index]
                                                               .repliedMessage!
-                                                              .name
+                                                              .name!
                                                           : AppStrings.you,
                                                       style: AppTextStyle
                                                           .repliedUserNameChat(),
@@ -120,7 +116,7 @@ class ChatMessage extends StatelessWidget {
                                                   Text(
                                                     modelList[index]
                                                         .repliedMessage!
-                                                        .message,
+                                                        .message!,
                                                     maxLines: 2,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -130,8 +126,8 @@ class ChatMessage extends StatelessWidget {
                                             ),
                                           )
                                         : SizedBox(),
-                                    modelList[index].isGroup
-                                        ?  !modelList[index].isMe
+                                    modelList[index].isGroup!
+                                        ?  !modelList[index].isMe!
                                     ?ListView(
                                             shrinkWrap: true,
                                             physics:
@@ -140,7 +136,7 @@ class ChatMessage extends StatelessWidget {
                                             children: [
                                                Padding(
                                                  padding:  EdgeInsets.only(bottom:6.h),
-                                                 child: Text(modelList[index].name,style: AppTextStyle.groupChatName(),),
+                                                 child: Text(modelList[index].name!,style: AppTextStyle.groupChatName(),),
                                                ),
                                               Padding(
                                                 padding: EdgeInsets.only(
@@ -150,7 +146,7 @@ class ChatMessage extends StatelessWidget {
                                                         ? 5.h
                                                         : 0),
                                                 child: Text(
-                                                  modelList[index].message,
+                                                  modelList[index].message!,
                                                   maxLines: null,
                                                 ),
                                               )
@@ -164,7 +160,7 @@ class ChatMessage extends StatelessWidget {
                                               ? 5.h
                                               : 0),
                                       child: Text(
-                                        modelList[index].message,
+                                        modelList[index].message!,
                                         maxLines: null,
                                       ),
                                     ):Padding(
@@ -175,17 +171,17 @@ class ChatMessage extends StatelessWidget {
                                               ? 5.h
                                               : 0),
                                       child: Text(
-                                        modelList[index].message,
+                                        modelList[index].message!,
                                         maxLines: null,
                                       ),
                                     ),
                                   ],
                                 )
                               : modelList[index].mediaType ==
-                                      MediaType.audio
+                                      "audio"
                                   ? IconButton(
                                       color: Get.theme.accentColor,
-                                      icon: !modelList[index].isTapped.value
+                                      icon: !modelList[index].isTapped!.value
                                           ? Icon(Icons.play_arrow)
                                           : Icon(Icons.pause),
                                       onPressed: () async {
@@ -193,18 +189,18 @@ class ChatMessage extends StatelessWidget {
                                             !chatController.isPlaying.value;
                                         if (chatController.isPlaying.value) {
                                           await chatController.stopAudio();
-                                          modelList[index].isTapped.value =
+                                          modelList[index].isTapped!.value =
                                               true;
-                                          if (modelList[index].isTapped.value) {
+                                          if (modelList[index].isTapped!.value) {
                                             chatController.animController
                                                 .forward();
                                             await chatController
                                                 .playAudio(
-                                                    modelList[index].media.path)
+                                                    modelList[index].media!)
                                                 .whenComplete(() {
                                               chatController.isPlaying.value =
                                                   false;
-                                              modelList[index].isTapped.value =
+                                              modelList[index].isTapped!.value =
                                                   false;
                                               chatController.animController
                                                   .reverse();
@@ -213,14 +209,14 @@ class ChatMessage extends StatelessWidget {
                                         } else {
                                           chatController.isPlaying.value =
                                               false;
-                                          modelList[index].isTapped.value =
+                                          modelList[index].isTapped!.value =
                                               false;
                                           await chatController.stopAudio();
                                         }
                                       },
                                     )
                                   : modelList[index].mediaType ==
-                                          MediaType.image
+                                          "image"
                                       ? Material(
                                           color: Colors.transparent,
                                           child: InkWell(
@@ -240,14 +236,14 @@ class ChatMessage extends StatelessWidget {
                                                     .contains(
                                                         modelList[index])) {
                                                   modelList[index]
-                                                      .isSelected
+                                                      .isSelected!
                                                       .value = false;
                                                   chatController
                                                       .selectedMessages
                                                       .remove(modelList[index]);
                                                 } else {
                                                   modelList[index]
-                                                      .isSelected
+                                                      .isSelected!
                                                       .value = true;
                                                   chatController
                                                       .selectedMessages
@@ -256,7 +252,7 @@ class ChatMessage extends StatelessWidget {
                                               }
                                             },
                                             child: Hero(
-                                              tag: modelList[index].time,
+                                              tag: modelList[index].time!,
                                               child: Container(
                                                 height: 150.h,
                                                 width: 150.h,
@@ -266,8 +262,8 @@ class ChatMessage extends StatelessWidget {
                                                           10.r),
                                                   image: DecorationImage(
                                                       image: FileImage(
-                                                          modelList[index]
-                                                              .media),
+                                                          File(modelList[index]
+                                                              .media!)),
                                                       fit: BoxFit.cover),
                                                   //   borderRadius: BorderRadius.circular(10.r)
                                                 ),
@@ -276,7 +272,7 @@ class ChatMessage extends StatelessWidget {
                                           ),
                                         )
                                       : modelList[index].mediaType ==
-                                              MediaType.video
+                                              "video"
                                           ? Material(
                                               color: Colors.transparent,
                                               child: InkWell(
@@ -290,8 +286,8 @@ class ChatMessage extends StatelessWidget {
                                                             .value =
                                                         VideoPlayerController
                                                             .file(
-                                                                modelList[index]
-                                                                    .media)
+                                                                File(modelList[index]
+                                                                    .media!))
                                                           ..initialize()
                                                               .whenComplete(() {
                                                             Future.delayed(
@@ -313,7 +309,7 @@ class ChatMessage extends StatelessWidget {
                                                         .contains(
                                                             modelList[index])) {
                                                       modelList[index]
-                                                          .isSelected
+                                                          .isSelected!
                                                           .value = false;
                                                       chatController
                                                           .selectedMessages
@@ -321,7 +317,7 @@ class ChatMessage extends StatelessWidget {
                                                               modelList[index]);
                                                     } else {
                                                       modelList[index]
-                                                          .isSelected
+                                                          .isSelected!
                                                           .value = true;
                                                       chatController
                                                           .selectedMessages
@@ -354,7 +350,7 @@ class ChatMessage extends StatelessWidget {
                                               ),
                                             )
                                           : modelList[index].mediaType ==
-                                                  MediaType.document
+                                                  "document"
                                               ? Material(
                                                   child: InkWell(
                                                     onTap: () {},
@@ -366,8 +362,7 @@ class ChatMessage extends StatelessWidget {
                                                       child: Center(
                                                           child: Text(
                                                               modelList[index]
-                                                                  .media
-                                                                  .path
+                                                                  .media!
                                                                   .split("/")
                                                                   .last)),
                                                     ),
@@ -377,9 +372,9 @@ class ChatMessage extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(
-                                    modelList[index].isMe ? 15.r : 0),
+                                    modelList[index].isMe! ? 15.r : 0),
                                 topRight: Radius.circular(
-                                    modelList[index].isMe ? 0 : 15.r),
+                                    modelList[index].isMe! ? 0 : 15.r),
                                 bottomLeft: Radius.circular(15.r),
                                 bottomRight: Radius.circular(15.r),
                               ),

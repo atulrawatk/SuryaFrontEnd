@@ -131,6 +131,9 @@ class AppStrings {
   static final String success = "Success".tr;
   static const String userMessagesList = "User Messages List";
   static final String thereIsNoMessages = "There is no messages yet !!";
+  static final String today="Today".tr;
+  static final String yesterday="Yesterday".tr;
+  static final String group="Group".tr;
 
   //Chat Screen
   static final String enterAMessage = 'Enter you message'.tr;
@@ -138,12 +141,13 @@ class AppStrings {
   static final String image = "Image".tr;
   static final String fileNotSupported = "File not supported".tr;
   static final String fileNotAdded = "File not added".tr;
-  // static const String imageSmall="image";
-  // static const String videoSmall="video";
-  // static const String documentSmall="document";
-  // static const String audioSmall="audio";
-  // static const String textSmall="text";
-  // static const String mediaSmall="media";
+
+  static final String busy="Busy".tr;
+
+  //Create User Name
+  static final String createUserName="Add User Name".tr;
+
+  static final String userDetails="User Details".tr;
 
   //Other User Profile
   static final String mediaLinks = "Media, links and docs".tr;
@@ -251,7 +255,6 @@ class AppStrings {
   //User profile
   static final String name = "Name".tr;
   static final String about = "About".tr;
-  static final String busy = "Busy".tr;
   static final String thisNameIsVisible =
       "This is not your username or pin. This name will be visible to your Surya contacts."
           .tr;
@@ -270,8 +273,8 @@ class AppStrings {
   static final String logout = "Logout".tr;
   // static final String delete = "Logout".tr;
   static final String areYouSureLogout = "Are you sure logout?".tr;
-  static final String areYouSureDeleteAccount =
-      "Are you sure delete account?".tr;
+  static final String areYouSureDeleteAccount = "Are you sure delete account?".tr;
+  static final String areYouSureToBlock = "Are you sure to block this user?".tr;
   static final String darkTheme = "Dark Theme".tr;
   static final String lightTheme = "Light Theme".tr;
   static final String systemTheme = "System Default Theme".tr;
@@ -307,4 +310,19 @@ class AppStrings {
 
   // Get Storage Keys
   static const String userList = "Users List";
+
+  //Media Type & Message Type
+  static const String imageSmall = "image";
+  static const String videoSmall = "video";
+  static const String documentSmall = "document";
+  static const String audioSmall = "audio";
+  static const String textSmall = "text";
+  static const String mediaSmall = "media";
+
+
+  //Media Links Docs
+
+ //static final String media
+
+
 }

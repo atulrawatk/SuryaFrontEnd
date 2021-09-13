@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/modules/home/controllers/home_controller.dart';
+import 'package:surya/app/routes/app_pages.dart';
 import 'package:surya/app/utils/utils.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -114,6 +116,26 @@ class ContactsController extends GetxController {
     //     }
     //   }
     // });
+  }
+  toChat(String name,ContactUsers contact){
+    HomeController homeController=Get.find<HomeController>();
+    bool found=false;
+    homeController.userList.forEach((element) {
+      if(element.name!.value==name){
+        found=true;
+        Get.offAndToNamed(Routes.CHAT,arguments: element);
+      }
+    });
+    if(!found){
+      Get.offAndToNamed(Routes.CHAT,arguments: ChatUserDBModel(
+          name: contact.name.obs,
+          number: contact.number.toString(),
+          isGroup: false,
+          users: <ChatUserDBModel>[].obs,
+          profileImage: "".obs,
+          isBlocked: false.obs,
+          messageList: <MessageDBList>[].obs));
+    }
   }
 
   @override

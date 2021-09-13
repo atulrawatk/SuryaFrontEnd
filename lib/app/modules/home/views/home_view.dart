@@ -152,91 +152,191 @@ class HomeView extends GetView<HomeController> {
               child: TabBarView(
                 controller: controller.tabController,
                 children: [
-                  controller.usersMessageList.length>0?ListView.builder(
-                      itemCount: controller.usersMessageList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Material(
-                          color: AppColors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              Get.toNamed(Routes.CHAT,arguments: controller.usersMessageList[index]);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                    flex: 1,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                          left: 10.w, top: 10.h, bottom: 10.h),
-                                      height: Get.height / 14,
-                                      width: Get.height / 14,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                AppImages.dummyProfileImage),
-                                            fit: BoxFit.fill),
-                                        borderRadius: BorderRadius.circular(
-                                            Get.height / 2),
-                                      ),
-                                    )),
-                                Flexible(
-                                    flex: 3,
-                                    fit: FlexFit.tight,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
-                                        left: 10.w,
-                                        top: 20.h,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(controller.usersMessageList[index].name.value,
-                                              textAlign: TextAlign.left,
-                                              style:
-                                                  AppTextStyle.multiChatName()),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: Get.height / 100),
-                                            child: Text(
-                                              controller.usersMessageList[index].messageList.last.message,
-                                              textAlign: TextAlign.left,
-                                              style: AppTextStyle
-                                                  .multiChatMessage(),
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
+                  Obx(() {
+                    controller.sortingMessages();
+                    return controller.userList.length > 0
+                        ? ListView.builder(
+                            itemCount: controller.userList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Material(
+                                color: AppColors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    if (controller.userList
+                                        .elementAt(index)
+                                        .isGroup!) {
+                                      Get.toNamed(Routes.GROUP_CHAT,
+                                          arguments: controller.userList
+                                              .elementAt(index));
+                                    } else {
+                                      Get.toNamed(Routes.CHAT,
+                                          arguments: controller.userList
+                                              .elementAt(index));
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                          flex: 1,
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                                left: 10.w,
+                                                top: 10.h,
+                                                bottom: 10.h),
+                                            height: Get.height / 14,
+                                            width: Get.height / 14,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black12,
+                                              image: DecorationImage(
+                                                  image: AssetImage(AppImages
+                                                      .dummyProfileImage),
+                                                  fit: BoxFit.fill),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Get.height / 2),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    )),
-                                Align(
-                                  alignment: AlignmentDirectional.topEnd,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      top: 15.h,
-                                      // right: 10.w,
-                                    ),
-                                    child: Text(
-                                      "Today",
-                                      textAlign: TextAlign.end,
-                                    ),
+                                          )),
+                                      Flexible(
+                                          flex: 3,
+                                          fit: FlexFit.tight,
+                                          child: Container(
+                                            margin: EdgeInsets.only(
+                                              left: 10.w,
+                                              top: 20.h,
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 5.w),
+                                                        child: Text(
+                                                            controller.userList
+                                                                .elementAt(
+                                                                    index)
+                                                                .name!
+                                                                .value,
+                                                            textAlign:
+                                                                TextAlign.left,
+                                                            style: AppTextStyle
+                                                                .multiChatName()),
+                                                      ),
+                                                    ),
+                                                    Flexible(
+                                                        child:controller.userList[index].isGroup!?Container(
+                                                      height: 15.h,
+                                                      width: 30.w,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .transparent,
+                                                          border: Border.all(
+                                                              color: Get.theme
+                                                                  .accentColor),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.r)),
+                                                      child: Center(
+                                                          child: Text(
+                                                        AppStrings.group,
+                                                        style: AppTextStyle
+                                                            .headingText(
+                                                                color: Get.theme
+                                                                    .accentColor,
+                                                                fontSize: 8.h,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal),
+                                                      )),
+                                                    ):Container())
+                                                  ],
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: Get.height / 100),
+                                                    child: Obx(() => Text(
+                                                          controller.userList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .messageList!
+                                                                      .last
+                                                                      .message ==
+                                                                  ""
+                                                              ? controller
+                                                                  .userList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .messageList!
+                                                                  .last
+                                                                  .mediaType!
+                                                                  .toUpperCase()
+                                                              : controller
+                                                                  .userList
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .messageList!
+                                                                  .last
+                                                                  .message!,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: controller
+                                                                      .userList
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .messageList!
+                                                                      .last
+                                                                      .message ==
+                                                                  ""
+                                                              ? AppTextStyle
+                                                                  .repliedUserNameChat()
+                                                              : AppTextStyle
+                                                                  .multiChatMessage(),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          maxLines: 1,
+                                                        )))
+                                              ],
+                                            ),
+                                          )),
+                                      Align(
+                                        alignment: AlignmentDirectional.topEnd,
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                            top: 15.h,
+                                            // right: 10.w,
+                                          ),
+                                          child: Text(
+                                            controller.messageTime(index),
+                                            textAlign: TextAlign.end,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
-                              ],
+                                ),
+                              );
+                            })
+                        : Align(
+                            child: Text(
+                              AppStrings.thereIsNoMessages,
+                              style: AppTextStyle.mainPageHeading(),
                             ),
-                          ),
-                        );
-                      }):Align(
-                    child: Text(AppStrings.thereIsNoMessages,style: AppTextStyle.mainPageHeading(),),
-                  ),
+                          );
+                  }),
                   ListView.separated(
                       shrinkWrap: true,
                       itemBuilder: (_, i) {

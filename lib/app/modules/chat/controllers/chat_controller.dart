@@ -16,6 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:surya/app/data/models/chat_user_model.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
 import 'package:surya/app/data/record_sound.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/modules/chat_media/controllers/chat_media_controller.dart';
@@ -57,8 +58,8 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
   RxBool isRecording = false.obs;
   RxBool stopTimer = false.obs;
 
-  RxList<ChatMessageModel> selectedMessages = <ChatMessageModel>[].obs;
-  Rx<ChatMessageModel> replyMessage = ChatMessageModel(
+  RxList<MessageDBList> selectedMessages = <MessageDBList>[].obs;
+  Rx<MessageDBList> replyMessage = MessageDBList(
           name: "",
           isGroup: false,
           isMe: false,
@@ -68,7 +69,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
           messageSeen: "",
           repliedMessage: null,
           isSelected: false.obs,
-          media: File(""),
+          media: "",
           mediaType: MediaType.none,
           isTapped: false.obs)
       .obs;
@@ -81,8 +82,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     messageFocusField.addListener(() {
       if (messageFocusField.hasFocus) {
         emojiOpen.value = false;
-        scrollController.position
-            .forcePixels(scrollController.position.maxScrollExtent + 55.h);
+        // scrollController.position
+        //     .forcePixels(scrollController.position.maxScrollExtent + 55.h);
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
       }
     });
   }
@@ -96,74 +98,6 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     myAnimation = CurvedAnimation(curve: Curves.linear, parent: animController);
   }
 
-  // RxList<ChatMessageModel> oneToOneChatModel = [
-  //   ChatMessageModel(
-  //       name: "",
-  //       isGroup: false,
-  //       isMe: true,
-  //       message: "Hi",
-  //       messageType: "text",
-  //       time: "18:00:00 03-08-2021",
-  //       messageSeen: "seen",
-  //       repliedMessage: null,
-  //       isSelected: false.obs,
-  //       media: File(""),
-  //       mediaType: "",
-  //       isTapped: false.obs),
-  //   ChatMessageModel(
-  //       name: "Harish",
-  //       isGroup: false,
-  //       isMe: false,
-  //       message: "Hello",
-  //       messageType: "text",
-  //       time: "18:00:00 03-08-2021",
-  //       messageSeen: "seen",
-  //       repliedMessage: null,
-  //       isSelected: false.obs,
-  //       media: File(""),
-  //       mediaType: "",
-  //       isTapped: false.obs),
-  //   ChatMessageModel(
-  //       name: "",
-  //       isGroup: false,
-  //       isMe: true,
-  //       message: "How are you?",
-  //       messageType: "text",
-  //       time: "18:00:00 03-08-2021",
-  //       messageSeen: "seen",
-  //       repliedMessage: null,
-  //       isSelected: false.obs,
-  //       media: File(""),
-  //       mediaType: "",
-  //       isTapped: false.obs),
-  //   ChatMessageModel(
-  //       name: "Harish",
-  //       isGroup: false,
-  //       isMe: false,
-  //       message:
-  //           "I'm good and you? ewjfghewukhfe iuwbfuwehfhbgwe ufwuefuwehfu wehfuehwfiu hewufhewof hiowehfiowehfih wehofiewbfw",
-  //       messageType: "text",
-  //       time: "18:00:00 03-08-2021",
-  //       messageSeen: "seen",
-  //       repliedMessage: null,
-  //       isSelected: false.obs,
-  //       media: File(""),
-  //       mediaType: "",
-  //       isTapped: false.obs),
-  //   ChatMessageModel(
-  //       name: "",
-  //       isGroup: false,
-  //       isMe: true,
-  //       message: "Me too!!",
-  //       messageType: "text",
-  //       time: "18:00:00 03-08-2021",
-  //       messageSeen: "seen",
-  //       repliedMessage: null,
-  //       isSelected: false.obs,
-  //       media: File(""),
-  //       mediaType: "",
-  //       isTapped: false.obs)
-  // ].toList(growable: true).obs;
 
   timerStart() {
     if (stopTimer.value) {
@@ -193,81 +127,31 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   sendMessage() {
     if (textEditingController.text.length > 0) {
-      HomeController homeController=Get.find<HomeController>();
-      RxList<ChatUserModel> userList=homeController.userList;
-      userList.forEach((element) {
-        if(element==userModel){
-          element.messageList.add(ChatMessageModel(
-              name: "You",
-              isGroup: false,
-              isMe: true,
-              message: textEditingController.text,
-              messageType: MessageType.text,
-              time: TimeOfDay.now().toString(),
-              messageSeen: "seen",
-              repliedMessage: replyMsg.value ? replyMessage.value : null,
-              isSelected: false.obs,
-              media: File(""),
-              mediaType: MediaType.none,
-              isTapped: false.obs));
-        }
-        else{
+      userModel.messageList!.add(MessageDBList(
+          name: "You",
+          isGroup: false,
+          isMe: true,
+          message: textEditingController.text,
+          messageType: MessageType.text,
+          time: DateTime.now().toUtc().toString(),
+          messageSeen: "seen",
+          repliedMessage: replyMsg.value ? replyMessage.value : null,
+          isSelected: false.obs,
+          media: "",
+          mediaType: MediaType.none,
+          isTapped: false.obs));
 
-        }
-      });
-      if (userModel.messageList.isEmpty) {
-        userModel.messageList.add(ChatMessageModel(
-            name: "You",
-            isGroup: false,
-            isMe: true,
-            message: textEditingController.text,
-            messageType: MessageType.text,
-            time: TimeOfDay.now().toString(),
-            messageSeen: "seen",
-            repliedMessage: replyMsg.value ? replyMessage.value : null,
-            isSelected: false.obs,
-            media: File(""),
-            mediaType: MediaType.none,
-            isTapped: false.obs));
+      storingMessageInDb();
         replyMsg.value = false;
         emojiOpen.value = false;
         textEditingController.clear();
-        scrollController.position
-            .forcePixels(scrollController.position.maxScrollExtent + 55.h);
-        List<ChatUserModel> chatUserlist = List.empty(growable: true);
-        chatUserlist.add(userModel);
-        AppGetStorage.saveValue(
-            AppStrings.userMessagesList, JSON.jsonEncode(chatUserlist));
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
       }
-      else if (AppGetStorage.hasData(AppStrings.userMessagesList)) {
-        AppGetStorage.storage
-            .listenKey(AppStrings.userMessagesList, (value) {
-              
-        });
-        userModel.messageList.add(ChatMessageModel(
-            name: "You",
-            isGroup: false,
-            isMe: true,
-            message: textEditingController.text,
-            messageType: MessageType.text,
-            time: TimeOfDay.now().toString(),
-            messageSeen: "seen",
-            repliedMessage: replyMsg.value ? replyMessage.value : null,
-            isSelected: false.obs,
-            media: File(""),
-            mediaType: MediaType.none,
-            isTapped: false.obs));
-        replyMsg.value = false;
-        emojiOpen.value = false;
-        textEditingController.clear();
-        scrollController.position
-            .forcePixels(scrollController.position.maxScrollExtent + 55.h);
-      }
-    }
+
   }
 
   late ChatMediaController mediaController;
-  late ChatUserModel userModel;
+  late ChatUserDBModel userModel;
   @override
   void onInit() {
     super.onInit();
@@ -284,8 +168,9 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     textEditingController.addListener(() {
       if (textEditingController.text.trim().isNotEmpty) {
         sendStatus.value = true;
-        scrollController.position
-            .forcePixels(scrollController.position.maxScrollExtent);
+        // scrollController.position
+        //     .forcePixels(scrollController.position.maxScrollExtent);
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
       } else {
         sendStatus.value = false;
       }
@@ -295,28 +180,42 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
   Future recordMessages() async {
     await recordSound
         .getRecorderFn(
-            path: "surya_recording${DateTime.now().toIso8601String()}.mp4")
+            path: "surya_recording${DateTime.now().toUtc().toString()}.mp4")
         .then((value) {
       if (stopTimer.value) {
         // recordSound.recordedAudioPath="surya_recording${DateTime.now().toIso8601String()}.mp4";
         Future.delayed(Duration(seconds: 1), () {
           String audioPath = recordSound.recordedAudioPath;
-          userModel.messageList.add(ChatMessageModel(
+          userModel.messageList!.add(MessageDBList(
               name: "You",
               isGroup: false,
               isMe: true,
               message: "",
               messageType: MessageType.media,
-              time: TimeOfDay.now().toString(),
+              time: DateTime.now().toUtc().toString(),
               messageSeen: "seen",
               repliedMessage: replyMsg.value ? replyMessage.value : null,
               isSelected: false.obs,
-              media: File(audioPath),
+              media: audioPath,
               mediaType: MediaType.audio,
               isTapped: false.obs));
+          storingMessageInDb();
         });
       }
     });
+  }
+
+  storingMessageInDb(){
+    //Adding messages into User List which is fetched at Home Screen
+    HomeController homeController=Get.find<HomeController>();
+    if(homeController.userList.contains(userModel)){
+      homeController.userList.remove(userModel);
+    }
+    homeController.userList.add(userModel);
+
+    //Storing Messages in Local Db into Storage
+    AppGetStorage.storage.write(AppStrings.userList, homeController.userList.value);
+    Logger().wtf(AppGetStorage.getValue(AppStrings.userList));
   }
 
   Future playAudio(String path) async {
@@ -330,20 +229,25 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
 
   removeMessages() {
     selectedMessages.removeWhere((element) {
-      if (userModel.messageList.contains(element)) {
-        userModel.messageList.remove(element);
+      if (userModel.messageList!.contains(element)) {
+        userModel.messageList!.remove(element);
         return true;
       } else {
         return false;
       }
     });
-    print(userModel.messageList.length);
+    if(userModel.messageList!.length<=0){
+      HomeController homeController=Get.find<HomeController>();
+      homeController.userList.remove(userModel);
+      AppGetStorage.storage.write(AppStrings.userList, homeController.userList);
+    }
+    print(userModel.messageList!.length);
     print(selectedMessages.length);
   }
 
   Future attachFile({required MediaType file}) async {
     try {
-      FilePickerResult? result = await FilePicker.platform
+       await FilePicker.platform
           .pickFiles(
               type: file == MediaType.audio
                   ? FileType.audio
@@ -361,7 +265,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
           .then((value) {
         switch (file) {
           case MediaType.video:
-            userModel.messageList.add(ChatMessageModel(
+            userModel.messageList!.add(MessageDBList(
                 name: "You",
                 isGroup: false,
                 isMe: true,
@@ -371,13 +275,12 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
-                media: File(value!.paths.first!),
+                media: value!.paths.first!,
                 mediaType: MediaType.video,
                 isTapped: false.obs));
-            //mediaController.videoController=VideoPlayerController.file(File(value.paths.first!))..initialize();
             break;
           case MediaType.audio:
-            userModel.messageList.add(ChatMessageModel(
+            userModel.messageList!.add(MessageDBList(
                 name: "You",
                 isGroup: false,
                 isMe: true,
@@ -387,12 +290,12 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
-                media: File(value!.paths.first!),
+                media: value!.paths.first!,
                 mediaType: MediaType.audio,
                 isTapped: false.obs));
             break;
           case MediaType.image:
-            userModel.messageList.add(ChatMessageModel(
+            userModel.messageList!.add(MessageDBList(
                 name: "You",
                 isGroup: false,
                 isMe: true,
@@ -402,12 +305,12 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
-                media: File(value!.paths.first!),
+                media: value!.paths.first!,
                 mediaType: MediaType.image,
                 isTapped: false.obs));
             break;
           default:
-            userModel.messageList.add(ChatMessageModel(
+            userModel.messageList!.add(MessageDBList(
                 name: "You",
                 isGroup: false,
                 isMe: true,
@@ -417,13 +320,13 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
                 messageSeen: AppStrings.smallSeen,
                 repliedMessage: replyMsg.value ? replyMessage.value : null,
                 isSelected: false.obs,
-                media: File(value!.paths.first!),
+                media: value!.paths.first!,
                 mediaType: MediaType.document,
                 isTapped: false.obs));
         }
         Get.back();
-        scrollController.position
-            .forcePixels(scrollController.position.maxScrollExtent + 200.h);
+        storingMessageInDb();
+        scrollController.jumpTo(scrollController.position.minScrollExtent);
       }).catchError((error) {
         Logger().w(error.toString());
       });
@@ -433,16 +336,16 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  String returnReplyMessage() {
-    if (replyMessage.value.messageType == MessageType.media) {
+  String? returnReplyMessage() {
+    if (replyMessage.value.messageType == "media") {
       switch (replyMessage.value.mediaType) {
-        case MediaType.video:
+        case "video":
           return AppStrings.video;
-        case MediaType.image:
+        case "image":
           return AppStrings.image;
-        case MediaType.document:
+        case "document":
           return AppStrings.document;
-        case MediaType.audio:
+        case "audio":
           return AppStrings.audio;
         default:
           return AppStrings.document;
@@ -466,8 +369,7 @@ class ChatController extends GetxController with SingleGetTickerProviderMixin {
       stopTimer.value = true;
       await recordMessages();
       isRecording.value = false;
-      scrollController.position
-          .forcePixels(scrollController.position.maxScrollExtent + 115.h);
+      scrollController.jumpTo(scrollController.position.minScrollExtent);
     }
   }
 

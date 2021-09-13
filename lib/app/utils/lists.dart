@@ -13,7 +13,7 @@ class AppLists{
     AppStrings.search,
     AppStrings.muteNotifications,
     AppStrings.wallpaper,
-    AppStrings.more,
+    AppStrings.block,
   ];
   static final List<String> chatAttachFileMenu=<String>[
     AppStrings.document,

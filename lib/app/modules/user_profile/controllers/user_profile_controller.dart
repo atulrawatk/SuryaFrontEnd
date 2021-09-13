@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:surya/app/data/models/personal_user_details_model.dart';
 import 'package:surya/app/data/storage/get_storage/get_storage.dart';
 import 'package:surya/app/utils/strings.dart';
 import 'package:surya/app/utils/styles/theme_service.dart';
@@ -15,20 +16,30 @@ class UserProfileController extends GetxController {
   RxBool themeSwitch = false.obs;
   RxInt themeButton = 0.obs;
 
-  Rx<TextEditingController> aboutController =
-      new TextEditingController(text: AppStrings.busy).obs;
-  Rx<TextEditingController> nameController =
-      new TextEditingController(text: "Sangam").obs;
+  late Rx<TextEditingController> aboutController ;
+  late Rx<TextEditingController> nameController;
+
 
   RxString aboutString = AppStrings.busy.obs;
-  RxString nameString = "Sangam".obs;
+  RxString nameString = "".obs;
 
   FocusNode aboutFocusNode = new FocusNode();
   FocusNode nameFocusNode = new FocusNode();
+  late PersonalUserDetailsModel userValues;
   @override
   void onInit() {
     super.onInit();
     getUserTheme();
+    getUserValues();
+  }
+
+  getUserValues(){
+   userValues=PersonalUserDetailsModel.fromJson(AppGetStorage.getValue(AppStrings.userDetails));
+   nameString =userValues.name!;
+   profileImage=userValues.profileImage!;
+   aboutString=userValues.about!;
+   aboutController=new TextEditingController(text:userValues.about!.value).obs;
+   nameController=new TextEditingController(text: userValues.name!.value).obs;
   }
 
   getUserTheme() {
@@ -50,7 +61,7 @@ class UserProfileController extends GetxController {
     }
   }
 
-  Rx<File> profileImage = File("").obs;
+  RxString profileImage = "".obs;
   RxBool setProfileImage = false.obs;
   Future imagePicker(ImageSource imageSource) async {
     if (imageSource == ImageSource.gallery) {
@@ -64,7 +75,9 @@ class UserProfileController extends GetxController {
       )
           .then((value) {
         setProfileImage.value = true;
-        profileImage.value = File(value!.paths.first!);
+        profileImage.value = value!.paths.first!;
+        userValues.profileImage!.value=value.paths.first!;
+        AppGetStorage.storage.write(AppStrings.userDetails,userValues);
       });
       //  (result!.paths.first!);
     } else if (imageSource == ImageSource.camera) {
@@ -77,11 +90,29 @@ class UserProfileController extends GetxController {
       )
           .then((value) {
         setProfileImage.value = true;
-        profileImage.value = File(value!.path);
+        profileImage.value = value!.path;
+        userValues.profileImage!.value=value.path;
+        AppGetStorage.storage.write(AppStrings.userDetails,userValues);
       });
     }
   }
+  setAbout(){
+    aboutString.value = aboutController.value.text;
+    userValues.about!.value=aboutController.value.text;
+    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+  }
 
+  setName(){
+    nameString.value = nameController.value.text;
+    userValues.name!.value=nameController.value.text;
+    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+
+  }
+  removeProfilePicture(){
+    profileImage.value = "";
+    userValues.profileImage!.value="";
+    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+  }
   Future changeAppTheme() async {
     switch (themeButton.value) {
       case 0:

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:surya/app/utils/utils.dart';
 
 class ProfileImage extends StatelessWidget {
-  final File profileImage;
+  final String profileImage;
   const ProfileImage({Key? key, required this.profileImage}) : super(key: key);
 
   @override
@@ -14,6 +14,21 @@ class ProfileImage extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
+            Hero(
+                tag: "profile_image",
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: Get.height/1.2,
+                    width: Get.width,
+                    child: profileImage == ""
+                        ? Image.asset(AppImages.dummyProfileImage)
+                        : Image.file(
+                            File(profileImage),
+                            fit: BoxFit.fitHeight,
+                          ),
+                  ),
+                )),
             Align(
               alignment: Alignment.topLeft,
               child: IconButton(
@@ -22,17 +37,6 @@ class ProfileImage extends StatelessWidget {
                     Get.back();
                   }),
             ),
-            Hero(
-                tag: "profile_image",
-                child: Align(
-                  alignment: Alignment.center,
-                  child: profileImage.path == ""
-                      ? Image.asset(AppImages.dummyProfileImage)
-                      : Image.file(
-                          profileImage,
-                          fit: BoxFit.fitWidth,
-                        ),
-                ))
           ],
         ),
       ),

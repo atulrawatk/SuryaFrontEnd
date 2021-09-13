@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:surya/app/data/device_services.dart';
 import 'package:surya/app/utils/initializer.dart';
 import 'package:surya/app/utils/styles/theme_service.dart';
 import 'app/routes/app_pages.dart';
@@ -19,6 +20,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   Initializer.init();
   //
+  print(await DeviceServices.deviceInfo());
   runZonedGuarded<Future<void>>(
     () async {
       runApp(MyApp());

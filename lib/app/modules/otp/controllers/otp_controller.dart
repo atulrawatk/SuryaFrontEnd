@@ -109,7 +109,7 @@ class OtpController extends GetxController {
         if (res.isOk) {
           OtpVerifyModel otpModel = OtpVerifyModel.fromJson(res.body);
 
-          //Saving OTP model into Get Storage
+          // Saving OTP model into Get Storage
           OTPVerifyGetStorageService().saveOtpModel(otpModel);
           userModel.value=otpModel;
           setOtpStatus = 2;

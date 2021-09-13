@@ -7,7 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:surya/app/data/models/ContactUsers.dart';
 import 'package:surya/app/data/models/chat_message_model.dart';
 import 'package:surya/app/data/models/chat_user_model.dart';
+import 'package:surya/app/data/models/my_chat_user_model.dart';
+import 'package:surya/app/data/storage/get_storage/get_storage.dart';
+import 'package:surya/app/modules/home/controllers/home_controller.dart';
 import 'package:surya/app/routes/app_pages.dart';
+import 'package:surya/app/utils/strings.dart';
 
 class NewGroupNameChatController extends GetxController {
   late TextEditingController groupNameController;
@@ -59,35 +63,29 @@ class NewGroupNameChatController extends GetxController {
 
   toGroupChat(){
     if (key.currentState!.validate()) {
-      List<ChatUserModel> groupUsers =
+      List<ChatUserDBModel> groupUsers =
       List.empty(growable: true);
       contactUsers.forEach((element) {
-        groupUsers.add( ChatUserModel(
+        groupUsers.add( ChatUserDBModel(
             name: element.name.obs,
             number: element.number.toString(),
             isGroup: true,
-            users: <ChatUserModel>[].obs,
-            profileImage: File("").obs,
+            users: <ChatUserDBModel>[].obs,
+            profileImage: "".obs,
             isBlocked: false.obs,
-            messageList: <ChatMessageModel>[].obs));
+            messageList: <MessageDBList>[].obs));
       });
-      Get.toNamed(Routes.GROUP_CHAT,
-          arguments:
-          // {
-          //   AppStrings.groupNameSmall:
-          //       controller.groupNameController.text,
-          //   AppStrings.groupListSmall:
-          //       controller.contactUsers.value
-          // }
-          ChatUserModel(
-              name:
-              groupNameController.text.obs,
-              number: "",
-              isGroup: true,
-              users: groupUsers.obs,
-              profileImage: profileImage,
-              isBlocked: false.obs,
-              messageList: <ChatMessageModel>[].obs));
+      ChatUserDBModel newGroupModel=ChatUserDBModel(
+          name:
+          groupNameController.text.obs,
+          number: "",
+          isGroup: true,
+          users: groupUsers.obs,
+          profileImage: profileImage.value.path.obs,
+          isBlocked: false.obs,
+          messageList: <MessageDBList>[].obs);
+      Get.offAndToNamed(Routes.GROUP_CHAT,
+          arguments:newGroupModel);
     }
   }
 
