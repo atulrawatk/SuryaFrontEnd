@@ -57,12 +57,11 @@ class UserProfileView extends GetView<UserProfileController> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100.r),
                               image: DecorationImage(
-                                  image: controller.profileImage.value ==
-                                              ""
+                                  image: controller.profileImage.value == ""
                                       ? Image.asset(AppImages.dummyProfileImage)
                                           .image
-                                      : Image.file(
-                                              File(controller.profileImage.value))
+                                      : Image.file(File(
+                                              controller.profileImage.value))
                                           .image,
                                   fit: BoxFit.cover),
                             ),
@@ -163,6 +162,8 @@ class UserProfileView extends GetView<UserProfileController> {
                     ),
                     onPressed: () {
                       controller.nameFocusNode.requestFocus();
+                      controller.aboutController.value = TextEditingController(
+                          text: controller.userValues.name!.value);
                       Get.bottomSheet(
                         Container(
                           height: 150.h,
@@ -263,6 +264,8 @@ class UserProfileView extends GetView<UserProfileController> {
                     ),
                     onPressed: () {
                       controller.aboutFocusNode.requestFocus();
+                      controller.aboutController.value = TextEditingController(
+                          text: controller.userValues.about!.value);
                       Get.bottomSheet(
                         Container(
                           height: 150.h,

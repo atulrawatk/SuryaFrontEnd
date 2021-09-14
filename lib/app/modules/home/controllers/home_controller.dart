@@ -218,12 +218,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
   String messageTime(int index) {
     int value =DateTime.now()
-        .toUtc().day
-        .compareTo(DateTime.tryParse(userList[index].messageList!.last.time!)!.day);
-    if(value<24){
+        .toUtc().day.compareTo(DateTime.tryParse(userList[index].messageList!.last.time!)!.day);
+    if(value==0){
       return AppStrings.today;
     }
-    else if(value<48&& value>24){
+    else if(value>0&&value<2){
       return AppStrings.yesterday;
     }
     else{

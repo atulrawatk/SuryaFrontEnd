@@ -84,7 +84,10 @@ class OtherUserProfileView extends GetView<OtherUserProfileController> {
                               ? Flexible(
                                   child: IconButton(
                                   icon: Icon(Icons.arrow_forward_ios),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.toNamed(Routes.MEDIA_LINKS_DOCS,
+                                        arguments: controller.model);
+                                  },
                                 ))
                               : Flexible(
                                   child: Container(),

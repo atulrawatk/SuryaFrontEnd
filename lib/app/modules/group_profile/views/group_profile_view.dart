@@ -133,7 +133,10 @@ class GroupProfileView extends GetView<GroupProfileController> {
                                 ? Flexible(
                                     child: IconButton(
                                     icon: Icon(Icons.arrow_forward_ios),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.toNamed(Routes.MEDIA_LINKS_DOCS,
+                                          arguments: controller.groupModel);
+                                    },
                                   ))
                                 : Flexible(
                                     child: Container(),

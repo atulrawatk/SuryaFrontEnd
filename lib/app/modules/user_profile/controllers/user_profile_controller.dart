@@ -16,9 +16,8 @@ class UserProfileController extends GetxController {
   RxBool themeSwitch = false.obs;
   RxInt themeButton = 0.obs;
 
-  late Rx<TextEditingController> aboutController ;
+  late Rx<TextEditingController> aboutController;
   late Rx<TextEditingController> nameController;
-
 
   RxString aboutString = AppStrings.busy.obs;
   RxString nameString = "".obs;
@@ -33,13 +32,39 @@ class UserProfileController extends GetxController {
     getUserValues();
   }
 
-  getUserValues(){
-   userValues=PersonalUserDetailsModel.fromJson(AppGetStorage.getValue(AppStrings.userDetails));
-   nameString =userValues.name!;
-   profileImage=userValues.profileImage!;
-   aboutString=userValues.about!;
-   aboutController=new TextEditingController(text:userValues.about!.value).obs;
-   nameController=new TextEditingController(text: userValues.name!.value).obs;
+  getUserValues() {
+    Logger().v(AppGetStorage.getValue(AppStrings.userDetails));
+    PersonalUserDetailsModel model;
+    try{
+      model = PersonalUserDetailsModel.fromJson(
+          AppGetStorage.getValue(AppStrings.userDetails));
+    }
+    catch(e){
+      model=AppGetStorage.getValue(AppStrings.userDetails);
+    }
+    nameString = model.name!;
+    profileImage = model.profileImage!;
+    aboutString = model.about!;
+    userValues = model;
+    listenUserValues();
+    aboutController =
+        new TextEditingController(text: userValues.about!.value).obs;
+    nameController =
+        new TextEditingController(text: userValues.name!.value).obs;
+  }
+
+  listenUserValues() {
+    AppGetStorage.storage.listenKey(AppStrings.userDetails, (value) {
+      userValues = value;
+      if (userValues.profileImage!.value != "") {
+        setProfileImage.value = true;
+      } else {
+        setProfileImage.value = false;
+      }
+      profileImage.value = userValues.profileImage!.value;
+      aboutString = userValues.about!;
+      nameString = userValues.name!;
+    });
   }
 
   getUserTheme() {
@@ -75,9 +100,8 @@ class UserProfileController extends GetxController {
       )
           .then((value) {
         setProfileImage.value = true;
-        profileImage.value = value!.paths.first!;
-        userValues.profileImage!.value=value.paths.first!;
-        AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+        userValues.profileImage!.value = value!.paths.first!;
+        AppGetStorage.storage.write(AppStrings.userDetails, userValues);
       });
       //  (result!.paths.first!);
     } else if (imageSource == ImageSource.camera) {
@@ -90,29 +114,27 @@ class UserProfileController extends GetxController {
       )
           .then((value) {
         setProfileImage.value = true;
-        profileImage.value = value!.path;
-        userValues.profileImage!.value=value.path;
-        AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+        userValues.profileImage!.value = value!.path;
+        AppGetStorage.storage.write(AppStrings.userDetails, userValues);
       });
     }
   }
-  setAbout(){
-    aboutString.value = aboutController.value.text;
-    userValues.about!.value=aboutController.value.text;
-    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+
+  setAbout() {
+    userValues.about!.value = aboutController.value.text;
+    AppGetStorage.storage.write(AppStrings.userDetails, userValues);
   }
 
-  setName(){
-    nameString.value = nameController.value.text;
-    userValues.name!.value=nameController.value.text;
-    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
+  setName() {
+    userValues.name!.value = nameController.value.text;
+    AppGetStorage.storage.write(AppStrings.userDetails, userValues);
+  }
 
+  removeProfilePicture() {
+    userValues.profileImage!.value = "";
+    AppGetStorage.storage.write(AppStrings.userDetails, userValues);
   }
-  removeProfilePicture(){
-    profileImage.value = "";
-    userValues.profileImage!.value="";
-    AppGetStorage.storage.write(AppStrings.userDetails,userValues);
-  }
+
   Future changeAppTheme() async {
     switch (themeButton.value) {
       case 0:

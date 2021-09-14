@@ -608,7 +608,8 @@ class ChatView extends GetView<ChatController> {
                                                controller.otherUserProfile();
                                                break;
                                              case "Media,links and docs":
-                                               Get.toNamed(Routes.MEDIA_LINKS_DOCS,arguments: controller.userModel);
+                                               Get.toNamed(Routes.MEDIA_LINKS_DOCS,
+                                                   arguments: controller.userModel);
                                                break;
                                            }
                                           },
